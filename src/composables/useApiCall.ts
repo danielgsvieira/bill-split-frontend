@@ -1,7 +1,9 @@
 import { i18n } from 'src/boot/i18n';
+import { useAuthStore } from 'src/stores';
 import { useToast } from './useToast';
 import { ApiError, ApiValidationError } from 'src/utils';
 import { ref, type Ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 type AssyncCall<T, Args extends unknown[]> = (...args: Args) => Promise<T>;
 type ShowToastOptions = {
@@ -18,8 +20,11 @@ function useApiCall<T, Args extends unknown[]>(
   asyncCall: AssyncCall<T, Args>,
   options: UseApiCallOptions = { showToast: true },
 ) {
+  const router = useRouter();
+  const route = useRoute();
   const { t } = i18n.global;
   const toast = useToast();
+  const authStore = useAuthStore();
 
   const data = ref<T | null>(null) as Ref<T | null>;
   const error = ref<ApiError | null>(null);
@@ -78,6 +83,11 @@ function useApiCall<T, Args extends unknown[]>(
       const apiError = err instanceof ApiError ? err : ApiError.createUnknownError();
 
       printApiErrorToast(apiError);
+
+      if (apiError.isUnauthorized) {
+        authStore.logout();
+        void router.push({ name: 'login', query: { redirect: route.path } });
+      }
 
       error.value = apiError;
     } finally {
