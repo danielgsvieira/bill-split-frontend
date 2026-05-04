@@ -3,11 +3,11 @@ import AppCard from 'src/components/AppCard.vue';
 import { AppDateFormat } from 'src/consts';
 import { computed } from 'vue';
 import { expenseCycleService } from 'src/services';
-import type { RouteLocationRaw } from 'vue-router';
-import { useApiCall } from 'src/composables';
 import { useI18n } from 'vue-i18n';
 import { valueOrEmptyIndicator } from 'src/utils';
 import { AppBtn, AppFieldValue, AppGoBackBtn, AppPage } from 'src/components';
+import { type RouteLocationRaw, useRouter } from 'vue-router';
+import { useApiCall, useDialog, useToast } from 'src/composables';
 
 type ExpenseCycleViewPageProps = {
   expenseCycleId: number;
@@ -16,6 +16,9 @@ type ExpenseCycleViewPageProps = {
 const { expenseCycleId } = defineProps<ExpenseCycleViewPageProps>();
 
 const { t } = useI18n();
+const router = useRouter();
+const dialog = useDialog();
+const toast = useToast();
 
 const labels = {
   deleteBtn: t('expenseCycle.viewPage.deleteBtn'),
@@ -30,6 +33,13 @@ const labels = {
   editBtn: t('expenseCycle.viewPage.editBtn'),
   goBackBtn: t('general.goBack'),
   pageTitle: t('expenseCycle.viewPage.pageTitle'),
+  removeExpenseCycle: {
+    dialog: {
+      title: t('general.remove'),
+      message: t('general.removeConfirmationMessage'),
+    },
+    successMessage: t('general.removeSuccessMessage'),
+  },
 };
 
 const {
@@ -50,6 +60,25 @@ const editExpenseCycleRoute: RouteLocationRaw = {
   params: { id: expenseCycleId },
 };
 const goBackRoute: RouteLocationRaw = { name: 'expense-cycle-index' };
+
+const {
+  data: deletedExpenseCycle,
+  loading: loadingDeleteExpenseCycle,
+  execute: deleteExpenseCicleApiCall,
+} = useApiCall(() => expenseCycleService.delete(expenseCycleId));
+
+async function deleteExpenseCycle() {
+  await deleteExpenseCicleApiCall();
+
+  if (deletedExpenseCycle.value !== null) {
+    toast.positive(t('general.removeSuccessMessage'));
+    void router.push({ name: 'expense-cycle-index' });
+  }
+}
+
+function handleDeleteBtnClick() {
+  dialog.confirm(labels.removeExpenseCycle.dialog).onOk(() => void deleteExpenseCycle());
+}
 
 export type { ExpenseCycleViewPageProps };
 </script>
@@ -82,14 +111,22 @@ export type { ExpenseCycleViewPageProps };
       </div>
       <div class="items-center justify-end q-gutter-md row">
         <AppBtn
-          color="secondary"
+          color="primary"
           flat
           icon="edit"
           :label="labels.editBtn"
           :to="editExpenseCycleRoute"
           type="button"
         />
-        <AppBtn color="negative" flat icon="delete" :label="labels.deleteBtn" type="button" />
+        <AppBtn
+          color="negative"
+          flat
+          icon="delete"
+          :label="labels.deleteBtn"
+          :loading="loadingDeleteExpenseCycle"
+          type="button"
+          @click="handleDeleteBtnClick"
+        />
       </div>
     </AppCard>
     <div class="items-center justify-end q-mt-md row">

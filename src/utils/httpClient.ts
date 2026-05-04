@@ -96,7 +96,7 @@ class HttpClient {
     });
   }
 
-  public deleteFn<T>(path: string, config?: RequestConfig) {
+  public delete<T>(path: string, config?: RequestConfig) {
     return this.makeRequest<T>({ ...config, path, method: 'DELETE' });
   }
 }

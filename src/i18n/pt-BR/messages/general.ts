@@ -2,13 +2,18 @@
 /* eslint sort-keys: "error" */
 
 const general = {
-  appTitle: 'Divisão de Compras',
+  appTitle: 'Divisão de Contas',
   close: 'Fechar',
   goBack: 'Voltar',
   logout: 'Sair',
+  no: 'Não',
+  remove: 'Remover',
+  removeConfirmationMessage: 'Deseja remover este registro? A remoção não poderá ser revertida.',
+  removeSuccessMessage: 'Registro removido com sucesso',
   table: {
     actionColumnLabel: 'Ações',
   },
+  yes: 'Sim',
 };
 
 export { general };

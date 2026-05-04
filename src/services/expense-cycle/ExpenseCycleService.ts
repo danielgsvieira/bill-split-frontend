@@ -31,6 +31,12 @@ class ExpenseCycleService {
 
     return expenseCycleResponseToModel(response);
   }
+
+  async delete(id: number) {
+    const response = await httpClient.delete<ExpenseCycleResponse>(`${this.basePath}/${id}`);
+
+    return expenseCycleResponseToModel(response);
+  }
 }
 
 const expenseCycleService = new ExpenseCycleService();
