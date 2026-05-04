@@ -1,16 +1,13 @@
 import { AppDateFormat } from 'src/consts';
 import { DateTime } from 'luxon';
 import { i18n } from 'src/boot/i18n';
+import { isNullOrUndefined } from './is-null-or-undefined';
 import type { ValidationRule } from 'quasar';
 
 type NotRequired<T> = T | null | undefined;
 type ValidationRequiredParam = NotRequired<boolean | string | number | object | unknown[]>;
 
 const { t } = i18n.global;
-
-function isNullOrUndefined(value: unknown): value is null | undefined {
-  return value === null || value === undefined;
-}
 
 function required(): ValidationRule {
   return (value: ValidationRequiredParam): true | string => {

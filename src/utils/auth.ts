@@ -1,3 +1,4 @@
+import { isNullOrUndefined } from './is-null-or-undefined';
 import { User } from 'src/models/User';
 
 type StorageAuthUserData = {
@@ -25,15 +26,13 @@ function createStorageAuthUserData(
 
 const USER_INFO_KEY = process.env.USER_INFO_KEY ?? 'USER_INFO';
 
-// Disable no-explicit-any rule for de type predicate
+// Disable no-explicit-any rule for the type predicate
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isStorageAuthUserData(value: any): value is StorageAuthUserData {
   return (
-    value !== null &&
-    value !== undefined &&
+    !isNullOrUndefined(value) &&
     typeof value.token === 'string' &&
-    value.user !== null &&
-    value.user !== undefined &&
+    !isNullOrUndefined(value.user) &&
     typeof value.user === 'object' &&
     typeof value.user.id === 'number' &&
     typeof value.user.username === 'string' &&

@@ -3,6 +3,7 @@ import AppBtn from './AppBtn.vue';
 import { AppDateFormat } from 'src/consts';
 import AppIcon from './AppIcon.vue';
 import { DateTime } from 'luxon';
+import { isNullOrUndefined } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 import { computed, useTemplateRef } from 'vue';
@@ -20,7 +21,7 @@ const popupProxyRef = useTemplateRef<InstanceType<typeof QPopupProxy>>('popup-pr
 
 const modelStrValue = computed({
   get: () => {
-    if (model.value === null || model.value === undefined) {
+    if (isNullOrUndefined(model.value)) {
       return null;
     }
 
