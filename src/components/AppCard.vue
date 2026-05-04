@@ -18,7 +18,7 @@ defineSlots<AppPageSlots>();
 <template>
   <QCard bordered flat>
     <QCardSection v-if="title !== undefined">
-      <h6 class="q-ma-none text-h5 text-secondary">
+      <h6 class="q-ma-none text-h5 text-primary">
         {{ title }}
       </h6>
     </QCardSection>

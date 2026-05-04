@@ -35,7 +35,7 @@ const {
 const emit = defineEmits<AppBtnEmits>();
 
 const btnColor = computed(() => {
-  const defaultColor = flat === true ? 'grey-8' : 'secondary';
+  const defaultColor = flat === true ? 'grey-8' : 'primary';
 
   return color ?? defaultColor;
 });

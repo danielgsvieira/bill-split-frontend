@@ -76,7 +76,7 @@ const registerRoute: RouteLocationRaw = {
 <template>
   <AppPage centered-content>
     <AppForm class="column full-width max-width q-gutter-y-sm" @submit="submit">
-      <h1 class="text-center text-h4 text-secondary">{{ labels.pageTitle }}</h1>
+      <h1 class="text-center text-h4 text-primary">{{ labels.pageTitle }}</h1>
       <AppInput
         id="input_username"
         v-model="formData.username"

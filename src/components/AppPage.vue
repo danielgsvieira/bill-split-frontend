@@ -29,7 +29,7 @@ const slots = defineSlots<AppPageSlots>();
       <template v-if="title !== undefined">
         <slot name="header">
           <div class="col-auto items-center justify-between q-mb-md q-px-md row">
-            <h1 class="q-ma-none text-h4 text-secondary">
+            <h1 class="q-ma-none text-h4 text-primary">
               <slot name="title">
                 {{ title }}
               </slot>
