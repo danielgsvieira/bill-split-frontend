@@ -1,4 +1,4 @@
-import { i18n } from 'src/boot/i18n';
+import { i18n as i18nInstance } from 'src/boot/i18n';
 import { useAuthStore } from 'src/stores';
 import { useToast } from './useToast';
 import { ApiError, ApiValidationError } from 'src/utils';
@@ -22,7 +22,7 @@ function useApiCall<T, Args extends unknown[]>(
 ) {
   const router = useRouter();
   const route = useRoute();
-  const { t } = i18n.global;
+  const i18n = i18nInstance.global;
   const toast = useToast();
   const authStore = useAuthStore();
 
@@ -52,22 +52,22 @@ function useApiCall<T, Args extends unknown[]>(
 
     if (apiError instanceof ApiValidationError) {
       if (showToastOptions.validation) {
-        toast.negative(t('apiError.validationFailed'));
+        toast.negative(i18n.t('apiError.validationFailed'));
       }
     } else if (apiError.isForbiddenAction) {
       if (showToastOptions.forbiddenAction) {
-        toast.negative(t('apiError.forbiddenAction'));
+        toast.negative(i18n.t('apiError.forbiddenAction'));
       }
     } else if (apiError.isNotFound) {
       if (showToastOptions.notFound) {
-        toast.negative(t('apiError.notFound'));
+        toast.negative(i18n.t('apiError.notFound'));
       }
     } else if (apiError.isUnauthorized) {
       if (showToastOptions.unauthorized) {
-        toast.negative(t('apiError.unauthorized'));
+        toast.negative(i18n.t('apiError.unauthorized'));
       }
     } else {
-      toast.negative(t('apiError.unknownError'));
+      toast.negative(i18n.t('apiError.unknownError'));
     }
   }
 

@@ -35,7 +35,7 @@ const {
 const emit = defineEmits<AppTableEmits>();
 defineSlots<AppTableSlots>();
 
-const { t } = useI18n();
+const i18n = useI18n();
 const quasar = useQuasar();
 
 const tableColumns = computed(() => {
@@ -45,7 +45,7 @@ const tableColumns = computed(() => {
     result.push({
       align: 'center',
       field: '' as keyof T,
-      label: t('general.table.actionColumnLabel'),
+      label: i18n.t('general.table.actionColumnLabel'),
       name: 'actions',
     });
   }

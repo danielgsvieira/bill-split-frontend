@@ -11,7 +11,12 @@ type ExpenseCycleViewPageProps = {
 
 const { expenseCycleId } = defineProps<ExpenseCycleViewPageProps>();
 
-const { t } = useI18n();
+const i18n = useI18n();
+
+const labels = {
+  expenseListTitle: i18n.t('expenseCycle.viewPage.expenseListTitle'),
+  pageTitile: i18n.t('expenseCycle.viewPage.pageTitle'),
+};
 
 const {
   data: expenseCycle,
@@ -26,7 +31,7 @@ export type { ExpenseCycleViewPageProps };
 </script>
 
 <template>
-  <AppPage :title="t('expenseCycle.viewPage.pageTitle')">
+  <AppPage :title="labels.pageTitile">
     <AppCard :loading>
       <ExpenseCycleView v-if="expenseCycle !== null" :expense-cycle />
     </AppCard>

@@ -10,10 +10,10 @@ type AppGoBackBtnProps = {
 
 const { fallbackRoute } = defineProps<AppGoBackBtnProps>();
 
-const { t } = useI18n();
+const i18n = useI18n();
 const { goBack } = useGoBack(fallbackRoute);
 </script>
 
 <template>
-  <AppBtn flat icon="arrow_back" :label="t('general.goBack')" type="button" @click="goBack" />
+  <AppBtn flat icon="arrow_back" :label="i18n.t('general.goBack')" type="button" @click="goBack" />
 </template>

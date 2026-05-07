@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { DateTime } from 'luxon';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import type { RouteLocationRaw } from 'vue-router';
 import SharedWithInput from './SharedWithInput.vue';
@@ -8,16 +7,16 @@ import { useAuthStore } from 'src/stores';
 import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
 import type { User } from 'src/models/User';
-import { validation } from 'src/utils';
 import { AppBtn, AppDatePicker, AppForm, AppGoBackBtn, AppInput } from 'src/components';
 import { computed, watch } from 'vue';
+import { endOfDay, startOfDay, validation } from 'src/utils';
 
 type ExpenseCycleFormData = {
   title: string;
   description: string;
   sharedWith: User[];
-  startDate: DateTime | null;
-  endDate: DateTime | null;
+  startDate: Date | null;
+  endDate: Date | null;
 };
 type ExpensecycleFormProps = {
   expenseCycle?: ExpenseCycle | null;
@@ -26,7 +25,7 @@ type ExpensecycleFormProps = {
 
 const { expenseCycle = null, onSubmit } = defineProps<ExpensecycleFormProps>();
 
-const { t } = useI18n();
+const i18n = useI18n();
 
 const authStore = useAuthStore();
 const { authUser } = storeToRefs(authStore);
@@ -34,17 +33,17 @@ const { authUser } = storeToRefs(authStore);
 const labels = {
   inputHints: {
     sharedWith: {
-      onlyCreatorCanEdit: t('expenseCycle.fieldHints.sharedWith.onlyCreatorCanEdit'),
+      onlyCreatorCanEdit: i18n.t('expenseCycle.fieldHints.sharedWith.onlyCreatorCanEdit'),
     },
   },
   inputs: {
-    description: t('expenseCycle.fields.description'),
-    endDate: t('expenseCycle.fields.endDate'),
-    sharedWith: t('expenseCycle.fields.sharedWith'),
-    startDate: t('expenseCycle.fields.startDate'),
-    title: t('expenseCycle.fields.title'),
+    description: i18n.t('expenseCycle.fields.description'),
+    endDate: i18n.t('expenseCycle.fields.endDate'),
+    sharedWith: i18n.t('expenseCycle.fields.sharedWith'),
+    startDate: i18n.t('expenseCycle.fields.startDate'),
+    title: i18n.t('expenseCycle.fields.title'),
   },
-  submitBtn: t('general.save'),
+  submitBtn: i18n.t('general.save'),
 };
 
 const { formData, submitting, submit } = useForm<ExpenseCycleFormData>({
@@ -77,15 +76,15 @@ const rules = computed(() => {
 
 const startDateModel = computed({
   get: () => formData.value.startDate,
-  set: (value: DateTime | null) => {
-    formData.value.startDate = value?.startOf('day') ?? null;
+  set: (value: Date | null) => {
+    formData.value.startDate = value !== null ? startOfDay(value) : null;
   },
 });
 
 const endDateModel = computed({
   get: () => formData.value.endDate,
-  set: (value: DateTime | null) => {
-    formData.value.endDate = value?.endOf('day') ?? null;
+  set: (value: Date | null) => {
+    formData.value.endDate = value !== null ? endOfDay(value) : null;
   },
 });
 

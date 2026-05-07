@@ -1,8 +1,8 @@
-import { i18n } from 'src/boot/i18n';
+import { i18n as i18nInstance } from 'src/boot/i18n';
 import { Dialog, type QDialogOptions } from 'quasar';
 
 function useDialog() {
-  const { t } = i18n.global;
+  const i18n = i18nInstance.global;
 
   /**
    * Expose the Dialog.create function. Docs: https://quasar.dev/quasar-plugins/dialog/
@@ -23,12 +23,12 @@ function useDialog() {
       cancel: {
         color: 'grey-8',
         flat: true,
-        label: options.cancelBtn?.label ?? t('general.no'),
+        label: options.cancelBtn?.label ?? i18n.t('general.no'),
         noCaps: true,
       },
       ok: {
         color: 'primary',
-        label: options.confirmBtn?.label ?? t('general.yes'),
+        label: options.confirmBtn?.label ?? i18n.t('general.yes'),
         noCaps: true,
       },
     });

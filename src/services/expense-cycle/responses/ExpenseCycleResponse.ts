@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { User } from 'src/models/User';
 import type { UserResponse } from 'src/services';
@@ -24,10 +23,10 @@ function expenseCycleResponseToModel(
     return data.map((el) => expenseCycleResponseToModel(el));
   }
 
-  const createdAt = DateTime.fromISO(data.createdAt);
-  const updatedAt = DateTime.fromISO(data.updatedAt);
-  const startDate = DateTime.fromISO(data.startDate);
-  const endDate = DateTime.fromISO(data.endDate);
+  const createdAt = new Date(data.createdAt);
+  const updatedAt = new Date(data.updatedAt);
+  const startDate = new Date(data.startDate);
+  const endDate = new Date(data.endDate);
   const createdBy = new User(data.createdBy);
   const sharedWith = data.sharedWith.map((el) => new User(el));
 

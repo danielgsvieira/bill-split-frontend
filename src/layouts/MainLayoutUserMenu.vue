@@ -15,15 +15,11 @@ import {
   Ripple as vRipple,
 } from 'quasar';
 
-const { t } = useI18n();
+const i18n = useI18n();
 const router = useRouter();
 
 const authStore = useAuthStore();
 const { authUser } = storeToRefs(authStore);
-
-const labels = {
-  logout: t('general.logout'),
-};
 
 function handleLogout() {
   authStore.logout();
@@ -48,7 +44,7 @@ const menuOffset = [0, 2];
           <QItemSection side>
             <AppIcon name="logout" />
           </QItemSection>
-          <QItemSection>{{ labels.logout }}</QItemSection>
+          <QItemSection>{{ i18n.t('general.logout') }}</QItemSection>
         </QItem>
       </QList>
     </QMenu>

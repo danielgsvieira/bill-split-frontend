@@ -1,21 +1,19 @@
-import type { DateTime } from 'luxon';
-import { InvalidDateError } from 'src/utils';
 import type { User } from './User';
 
 class ExpenseCycle {
   readonly id: number;
 
-  readonly createdAt: DateTime<true>;
+  readonly createdAt: Date;
 
-  readonly updatedAt: DateTime<true>;
+  readonly updatedAt: Date;
 
   readonly title: string;
 
   readonly description: string | null;
 
-  readonly startDate: DateTime<true>;
+  readonly startDate: Date;
 
-  readonly endDate: DateTime<true>;
+  readonly endDate: Date;
 
   readonly createdBy: User;
 
@@ -23,17 +21,15 @@ class ExpenseCycle {
 
   constructor(data: {
     id: number;
-    createdAt: DateTime;
-    updatedAt: DateTime;
+    createdAt: Date;
+    updatedAt: Date;
     title: string;
     description: string | null;
-    startDate: DateTime;
-    endDate: DateTime;
+    startDate: Date;
+    endDate: Date;
     createdBy: User;
     sharedWith: User[];
   }) {
-    ExpenseCycle.validateDates(data);
-
     this.id = data.id;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
@@ -43,35 +39,6 @@ class ExpenseCycle {
     this.endDate = data.endDate;
     this.createdBy = data.createdBy;
     this.sharedWith = data.sharedWith;
-  }
-
-  private static validateDates(data: {
-    createdAt: DateTime;
-    updatedAt: DateTime;
-    startDate: DateTime;
-    endDate: DateTime;
-  }) {
-    const errors = [];
-
-    if (!data.createdAt.isValid) {
-      errors.push(new InvalidDateError('createdAt'));
-    }
-
-    if (!data.updatedAt.isValid) {
-      errors.push(new InvalidDateError('updatedAt'));
-    }
-
-    if (!data.startDate.isValid) {
-      errors.push(new InvalidDateError('startDate'));
-    }
-
-    if (!data.endDate.isValid) {
-      errors.push(new InvalidDateError('endDate'));
-    }
-
-    if (errors.length > 0) {
-      throw new AggregateError(errors);
-    }
   }
 }
 

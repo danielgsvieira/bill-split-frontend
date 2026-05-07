@@ -8,11 +8,18 @@ import { AppBtn, AppPage, AppTable, type AppTableColumns } from 'src/components'
 import { type RouteLocationRaw, useRouter } from 'vue-router';
 
 const router = useRouter();
-const { t } = useI18n();
+const i18n = useI18n();
 
 const labels = {
-  pageTitle: t('expenseCycle.indexPage.pageTitle'),
-  createExpenseCycleBtn: t('general.create'),
+  createExpenseCycleBtn: i18n.t('general.create'),
+  fields: {
+    createdBy: i18n.t('expenseCycle.fields.createdBy'),
+    description: i18n.t('expenseCycle.fields.description'),
+    endDate: i18n.t('expenseCycle.fields.endDate'),
+    startDate: i18n.t('expenseCycle.fields.startDate'),
+    title: i18n.t('expenseCycle.fields.title'),
+  },
+  pageTitle: i18n.t('expenseCycle.indexPage.pageTitle'),
 };
 
 const {
@@ -26,34 +33,34 @@ const columns: AppTableColumns<ExpenseCycle> = [
   {
     name: 'title',
     field: 'title',
-    label: t('expenseCycle.fields.title'),
+    label: labels.fields.title,
     align: 'left',
   },
   {
     name: 'description',
     field: 'description',
-    label: t('expenseCycle.fields.description'),
+    label: labels.fields.description,
     align: 'left',
     format: (value) => valueOrEmptyIndicator(value),
   },
   {
     name: 'startDate',
     field: 'startDate',
-    label: t('expenseCycle.fields.startDate'),
+    label: labels.fields.startDate,
     align: 'center',
     format: (value) => value.toLocaleString(),
   },
   {
     name: 'endDate',
     field: 'endDate',
-    label: t('expenseCycle.fields.endDate'),
+    label: labels.fields.endDate,
     align: 'center',
     format: (value) => value.toLocaleString(),
   },
   {
     name: 'createdBy',
     field: 'createdBy',
-    label: t('expenseCycle.fields.createdBy'),
+    label: labels.fields.createdBy,
     align: 'center',
     format: (value) => value.displayName,
   },

@@ -2,12 +2,12 @@
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const i18n = useI18n();
 
 const labels = {
-  fourOFour: t('pageNotFound.fourOFour'),
-  homeBtn: t('pageNotFound.homeBtn'),
-  pageNotFoundText: t('pageNotFound.pageNotFoundText'),
+  fourOFour: i18n.t('pageNotFound.fourOFour'),
+  homeBtn: i18n.t('pageNotFound.homeBtn'),
+  pageNotFoundText: i18n.t('pageNotFound.pageNotFoundText'),
 };
 </script>
 

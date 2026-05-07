@@ -5,13 +5,13 @@ import { AppPage, ExpenseCycleForm, type ExpenseCycleFormData } from 'src/compon
 import { CreateExpenseCycleDto, expenseCycleService } from 'src/services';
 import { useApiCall, useToast } from 'src/composables';
 
-const { t } = useI18n();
+const i18n = useI18n();
 const router = useRouter();
 const toast = useToast();
 
 const labels = {
-  pageTitle: t('expenseCycle.createPage.pageTitle'),
-  createSuccessMessage: t('general.createSuccessMessage'),
+  pageTitle: i18n.t('expenseCycle.createPage.pageTitle'),
+  createSuccessMessage: i18n.t('general.createSuccessMessage'),
 };
 
 const { data: createdExpenseCycle, execute: createExpenseCycle } = useApiCall(
@@ -21,7 +21,7 @@ const { data: createdExpenseCycle, execute: createExpenseCycle } = useApiCall(
 async function handleSubmit(data: ExpenseCycleFormData) {
   const { startDate, endDate } = data;
   if (startDate === null || endDate === null) {
-    toast.negative(t('validation.invalidFormData'));
+    toast.negative(i18n.t('validation.invalidFormData'));
     return;
   }
 

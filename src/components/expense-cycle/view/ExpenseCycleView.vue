@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { AppDateFormat } from 'src/consts';
 import { computed } from 'vue';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { expenseCycleService } from 'src/services';
@@ -16,26 +15,26 @@ type ExpenseCycleViewProps = {
 const { expenseCycle } = defineProps<ExpenseCycleViewProps>();
 
 const router = useRouter();
-const { t } = useI18n();
+const i18n = useI18n();
 const dialog = useDialog();
 const toast = useToast();
 
 const labels = {
-  deleteBtn: t('general.delete'),
+  deleteBtn: i18n.t('general.delete'),
   fields: {
-    description: t('expenseCycle.fields.description'),
-    endDate: t('expenseCycle.fields.endDate'),
-    sharedWith: t('expenseCycle.fields.sharedWith'),
-    startDate: t('expenseCycle.fields.startDate'),
-    title: t('expenseCycle.fields.title'),
+    description: i18n.t('expenseCycle.fields.description'),
+    endDate: i18n.t('expenseCycle.fields.endDate'),
+    sharedWith: i18n.t('expenseCycle.fields.sharedWith'),
+    startDate: i18n.t('expenseCycle.fields.startDate'),
+    title: i18n.t('expenseCycle.fields.title'),
   },
-  editBtn: t('general.edit'),
+  editBtn: i18n.t('general.edit'),
   removeExpenseCycle: {
     dialog: {
-      title: t('general.remove'),
-      message: t('general.removeConfirmationMessage'),
+      title: i18n.t('general.remove'),
+      message: i18n.t('general.removeConfirmationMessage'),
     },
-    successMessage: t('general.removeSuccessMessage'),
+    successMessage: i18n.t('general.removeSuccessMessage'),
   },
 };
 
@@ -72,21 +71,21 @@ const editExpenseCycleRoute = computed<RouteLocationRaw>(() => {
 <template>
   <div>
     <div class="items-center q-col-gutter-md row">
-      <AppFieldValue class="col-12" :label="labels.fields.title" :value="expenseCycle?.title" />
+      <AppFieldValue class="col-12" :label="labels.fields.title" :value="expenseCycle.title" />
       <AppFieldValue
         class="col-12"
         :label="labels.fields.description"
-        :value="valueOrEmptyIndicator(expenseCycle?.description)"
+        :value="valueOrEmptyIndicator(expenseCycle.description)"
       />
       <AppFieldValue
         class="col-12 col-md-4"
         :label="labels.fields.startDate"
-        :value="expenseCycle?.startDate.toFormat(AppDateFormat)"
+        :value="i18n.d(expenseCycle.startDate, 'short')"
       />
       <AppFieldValue
         class="col-12 col-md-4"
         :label="labels.fields.endDate"
-        :value="expenseCycle?.endDate.toFormat(AppDateFormat)"
+        :value="i18n.d(expenseCycle.endDate, 'short')"
       />
       <AppFieldValue
         class="col-12 col-md-4"

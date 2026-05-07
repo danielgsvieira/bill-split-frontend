@@ -1,4 +1,5 @@
 export * from './auth';
+export * from './date';
 export * from './errors';
 export * from './httpClient';
 export * from './is-null-or-undefined';

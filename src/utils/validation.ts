@@ -1,18 +1,17 @@
-import { AppDateFormat } from 'src/consts';
-import { DateTime } from 'luxon';
-import { i18n } from 'src/boot/i18n';
+import { dateFromString } from './date';
+import { i18n as i18nInstance } from 'src/boot/i18n';
 import { isNullOrUndefined } from './is-null-or-undefined';
 import type { ValidationRule } from 'quasar';
 
 type NotRequired<T> = T | null | undefined;
 type ValidationRequiredParam = NotRequired<boolean | string | number | object | unknown[]>;
 
-const { t } = i18n.global;
+const i18n = i18nInstance.global;
 
 function required(): ValidationRule {
   return (value: ValidationRequiredParam): true | string => {
     if (isNullOrUndefined(value)) {
-      return t('validation.required.short');
+      return i18n.t('validation.required.short');
     }
 
     if (Array.isArray(value)) {
@@ -20,7 +19,7 @@ function required(): ValidationRule {
         return true;
       }
 
-      return t('validation.required.short');
+      return i18n.t('validation.required.short');
     }
 
     if (typeof value === 'string') {
@@ -28,7 +27,7 @@ function required(): ValidationRule {
         return true;
       }
 
-      return t('validation.required.short');
+      return i18n.t('validation.required.short');
     }
 
     const truthyTypes = ['boolean', 'number', 'object'];
@@ -37,7 +36,7 @@ function required(): ValidationRule {
       return true;
     }
 
-    return t('validation.required.short');
+    return i18n.t('validation.required.short');
   };
 }
 
@@ -48,7 +47,7 @@ function length(min: number, max: number): ValidationRule {
     }
 
     if (value.trim().length < min || value.length > max) {
-      return t('validation.length.short', { min, max });
+      return i18n.t('validation.length.short', { min, max });
     }
 
     return true;
@@ -62,7 +61,7 @@ function maxLength(max: number, options?: { customMaxText?: string }): Validatio
     }
 
     if (value.length > max) {
-      return t('validation.maxLength.short', { max: options?.customMaxText ?? max });
+      return i18n.t('validation.maxLength.short', { max: options?.customMaxText ?? max });
     }
 
     return true;
@@ -76,23 +75,23 @@ function minLength(min: number, options?: { customMinText?: string }): Validatio
     }
 
     if (value.trim().length < min) {
-      return t('validation.minLength.short', { min: options?.customMinText ?? min });
+      return i18n.t('validation.minLength.short', { min: options?.customMinText ?? min });
     }
 
     return true;
   };
 }
 
-function minDate(min: NotRequired<DateTime>, options?: { customMinText?: string }): ValidationRule {
+function minDate(min: NotRequired<Date>, options?: { customMinText?: string }): ValidationRule {
   return (value: NotRequired<string>): true | string => {
     if (isNullOrUndefined(value) || isNullOrUndefined(min)) {
       return true;
     }
 
-    const dateTimeValue = DateTime.fromFormat(value, AppDateFormat);
-    if (dateTimeValue.isValid && dateTimeValue < min) {
-      return t('validation.minDate.short', {
-        min: options?.customMinText ?? min.toFormat(AppDateFormat),
+    const dateTimeValue = dateFromString(value);
+    if (dateTimeValue < min) {
+      return i18n.t('validation.minDate.short', {
+        min: options?.customMinText ?? i18n.d(min, 'short'),
       });
     }
 
@@ -100,16 +99,16 @@ function minDate(min: NotRequired<DateTime>, options?: { customMinText?: string 
   };
 }
 
-function maxDate(max: NotRequired<DateTime>, options?: { customMaxText?: string }): ValidationRule {
+function maxDate(max: NotRequired<Date>, options?: { customMaxText?: string }): ValidationRule {
   return (value: NotRequired<string>): true | string => {
     if (isNullOrUndefined(value) || isNullOrUndefined(max)) {
       return true;
     }
 
-    const dateTimeValue = DateTime.fromFormat(value, AppDateFormat);
-    if (dateTimeValue.isValid && dateTimeValue > max) {
-      return t('validation.maxDate.short', {
-        max: options?.customMaxText ?? max.toFormat(AppDateFormat),
+    const dateTimeValue = dateFromString(value);
+    if (dateTimeValue > max) {
+      return i18n.t('validation.maxDate.short', {
+        max: options?.customMaxText ?? i18n.d(max, 'short'),
       });
     }
 

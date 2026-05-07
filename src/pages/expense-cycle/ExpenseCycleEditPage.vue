@@ -10,12 +10,12 @@ type ExpenseCycleEditPageProps = {
 
 const { expenseCycleId } = defineProps<ExpenseCycleEditPageProps>();
 
-const { t } = useI18n();
+const i18n = useI18n();
 const toast = useToast();
 
 const labels = {
-  pageTitle: t('expenseCycle.editPage.pageTitle'),
-  editSuccessMessage: t('general.editSuccessMessage'),
+  pageTitle: i18n.t('expenseCycle.editPage.pageTitle'),
+  editSuccessMessage: i18n.t('general.editSuccessMessage'),
 };
 
 const {
@@ -32,7 +32,7 @@ const { data: editedExpenseCycle, execute: editExpenseCycle } = useApiCall(
 async function handleSubmit(data: ExpenseCycleFormData) {
   const { startDate, endDate } = data;
   if (startDate === null || endDate === null) {
-    toast.negative(t('validation.invalidFormData'));
+    toast.negative(i18n.t('validation.invalidFormData'));
     return;
   }
 

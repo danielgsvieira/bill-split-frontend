@@ -14,20 +14,17 @@ const expenseCycle = {
     },
   },
   fields: {
-    createdAt: 'Data de Criação',
-    createdBy: 'Criado por',
     description: 'Descrição',
     endDate: 'Fim',
-    id: 'ID',
     sharedWith: 'Compartilhado com',
     startDate: 'Início',
     title: 'Título',
-    updatedAt: 'Última Atualização',
   },
   indexPage: {
     pageTitle: 'Ciclos de Despesa',
   },
   viewPage: {
+    expenseListTitle: 'Despesas',
     pageTitle: 'Ciclo de Despesa',
   },
 };

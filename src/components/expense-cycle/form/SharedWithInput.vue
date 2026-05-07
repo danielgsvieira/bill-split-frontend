@@ -14,7 +14,7 @@ type SharedWithInputProps = {
 const { disable, hint = undefined } = defineProps<SharedWithInputProps>();
 const model = defineModel<User[]>();
 
-const { t } = useI18n();
+const i18n = useI18n();
 
 const {
   data: users,
@@ -37,7 +37,7 @@ const userOptions = computed(() => {
     clearable
     :disable
     :hint
-    :label="t('expenseCycle.fields.sharedWith')"
+    :label="i18n.t('expenseCycle.fields.sharedWith')"
     :loading
     multiple
     name="sharedWith"

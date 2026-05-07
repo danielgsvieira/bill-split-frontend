@@ -1,6 +1,4 @@
-import type { DateTime } from 'luxon';
 import type { EditExpenseCycleRequest } from '../requests';
-import { InvalidDateError } from 'src/utils';
 import type { User } from 'src/models/User';
 
 class EditExpenseCycleDto {
@@ -8,19 +6,17 @@ class EditExpenseCycleDto {
   readonly title: string;
   readonly description: string;
   readonly sharedWith: User[];
-  readonly startDate: DateTime<true>;
-  readonly endDate: DateTime<true>;
+  readonly startDate: Date;
+  readonly endDate: Date;
 
   constructor(data: {
     id: number;
     title: string;
     description: string;
     sharedWith: User[];
-    startDate: DateTime;
-    endDate: DateTime;
+    startDate: Date;
+    endDate: Date;
   }) {
-    EditExpenseCycleDto.validateDates(data);
-
     this.id = data.id;
     this.title = data.title;
     this.description = data.description;
@@ -29,34 +25,13 @@ class EditExpenseCycleDto {
     this.endDate = data.endDate;
   }
 
-  private static validateDates(data: { startDate: DateTime; endDate: DateTime }) {
-    const errors = [];
-
-    if (!data.startDate.isValid) {
-      errors.push(new InvalidDateError('startDate'));
-    }
-
-    if (!data.endDate.isValid) {
-      errors.push(new InvalidDateError('endDate'));
-    }
-
-    if (errors.length > 0) {
-      throw new AggregateError(errors);
-    }
-  }
-
   toRequest(): EditExpenseCycleRequest {
-    const description = this.description.length > 0 ? this.description : null;
-    const sharedWithIds = this.sharedWith.map((el) => el.id);
-    const startDate = this.startDate.toISO();
-    const endDate = this.endDate.toISO();
-
     return {
       title: this.title,
-      description,
-      sharedWithIds,
-      startDate,
-      endDate,
+      description: this.description.length > 0 ? this.description : null,
+      sharedWithIds: this.sharedWith.map((el) => el.id),
+      startDate: this.startDate.toISOString(),
+      endDate: this.endDate.toISOString(),
     };
   }
 }

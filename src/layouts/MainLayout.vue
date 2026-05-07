@@ -4,18 +4,14 @@ import { RouterView } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { QHeader, QLayout, QPageContainer, QToolbar, QToolbarTitle } from 'quasar';
 
-const { t } = useI18n();
-
-const labels = {
-  appTitle: t('general.appTitle'),
-};
+const i18n = useI18n();
 </script>
 
 <template>
   <QLayout view="lHh Lpr lFf">
     <QHeader elevated>
       <QToolbar>
-        <QToolbarTitle>{{ labels.appTitle }}</QToolbarTitle>
+        <QToolbarTitle>{{ i18n.t('general.appTitle') }}</QToolbarTitle>
         <MainLayoutUserMenu />
       </QToolbar>
     </QHeader>
