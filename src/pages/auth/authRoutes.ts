@@ -13,7 +13,7 @@ const authRoutes: AppRouteRecordRaw[] = [
       {
         name: 'register',
         path: 'register',
-        component: () => import('./register/RegisterPage.vue'),
+        component: () => import('./RegisterPage.vue'),
         meta: {
           authenticated: false,
         },
@@ -21,7 +21,7 @@ const authRoutes: AppRouteRecordRaw[] = [
       {
         name: 'login',
         path: 'login',
-        component: () => import('./login/LoginPage.vue'),
+        component: () => import('./LoginPage.vue'),
         meta: {
           authenticated: false,
         },

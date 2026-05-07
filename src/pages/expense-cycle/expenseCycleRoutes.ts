@@ -1,6 +1,6 @@
 import type { AppRouteRecordRaw } from 'src/router/routes';
-import type { ExpenseCycleEditPageProps } from './edit/ExpenseCycleEditPage.vue';
-import type { ExpenseCycleViewPageProps } from './view/ExpenseCycleViewPage.vue';
+import type { ExpenseCycleEditPageProps } from './ExpenseCycleEditPage.vue';
+import type { ExpenseCycleViewPageProps } from './ExpenseCycleViewPage.vue';
 
 const expenseCycleRoutes: AppRouteRecordRaw[] = [
   {
@@ -15,7 +15,7 @@ const expenseCycleRoutes: AppRouteRecordRaw[] = [
       {
         name: 'expense-cycle-index',
         path: '',
-        component: () => import('./index/ExpenseCycleIndexPage.vue'),
+        component: () => import('./ExpenseCycleIndexPage.vue'),
         meta: {
           authenticated: true,
         },
@@ -23,7 +23,7 @@ const expenseCycleRoutes: AppRouteRecordRaw[] = [
       {
         name: 'expense-cycle-view',
         path: ':id',
-        component: () => import('./view/ExpenseCycleViewPage.vue'),
+        component: () => import('./ExpenseCycleViewPage.vue'),
         props: (route): ExpenseCycleViewPageProps => ({
           expenseCycleId: Number.parseInt(route.params.id as string),
         }),
@@ -34,7 +34,7 @@ const expenseCycleRoutes: AppRouteRecordRaw[] = [
       {
         name: 'expense-cycle-create',
         path: 'create',
-        component: () => import('./create/ExpenseCycleCreatePage.vue'),
+        component: () => import('./ExpenseCycleCreatePage.vue'),
         meta: {
           authenticated: true,
         },
@@ -42,7 +42,7 @@ const expenseCycleRoutes: AppRouteRecordRaw[] = [
       {
         name: 'expense-cycle-edit',
         path: ':id/edit',
-        component: () => import('./edit/ExpenseCycleEditPage.vue'),
+        component: () => import('./ExpenseCycleEditPage.vue'),
         props: (route): ExpenseCycleEditPageProps => ({
           expenseCycleId: Number.parseInt(route.params.id as string),
         }),

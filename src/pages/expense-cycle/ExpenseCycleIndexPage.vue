@@ -12,7 +12,7 @@ const { t } = useI18n();
 
 const labels = {
   pageTitle: t('expenseCycle.indexPage.pageTitle'),
-  createExpenseCycleBtn: t('expenseCycle.indexPage.createExpenseCycleBtn'),
+  createExpenseCycleBtn: t('general.create'),
 };
 
 const {

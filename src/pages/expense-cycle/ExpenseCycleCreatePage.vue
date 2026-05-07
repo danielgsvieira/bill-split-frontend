@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { AppPage } from 'src/components';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import { AppPage, ExpenseCycleForm, type ExpenseCycleFormData } from 'src/components';
 import { CreateExpenseCycleDto, expenseCycleService } from 'src/services';
-import { ExpenseCycleForm, type ExpenseCycleFormData } from '../components';
 import { useApiCall, useToast } from 'src/composables';
 
 const { t } = useI18n();
@@ -12,7 +11,7 @@ const toast = useToast();
 
 const labels = {
   pageTitle: t('expenseCycle.createPage.pageTitle'),
-  submitBtn: t('expenseCycle.createPage.submitBtn'),
+  createSuccessMessage: t('general.createSuccessMessage'),
 };
 
 const { data: createdExpenseCycle, execute: createExpenseCycle } = useApiCall(
@@ -34,6 +33,7 @@ async function handleSubmit(data: ExpenseCycleFormData) {
   await createExpenseCycle(dto);
 
   if (createdExpenseCycle.value !== null) {
+    toast.positive(labels.createSuccessMessage);
     void router.push({ name: 'expense-cycle-view', params: { id: createdExpenseCycle.value.id } });
   }
 }
@@ -41,6 +41,6 @@ async function handleSubmit(data: ExpenseCycleFormData) {
 
 <template>
   <AppPage :title="labels.pageTitle">
-    <ExpenseCycleForm :submit-btn-label="labels.submitBtn" @submit="handleSubmit" />
+    <ExpenseCycleForm @submit="handleSubmit" />
   </AppPage>
 </template>

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { AppPage } from 'src/components';
 import { useI18n } from 'vue-i18n';
+import { AppPage, ExpenseCycleForm, type ExpenseCycleFormData } from 'src/components';
 import { EditExpenseCycleDto, expenseCycleService } from 'src/services';
-import { ExpenseCycleForm, type ExpenseCycleFormData } from '../components';
 import { useApiCall, useToast } from 'src/composables';
 
 type ExpenseCycleEditPageProps = {
@@ -15,8 +14,8 @@ const { t } = useI18n();
 const toast = useToast();
 
 const labels = {
-  pageTitle: t('expenseCycle.createPage.pageTitle'),
-  submitBtn: t('expenseCycle.createPage.submitBtn'),
+  pageTitle: t('expenseCycle.editPage.pageTitle'),
+  editSuccessMessage: t('general.editSuccessMessage'),
 };
 
 const {
@@ -47,6 +46,7 @@ async function handleSubmit(data: ExpenseCycleFormData) {
 
   if (editedExpenseCycle.value !== null) {
     expenseCycle.value = editedExpenseCycle.value;
+    toast.positive(labels.editSuccessMessage);
   }
 }
 
@@ -55,10 +55,6 @@ export type { ExpenseCycleEditPageProps };
 
 <template>
   <AppPage :loading="loadingExpenseCycle" :title="labels.pageTitle">
-    <ExpenseCycleForm
-      :expense-cycle="expenseCycle"
-      :submit-btn-label="labels.submitBtn"
-      @submit="handleSubmit"
-    />
+    <ExpenseCycleForm :expense-cycle="expenseCycle" @submit="handleSubmit" />
   </AppPage>
 </template>

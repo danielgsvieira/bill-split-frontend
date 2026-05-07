@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { User } from 'src/models/User';
-import type { UserResponse } from 'src/services/auth/responses';
+import type { UserResponse } from 'src/services';
 
 type ExpenseCycleResponse = {
   id: number;

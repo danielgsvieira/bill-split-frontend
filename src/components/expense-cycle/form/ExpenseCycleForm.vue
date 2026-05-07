@@ -22,10 +22,9 @@ type ExpenseCycleFormData = {
 type ExpensecycleFormProps = {
   expenseCycle?: ExpenseCycle | null;
   onSubmit: (data: ExpenseCycleFormData) => Promise<void> | void;
-  submitBtnLabel: string;
 };
 
-const { expenseCycle = null, onSubmit, submitBtnLabel } = defineProps<ExpensecycleFormProps>();
+const { expenseCycle = null, onSubmit } = defineProps<ExpensecycleFormProps>();
 
 const { t } = useI18n();
 
@@ -45,8 +44,7 @@ const labels = {
     startDate: t('expenseCycle.fields.startDate'),
     title: t('expenseCycle.fields.title'),
   },
-  submitBtn: t('expenseCycle.createPage.submitBtn'),
-  goBackBtn: t('general.goBack'),
+  submitBtn: t('general.save'),
 };
 
 const { formData, submitting, submit } = useForm<ExpenseCycleFormData>({
@@ -164,7 +162,7 @@ export type { ExpenseCycleFormData };
     <div class="col-12">
       <div class="items-center justify-end q-gutter-x-md row">
         <AppGoBackBtn :fallback-route="goBackRoute" />
-        <AppBtn :label="submitBtnLabel" :loading="submitting" type="submit" />
+        <AppBtn :label="labels.submitBtn" :loading="submitting" type="submit" />
       </div>
     </div>
   </AppForm>

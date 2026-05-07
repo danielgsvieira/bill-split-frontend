@@ -1,5 +1,5 @@
-import type { CreateExpenseCycleRequest } from '../requests';
 import type { DateTime } from 'luxon';
+import type { EditExpenseCycleRequest } from '../requests';
 import { InvalidDateError } from 'src/utils';
 import type { User } from 'src/models/User';
 
@@ -45,7 +45,7 @@ class EditExpenseCycleDto {
     }
   }
 
-  toRequest(): CreateExpenseCycleRequest {
+  toRequest(): EditExpenseCycleRequest {
     const description = this.description.length > 0 ? this.description : null;
     const sharedWithIds = this.sharedWith.map((el) => el.id);
     const startDate = this.startDate.toISO();
