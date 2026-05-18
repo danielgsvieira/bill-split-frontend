@@ -41,11 +41,11 @@ const labels = {
 const {
   data: deletedExpenseCycle,
   loading: loadingDeleteExpenseCycle,
-  execute: deleteExpenseCicleApiCall,
+  execute: deleteExpenseCycleApiCall,
 } = useApiCall(() => expenseCycleService.delete(expenseCycle.id));
 
 async function deleteExpenseCycle() {
-  await deleteExpenseCicleApiCall();
+  await deleteExpenseCycleApiCall();
 
   if (deletedExpenseCycle.value !== null) {
     toast.positive(labels.removeExpenseCycle.successMessage);

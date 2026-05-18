@@ -1,6 +1,7 @@
 import { httpClient } from 'src/utils';
 import type { CreateExpenseCycleDto, EditExpenseCycleDto } from './dto';
 import { type ExpenseCycleResponse, expenseCycleResponseToModel } from './responses';
+import { type UserResponse, userResponseToModel } from '../user';
 
 class ExpenseCycleService {
   readonly basePath = 'expense-cycle';
@@ -36,6 +37,12 @@ class ExpenseCycleService {
     const response = await httpClient.delete<ExpenseCycleResponse>(`${this.basePath}/${id}`);
 
     return expenseCycleResponseToModel(response);
+  }
+
+  async listUsers(id: number) {
+    const response = await httpClient.get<UserResponse[]>(`${this.basePath}/${id}/list-user`);
+
+    return userResponseToModel(response);
   }
 }
 

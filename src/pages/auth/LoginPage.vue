@@ -19,7 +19,7 @@ type LoginFormData = {
   password: string;
 };
 
-const { t } = useI18n();
+const i18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -27,13 +27,13 @@ const authStore = useAuthStore();
 
 const labels = {
   inputs: {
-    password: t('auth.loginPage.inputs.password'),
-    username: t('auth.loginPage.inputs.username'),
+    password: i18n.t('auth.loginPage.inputs.password'),
+    username: i18n.t('auth.loginPage.inputs.username'),
   },
-  invalidCredentialsMessage: t('auth.loginPage.invalidCredentialsMessage'),
-  pageTitle: t('auth.loginPage.pageTitle'),
-  registerLink: t('auth.loginPage.registerLink'),
-  submitBtn: t('auth.loginPage.submitBtn'),
+  invalidCredentialsMessage: i18n.t('auth.loginPage.invalidCredentialsMessage'),
+  pageTitle: i18n.t('auth.loginPage.pageTitle'),
+  registerLink: i18n.t('auth.loginPage.registerLink'),
+  submitBtn: i18n.t('auth.loginPage.submitBtn'),
 };
 
 const {

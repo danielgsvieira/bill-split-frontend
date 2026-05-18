@@ -15,12 +15,12 @@ type AppSelectProps = {
   disable?: boolean | undefined;
   hint?: string | undefined;
   id: string;
-  label?: string;
+  label?: string | undefined;
   loading?: boolean | undefined;
   multiple?: boolean | undefined;
   name: string;
   options: AppSelectOption[];
-  rules?: ValidationRule[];
+  rules?: ValidationRule[] | undefined;
   useChips?: boolean | undefined;
 };
 type AppSelectModelType = T | T[] | null | undefined;

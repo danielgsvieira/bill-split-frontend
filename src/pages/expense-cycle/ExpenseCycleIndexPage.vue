@@ -11,7 +11,7 @@ const router = useRouter();
 const i18n = useI18n();
 
 const labels = {
-  createExpenseCycleBtn: i18n.t('general.create'),
+  createBtn: i18n.t('general.create'),
   fields: {
     createdBy: i18n.t('expenseCycle.fields.createdBy'),
     description: i18n.t('expenseCycle.fields.description'),
@@ -48,14 +48,14 @@ const columns: AppTableColumns<ExpenseCycle> = [
     field: 'startDate',
     label: labels.fields.startDate,
     align: 'center',
-    format: (value) => value.toLocaleString(),
+    format: (value) => i18n.d(value, 'short'),
   },
   {
     name: 'endDate',
     field: 'endDate',
     label: labels.fields.endDate,
     align: 'center',
-    format: (value) => value.toLocaleString(),
+    format: (value) => i18n.d(value, 'short'),
   },
   {
     name: 'createdBy',
@@ -76,12 +76,7 @@ function handleRowClick(row: ExpenseCycle) {
 <template>
   <AppPage :title="labels.pageTitle">
     <template #buttons>
-      <AppBtn
-        icon="add"
-        :label="labels.createExpenseCycleBtn"
-        :to="createExpenseCycleRoute"
-        type="button"
-      />
+      <AppBtn icon="add" :label="labels.createBtn" :to="createExpenseCycleRoute" type="button" />
     </template>
     <AppTable :columns :loading="loading" :rows="expenseCycles ?? []" @row-click="handleRowClick" />
   </AppPage>

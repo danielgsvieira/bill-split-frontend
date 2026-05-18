@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { AppPage } from 'src/components';
+import { RouterLink } from 'vue-router';
 
-const text = 'DashboardPage.vue';
+const linkText = 'Ciclos de Despesa';
+const route = { name: 'expense-cycle-index' };
 </script>
 
 <template>
-  <AppPage> {{ text }} </AppPage>
+  <AppPage>
+    <RouterLink :to="route">{{ linkText }}</RouterLink>
+  </AppPage>
 </template>

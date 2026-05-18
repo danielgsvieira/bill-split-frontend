@@ -14,6 +14,7 @@ const expenseCycle = {
     },
   },
   fields: {
+    createdBy: 'Criado por',
     description: 'Descrição',
     endDate: 'Fim',
     sharedWith: 'Compartilhado com',
@@ -24,6 +25,7 @@ const expenseCycle = {
     pageTitle: 'Ciclos de Despesa',
   },
   viewPage: {
+    createExpenseBtn: 'Cadastrar Despesa',
     expenseListTitle: 'Despesas',
     pageTitle: 'Ciclo de Despesa',
   },

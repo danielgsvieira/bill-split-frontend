@@ -1,32 +1,39 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends User | User[]">
 import { AppSelect } from 'src/components';
 import { computed } from 'vue';
+import { expenseCycleService } from 'src/services';
 import { useApiCall } from 'src/composables';
 import type { User } from 'src/models/User';
-import { userService } from 'src/services';
+import type { ValidationRule } from 'quasar';
 
 type SharedWithInputProps = {
-  disable?: boolean | undefined;
+  disable?: boolean;
+  expenseCycleId: number;
   hint?: string | undefined;
-  label?: string | undefined;
   id: string;
+  label?: string | undefined;
+  multiple?: boolean | undefined;
   name: string;
+  rules?: ValidationRule[] | undefined;
 };
 
 const {
-  disable = undefined,
+  disable,
+  expenseCycleId,
   hint = undefined,
-  label = undefined,
   id,
+  label = undefined,
+  multiple = undefined,
   name,
+  rules = undefined,
 } = defineProps<SharedWithInputProps>();
-const model = defineModel<User[]>();
+const model = defineModel<T | null | undefined>();
 
 const {
   data: users,
   loading,
   execute: fetchUsers,
-} = useApiCall(() => userService.listUsersAvailableToShareWith());
+} = useApiCall(() => expenseCycleService.listUsers(expenseCycleId));
 void fetchUsers();
 
 const userOptions = computed(() => {
@@ -39,14 +46,14 @@ const userOptions = computed(() => {
   <AppSelect
     :id
     v-model="model"
-    class="col-12 col-md-4"
     clearable
     :disable
     :hint
     :label
     :loading
-    multiple
+    :multiple
     :name
     :options="userOptions"
+    :rules
   />
 </template>

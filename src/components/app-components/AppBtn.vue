@@ -4,6 +4,7 @@
   Docs: https://quasar.dev/vue-components/button
 -->
 <script setup lang="ts">
+import type { AppSizeString } from 'src/utils';
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { QBtn, type QBtnProps } from 'quasar';
@@ -15,7 +16,7 @@ type AppBtnProps = {
   label?: string | undefined;
   loading?: boolean | undefined;
   round?: boolean | undefined;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined;
+  size?: AppSizeString | undefined;
   to?: RouteLocationRaw | undefined;
   type: string;
 };

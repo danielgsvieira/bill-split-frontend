@@ -11,6 +11,8 @@ import { useI18n } from 'vue-i18n';
 import type { VueSlot } from 'src/utils';
 import { QTable, type QTableColumn, QTd, useQuasar } from 'quasar';
 
+// TODO: Fix action column slot not working on mobile/grid version
+
 type AppTableProps = {
   columns: AppTableColumns<T>;
   grid?: boolean | undefined;

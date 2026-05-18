@@ -7,6 +7,20 @@
 import type { VNode } from 'vue';
 import { QInput, type ValidationRule } from 'quasar';
 
+type InputType =
+  | 'text'
+  | 'password'
+  | 'textarea'
+  | 'email'
+  | 'search'
+  | 'tel'
+  | 'file'
+  | 'number'
+  | 'url'
+  | 'time'
+  | 'date'
+  | 'datetime-local';
+
 type AppInputModelValue = string | number | null | undefined;
 type AppInputProps = {
   debounce?: number | undefined;
@@ -17,9 +31,13 @@ type AppInputProps = {
   mask?: string | undefined;
   name: string;
   rules?: ValidationRule[] | undefined;
+  step?: number | undefined;
+  type?: InputType;
 };
+type AppInputEmits = (e: 'keyup') => void;
 type AppInputSlots = {
   append: () => VNode[];
+  prepend: () => VNode[];
 };
 
 const {
@@ -31,18 +49,38 @@ const {
   mask = undefined,
   name,
   rules = undefined,
+  step = undefined,
+  type = 'text',
 } = defineProps<AppInputProps>();
+const emit = defineEmits<AppInputEmits>();
 const slots = defineSlots<AppInputSlots>();
 
 const model = defineModel<AppInputModelValue>();
 
-export type { AppInputProps };
+export type { AppInputModelValue, AppInputProps };
 </script>
 
 <template>
-  <QInput :id v-model="model" :debounce :disable :hint :label :mask :name outlined :rules>
+  <QInput
+    :id
+    v-model="model"
+    :debounce
+    :disable
+    :hint
+    :label
+    :mask
+    :name
+    outlined
+    :rules
+    :step
+    :type
+    @keyup="emit('keyup')"
+  >
     <template v-if="slots.append" #append>
       <slot name="append" />
+    </template>
+    <template v-if="slots.prepend" #prepend>
+      <slot name="prepend" />
     </template>
   </QInput>
 </template>

@@ -104,7 +104,7 @@ watch(
 );
 
 const disableSharedWithInput = computed(() => {
-  return expenseCycle !== null && authUser.value?.id !== expenseCycle.id;
+  return expenseCycle !== null && authUser.value?.id !== expenseCycle.createdBy.id;
 });
 
 const sharedWithInputHint = computed(() => {
@@ -135,7 +135,7 @@ export type { ExpenseCycleFormData };
       :rules="rules.description"
     />
     <AppDatePicker
-      id="input_start_date"
+      id="input_startDate"
       v-model="startDateModel"
       class="col-12 col-md-4"
       :label="labels.inputs.startDate"
@@ -143,7 +143,7 @@ export type { ExpenseCycleFormData };
       :rules="rules.startDate"
     />
     <AppDatePicker
-      id="input_end_date"
+      id="input_endDate"
       v-model="endDateModel"
       class="col-12 col-md-4"
       :label="labels.inputs.endDate"
@@ -151,7 +151,7 @@ export type { ExpenseCycleFormData };
       :rules="rules.endDate"
     />
     <SharedWithInput
-      id="input_shared_with"
+      id="input_sharedWith"
       v-model="formData.sharedWith"
       :disable="disableSharedWithInput"
       :hint="sharedWithInputHint"

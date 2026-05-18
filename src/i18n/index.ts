@@ -11,7 +11,7 @@ const numberFormats = {
       currency: 'BRL',
       notation: 'standard',
     },
-    decimal: {
+    decimalTwoDigits: {
       style: 'decimal',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,

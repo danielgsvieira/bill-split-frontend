@@ -1,5 +1,6 @@
 import { authRoutes } from 'src/pages/auth/authRoutes';
 import { expenseCycleRoutes } from 'src/pages/expense-cycle/expenseCycleRoutes';
+import { expenseRoutes } from 'src/pages/expense/expenseRoutes';
 import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 
 type AppRouteMeta = RouteMeta & { authenticated: boolean };
@@ -32,6 +33,7 @@ const routes: AppRouteRecordRaw[] = [
   },
   ...authRoutes,
   ...expenseCycleRoutes,
+  ...expenseRoutes,
 
   // Always leave this as last one,
   // but you can also remove it

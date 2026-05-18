@@ -19,7 +19,7 @@ type RegisterFormData = {
   displayName: string;
 };
 
-const { t } = useI18n();
+const i18n = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -27,13 +27,13 @@ const authStore = useAuthStore();
 
 const labels = {
   inputs: {
-    displayName: t('auth.registerPage.inputs.displayName'),
-    password: t('auth.registerPage.inputs.password'),
-    username: t('auth.registerPage.inputs.username'),
+    displayName: i18n.t('auth.registerPage.inputs.displayName'),
+    password: i18n.t('auth.registerPage.inputs.password'),
+    username: i18n.t('auth.registerPage.inputs.username'),
   },
-  loginLink: t('auth.registerPage.loginLink'),
-  pageTitle: t('auth.registerPage.pageTitle'),
-  submitBtn: t('auth.registerPage.submitBtn'),
+  loginLink: i18n.t('auth.registerPage.loginLink'),
+  pageTitle: i18n.t('auth.registerPage.pageTitle'),
+  submitBtn: i18n.t('auth.registerPage.submitBtn'),
 };
 
 const { data: registerResponse, execute: apiCall } = useApiCall((data: RegisterFormData) =>
@@ -63,7 +63,7 @@ const isUsernameAvailableRule: ValidationRule = async (username: string) => {
 
   return (
     response.isAvailable ||
-    t('validation.alreadyExists.short', { fieldName: labels.inputs.username })
+    i18n.t('validation.alreadyExists.short', { fieldName: labels.inputs.username })
   );
 };
 

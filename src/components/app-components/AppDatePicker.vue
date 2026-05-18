@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import AppBtn from './AppBtn.vue';
 import AppIcon from './AppIcon.vue';
-import { isNullOrUndefined } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 import { computed, useTemplateRef } from 'vue';
+import { dateFromString, isNullOrUndefined } from 'src/utils';
 import { QDate, QPopupProxy, ClosePopup as vClosePopup } from 'quasar';
 
 type AppDatePickerModelType = Date | null;
@@ -31,8 +31,7 @@ const modelStrValue = computed({
       return;
     }
 
-    const [day, month, year] = value.split('/').map(Number) as [number, number, number];
-    model.value = new Date(year, month - 1, day);
+    model.value = dateFromString(value);
 
     popupProxyRef.value?.hide();
   },

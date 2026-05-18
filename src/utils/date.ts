@@ -1,9 +1,9 @@
 function startOfDay(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDay(), 0, 0, 0, 0);
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
 }
 
 function endOfDay(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDay(), 23, 59, 59, 999);
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
 }
 
 /**

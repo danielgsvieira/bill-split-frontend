@@ -116,6 +116,34 @@ function maxDate(max: NotRequired<Date>, options?: { customMaxText?: string }): 
   };
 }
 
+function minNumber(min: NotRequired<number>, options?: { customMinText?: string }): ValidationRule {
+  return (value: NotRequired<number>): true | string => {
+    if (isNullOrUndefined(value) || isNullOrUndefined(min)) {
+      return true;
+    }
+
+    if (value < min) {
+      return i18n.t('validation.minNumber.short', { min: options?.customMinText ?? i18n.n(min) });
+    }
+
+    return true;
+  };
+}
+
+function maxNumber(max: NotRequired<number>, options?: { customMaxText?: string }): ValidationRule {
+  return (value: NotRequired<number>): true | string => {
+    if (isNullOrUndefined(value) || isNullOrUndefined(max)) {
+      return true;
+    }
+
+    if (value > max) {
+      return i18n.t('validation.maxNumber.short', { max: options?.customMaxText ?? i18n.n(max) });
+    }
+
+    return true;
+  };
+}
+
 const validation = {
   required,
   length,
@@ -123,6 +151,8 @@ const validation = {
   maxLength,
   minDate,
   maxDate,
+  minNumber,
+  maxNumber,
 };
 
 export { validation };
