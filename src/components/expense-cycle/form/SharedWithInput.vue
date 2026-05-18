@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { AppSelect } from 'src/components';
-import { computed } from 'vue';
 import { useApiCall } from 'src/composables';
 import type { User } from 'src/models/User';
 import { userService } from 'src/services';
+import { computed, onMounted } from 'vue';
 
 type SharedWithInputProps = {
   disable?: boolean | undefined;
@@ -27,7 +27,10 @@ const {
   loading,
   execute: fetchUsers,
 } = useApiCall(() => userService.listUsersAvailableToShareWith());
-void fetchUsers();
+
+onMounted(() => {
+  void fetchUsers();
+});
 
 const userOptions = computed(() => {
   const options = users.value?.map((el) => ({ id: el.id, label: el.displayName, value: el }));

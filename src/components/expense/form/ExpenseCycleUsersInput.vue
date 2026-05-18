@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="T extends User | User[]">
 import { AppSelect } from 'src/components';
-import { computed } from 'vue';
 import { expenseCycleService } from 'src/services';
 import { useApiCall } from 'src/composables';
 import type { User } from 'src/models/User';
 import type { ValidationRule } from 'quasar';
+import { computed, onMounted } from 'vue';
 
 type SharedWithInputProps = {
   disable?: boolean;
@@ -34,7 +34,10 @@ const {
   loading,
   execute: fetchUsers,
 } = useApiCall(() => expenseCycleService.listUsers(expenseCycleId));
-void fetchUsers();
+
+onMounted(() => {
+  void fetchUsers();
+});
 
 const userOptions = computed(() => {
   const options = users.value?.map((el) => ({ id: el.id, label: el.displayName, value: el }));

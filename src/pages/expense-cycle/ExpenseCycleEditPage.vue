@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { AppPage, ExpenseCycleForm, type ExpenseCycleFormData } from 'src/components';
 import { EditExpenseCycleDto, expenseCycleService } from 'src/services';
@@ -23,7 +24,10 @@ const {
   loading: loadingExpenseCycle,
   execute: fetchExpenseCycle,
 } = useApiCall(() => expenseCycleService.findOneById(expenseCycleId));
-void fetchExpenseCycle();
+
+onMounted(() => {
+  void fetchExpenseCycle();
+});
 
 const { data: editedExpenseCycle, execute: editExpenseCycle } = useApiCall(
   (dto: EditExpenseCycleDto) => expenseCycleService.edit(dto),
@@ -55,6 +59,6 @@ export type { ExpenseCycleEditPageProps };
 
 <template>
   <AppPage :loading="loadingExpenseCycle" :title="labels.pageTitle">
-    <ExpenseCycleForm :expense-cycle="expenseCycle" @submit="handleSubmit" />
+    <ExpenseCycleForm :expense-cycle @submit="handleSubmit" />
   </AppPage>
 </template>

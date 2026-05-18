@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { type RouteLocationRaw } from 'vue-router';
 import { useApiCall } from 'src/composables';
 import { useI18n } from 'vue-i18n';
@@ -39,7 +40,9 @@ const {
   execute: fetchExpenses,
 } = useApiCall(() => expenseService.listByExpenseCycleId(expenseCycleId));
 
-void fetchExpenseCycle().then(() => {
+onMounted(async () => {
+  await fetchExpenseCycle();
+
   if (expenseCycle.value !== null) {
     void fetchExpenses();
   }

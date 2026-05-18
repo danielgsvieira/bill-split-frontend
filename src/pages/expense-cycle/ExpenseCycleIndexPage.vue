@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { expenseCycleService } from 'src/services';
+import { onMounted } from 'vue';
 import { useApiCall } from 'src/composables';
 import { useI18n } from 'vue-i18n';
 import { valueOrEmptyIndicator } from 'src/utils';
@@ -27,7 +28,10 @@ const {
   loading,
   execute: fetchExpenseCycles,
 } = useApiCall(() => expenseCycleService.list());
-void fetchExpenseCycles();
+
+onMounted(() => {
+  void fetchExpenseCycles();
+});
 
 const columns: AppTableColumns<ExpenseCycle> = [
   {

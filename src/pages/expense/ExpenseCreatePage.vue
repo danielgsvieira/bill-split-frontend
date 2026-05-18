@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { AppPage, ExpenseForm, type ExpenseFormData } from 'src/components';
@@ -25,7 +26,10 @@ const {
   loading: loadingExpenseCycle,
   execute: fetchExpenseCycle,
 } = useApiCall(() => expenseCycleService.findOneById(expenseCycleId));
-void fetchExpenseCycle();
+
+onMounted(() => {
+  void fetchExpenseCycle();
+});
 
 const { data: createdExpense, execute: createExpense } = useApiCall((dto: CreateExpenseDto) =>
   expenseService.create(dto),
