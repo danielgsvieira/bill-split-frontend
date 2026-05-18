@@ -19,6 +19,12 @@ class ExpenseService {
     return expenseResponseToModel(response);
   }
 
+  async findOneById(id: number) {
+    const response = await httpClient.get<ExpenseResponse>(`${this.basePath}/${id}`);
+
+    return expenseResponseToModel(response);
+  }
+
   async edit(dto: EditExpenseDto) {
     const response = await httpClient.put<ExpenseResponse>(
       `${this.basePath}/${dto.id}`,

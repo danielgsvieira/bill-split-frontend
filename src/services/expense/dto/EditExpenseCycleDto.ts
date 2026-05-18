@@ -1,4 +1,5 @@
 import type { EditExpenseRequest } from '../requests';
+import type { Money } from 'src/utils';
 import type { User } from 'src/models/User';
 
 class EditExpenseDto {
@@ -10,7 +11,7 @@ class EditExpenseDto {
 
   readonly isProportional: boolean;
 
-  readonly valueInCents: number;
+  readonly price: Money;
 
   readonly paidBy: User;
 
@@ -21,7 +22,7 @@ class EditExpenseDto {
     description: string;
     date: Date;
     isProportional: boolean;
-    valueInCents: number;
+    price: Money;
     paidBy: User;
     sharedBetween: User[];
   }) {
@@ -29,7 +30,7 @@ class EditExpenseDto {
     this.description = data.description;
     this.date = data.date;
     this.isProportional = data.isProportional;
-    this.valueInCents = data.valueInCents;
+    this.price = data.price;
     this.paidBy = data.paidBy;
     this.sharedBetween = data.sharedBetween;
   }
@@ -39,7 +40,7 @@ class EditExpenseDto {
       description: this.description,
       date: this.date.toISOString(),
       isProportional: this.isProportional,
-      valueInCents: this.valueInCents,
+      valueInCents: this.price.valueInCents,
       paidByUserId: this.paidBy.id,
       sharedBetweenIds: this.sharedBetween.map((el) => el.id),
     };

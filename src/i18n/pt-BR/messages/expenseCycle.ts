@@ -6,7 +6,7 @@ const expenseCycle = {
     pageTitle: 'Cadastrar Ciclo de Despesa',
   },
   editPage: {
-    pageTitle: 'Cadastrar Ciclo de Despesa',
+    pageTitle: 'Editar Ciclo de Despesa',
   },
   fieldHints: {
     sharedWith: {

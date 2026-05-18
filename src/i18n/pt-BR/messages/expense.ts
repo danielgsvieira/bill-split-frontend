@@ -5,6 +5,9 @@ const expense = {
   createPage: {
     pageTitle: 'Cadastrar Despesa',
   },
+  editPage: {
+    pageTitle: 'Editar Despesa',
+  },
   fields: {
     date: 'Data',
     description: 'Descrição',

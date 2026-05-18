@@ -6,7 +6,6 @@ import type { RouteLocationRaw } from 'vue-router';
 import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
 import type { User } from 'src/models/User';
-import { watch } from 'vue';
 import {
   AppBtn,
   AppDatePicker,
@@ -17,6 +16,7 @@ import {
   AppToggle,
 } from '../../app-components';
 import { Money, validation } from 'src/utils';
+import { onMounted, watch } from 'vue';
 
 type ExpenseFormData = {
   description: string;
@@ -53,7 +53,7 @@ const { formData, submitting, submit } = useForm<ExpenseFormData>({
     description: '',
     date: null,
     isProportional: false,
-    price: new Money(3),
+    price: new Money(0),
     paidBy: null,
     sharedBetween: [],
   },
@@ -74,18 +74,28 @@ const rules = {
   sharedBetween: [validation.required()],
 };
 
+function fillExpenseData(newValue: Expense) {
+  formData.value = {
+    description: newValue.description,
+    date: newValue.date,
+    isProportional: newValue.isProportional,
+    price: new Money(newValue.price.valueInCents),
+    paidBy: newValue.paidBy,
+    sharedBetween: [...newValue.sharedBetween],
+  };
+}
+
+onMounted(() => {
+  if (expense !== null) {
+    fillExpenseData(expense);
+  }
+});
+
 watch(
   () => expense,
   (newValue) => {
     if (newValue !== null) {
-      formData.value = {
-        description: newValue.description,
-        date: newValue.date,
-        isProportional: newValue.isProportional,
-        price: newValue.price,
-        paidBy: newValue.paidBy,
-        sharedBetween: [...newValue.sharedBetween],
-      };
+      fillExpenseData(newValue);
     }
   },
 );
