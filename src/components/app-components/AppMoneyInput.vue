@@ -3,7 +3,7 @@ import AppIcon from './AppIcon.vue';
 import { useI18n } from 'vue-i18n';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 import { isNullOrUndefined, Money } from 'src/utils';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 type AppMoneyInputProps = Omit<AppInputProps, 'modelValue'>;
 
@@ -15,10 +15,18 @@ const i18n = useI18n();
 
 const inputModel = ref(i18n.n(0, 'decimalTwoDigits'));
 
-onMounted(() => {
-  if (!isNullOrUndefined(model.value)) {
-    inputModel.value = i18n.n(model.value.decimalValue, 'decimalTwoDigits');
+function fillInputModel(newValue: Money | null | undefined) {
+  if (!isNullOrUndefined(newValue)) {
+    inputModel.value = i18n.n(newValue.decimalValue, 'decimalTwoDigits');
   }
+}
+
+onMounted(() => {
+  fillInputModel(model.value);
+});
+
+watch(model, (newValue) => {
+  fillInputModel(newValue);
 });
 
 function handleKeyup() {
