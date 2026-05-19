@@ -30,6 +30,7 @@ type AppInputProps = {
   label?: string | undefined;
   mask?: string | undefined;
   name: string;
+  reactiveRules?: boolean | undefined;
   rules?: ValidationRule[] | undefined;
   step?: number | undefined;
   type?: InputType;
@@ -48,6 +49,7 @@ const {
   label = undefined,
   mask = undefined,
   name,
+  reactiveRules = undefined,
   rules = undefined,
   step = undefined,
   type = 'text',
@@ -71,6 +73,7 @@ export type { AppInputModelValue, AppInputProps };
     :mask
     :name
     outlined
+    :reactive-rules
     :rules
     :step
     :type
