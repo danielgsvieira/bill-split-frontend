@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 import { AppPage, ExpenseCycleForm, type ExpenseCycleFormData } from 'src/components';
 import { EditExpenseCycleDto, expenseCycleService } from 'src/services';
 import { useApiCall, useToast } from 'src/composables';
@@ -13,6 +14,7 @@ const { expenseCycleId } = defineProps<ExpenseCycleEditPageProps>();
 
 const i18n = useI18n();
 const toast = useToast();
+const router = useRouter();
 
 const labels = {
   pageTitle: i18n.t('expenseCycle.editPage.pageTitle'),
@@ -51,6 +53,8 @@ async function handleSubmit(data: ExpenseCycleFormData) {
   if (editedExpenseCycle.value !== null) {
     expenseCycle.value = editedExpenseCycle.value;
     toast.positive(labels.editSuccessMessage);
+
+    void router.push({ name: 'expense-cycle-view', params: { id: expenseCycleId } });
   }
 }
 
