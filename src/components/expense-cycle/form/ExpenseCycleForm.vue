@@ -3,8 +3,6 @@ import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { expenseService } from 'src/services';
 import type { RouteLocationRaw } from 'vue-router';
 import SharedWithInput from './SharedWithInput.vue';
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from 'src/stores';
 import { useI18n } from 'vue-i18n';
 import type { User } from 'src/models/User';
 import { AppBtn, AppDatePicker, AppForm, AppGoBackBtn, AppInput } from 'src/components';
@@ -27,9 +25,6 @@ type ExpensecycleFormProps = {
 const { expenseCycle = null, onSubmit } = defineProps<ExpensecycleFormProps>();
 
 const i18n = useI18n();
-
-const authStore = useAuthStore();
-const { authUser } = storeToRefs(authStore);
 
 const labels = {
   inputHints: {
@@ -143,14 +138,6 @@ watch(
   },
 );
 
-const disableSharedWithInput = computed(() => {
-  return expenseCycle !== null && authUser.value?.id !== expenseCycle.createdBy.id;
-});
-
-const sharedWithInputHint = computed(() => {
-  return disableSharedWithInput.value ? labels.inputHints.sharedWith.onlyCreatorCanEdit : undefined;
-});
-
 const goBackRoute: RouteLocationRaw = { name: 'expense-cycle-index' };
 
 export type { ExpenseCycleFormData };
@@ -195,8 +182,6 @@ export type { ExpenseCycleFormData };
     <SharedWithInput
       id="input_sharedWith"
       v-model="formData.sharedWith"
-      :disable="disableSharedWithInput"
-      :hint="sharedWithInputHint"
       :label="labels.inputs.sharedWith"
       name="sharedWith"
     />
