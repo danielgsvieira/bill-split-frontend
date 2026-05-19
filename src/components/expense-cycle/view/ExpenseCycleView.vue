@@ -2,6 +2,8 @@
 import { computed } from 'vue';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { expenseCycleService } from 'src/services';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from 'src/stores';
 import { useI18n } from 'vue-i18n';
 import { valueOrEmptyIndicator } from 'src/utils';
 import { AppBtn, AppFieldValue } from 'src/components';
@@ -18,6 +20,9 @@ const router = useRouter();
 const i18n = useI18n();
 const dialog = useDialog();
 const toast = useToast();
+
+const authStore = useAuthStore();
+const { authUser } = storeToRefs(authStore);
 
 const labels = {
   deleteBtn: i18n.t('general.delete'),
@@ -63,6 +68,8 @@ const sharedWithText = computed(() => {
   return valueOrEmptyIndicator(str);
 });
 
+const canDelete = computed(() => authUser.value?.id === expenseCycle.id);
+
 const editExpenseCycleRoute = computed<RouteLocationRaw>(() => {
   return { name: 'expense-cycle-edit', params: { id: expenseCycle.id } };
 });
@@ -103,6 +110,7 @@ const editExpenseCycleRoute = computed<RouteLocationRaw>(() => {
         type="button"
       />
       <AppBtn
+        v-if="canDelete"
         color="negative"
         flat
         icon="delete"
