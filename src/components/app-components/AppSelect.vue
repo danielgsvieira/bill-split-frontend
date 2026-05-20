@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends object | string | number">
-import { QSelect, type ValidationRule } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import { QItem, QItemSection, QSelect, type ValidationRule } from 'quasar';
 import { ref, watch } from 'vue';
 
 type FilterFnUpdate = (callback: () => void) => void;
@@ -40,6 +41,8 @@ const {
 } = defineProps<AppSelectProps>();
 
 const model = defineModel<AppSelectModelType>();
+
+const i18n = useI18n();
 
 const filteredOptions = ref(options);
 
@@ -88,5 +91,13 @@ watch(
     :use-chips="useChips ?? multiple === true"
     use-input
     @filter="filterFn"
-  />
+  >
+    <template #no-option>
+      <QItem>
+        <QItemSection class="text-grey-8 text-italic">
+          {{ i18n.t('general.noResults') }}
+        </QItemSection>
+      </QItem>
+    </template>
+  </QSelect>
 </template>

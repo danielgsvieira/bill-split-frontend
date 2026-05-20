@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { Expense } from 'src/models/Expense';
 import { Money } from 'src/utils';
 import { User } from 'src/models/User';
@@ -25,9 +26,9 @@ function expenseResponseToModel(data: ExpenseResponse | ExpenseResponse[]): Expe
 
   return new Expense({
     ...data,
-    createdAt: new Date(data.createdAt),
-    updatedAt: new Date(data.updatedAt),
-    date: new Date(data.date),
+    createdAt: DateTime.fromISO(data.createdAt),
+    updatedAt: DateTime.fromISO(data.updatedAt),
+    date: DateTime.fromISO(data.date),
     paidBy: new User(data.paidBy),
     price: new Money(data.valueInCents),
     sharedBetween: data.sharedBetween.map((el) => new User(el)),

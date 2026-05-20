@@ -1,3 +1,4 @@
+import type { DateTime } from 'luxon';
 import type { EditExpenseRequest } from '../requests';
 import type { Money } from 'src/utils';
 import type { User } from 'src/models/User';
@@ -7,7 +8,7 @@ class EditExpenseDto {
 
   readonly description: string;
 
-  readonly date: Date;
+  readonly date: DateTime;
 
   readonly isProportional: boolean;
 
@@ -20,7 +21,7 @@ class EditExpenseDto {
   constructor(data: {
     id: number;
     description: string;
-    date: Date;
+    date: DateTime;
     isProportional: boolean;
     price: Money;
     paidBy: User;
@@ -36,9 +37,15 @@ class EditExpenseDto {
   }
 
   toRequest(): EditExpenseRequest {
+    const date = this.date.toISO();
+
+    if (date === null) {
+      throw new Error('invalid date');
+    }
+
     return {
       description: this.description,
-      date: this.date.toISOString(),
+      date,
       isProportional: this.isProportional,
       valueInCents: this.price.valueInCents,
       paidByUserId: this.paidBy.id,

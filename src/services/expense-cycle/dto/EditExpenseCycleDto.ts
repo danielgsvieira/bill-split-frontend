@@ -1,3 +1,4 @@
+import type { DateTime } from 'luxon';
 import type { EditExpenseCycleRequest } from '../requests';
 import type { User } from 'src/models/User';
 
@@ -6,16 +7,16 @@ class EditExpenseCycleDto {
   readonly title: string;
   readonly description: string;
   readonly sharedWith: User[];
-  readonly startDate: Date;
-  readonly endDate: Date;
+  readonly startDate: DateTime;
+  readonly endDate: DateTime;
 
   constructor(data: {
     id: number;
     title: string;
     description: string;
     sharedWith: User[];
-    startDate: Date;
-    endDate: Date;
+    startDate: DateTime;
+    endDate: DateTime;
   }) {
     this.id = data.id;
     this.title = data.title;
@@ -26,12 +27,19 @@ class EditExpenseCycleDto {
   }
 
   toRequest(): EditExpenseCycleRequest {
+    const startDate = this.startDate.toISO();
+    const endDate = this.endDate.toISO();
+
+    if (startDate === null || endDate === null) {
+      throw new Error('invalid date');
+    }
+
     return {
       title: this.title,
       description: this.description.length > 0 ? this.description : null,
       sharedWithIds: this.sharedWith.map((el) => el.id),
-      startDate: this.startDate.toISOString(),
-      endDate: this.endDate.toISOString(),
+      startDate,
+      endDate,
     };
   }
 }

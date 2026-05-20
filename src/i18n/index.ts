@@ -29,6 +29,7 @@ const datetimeFormats = {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
+      timeZone: 'UTC',
     },
     long: {
       year: 'numeric',
@@ -37,6 +38,7 @@ const datetimeFormats = {
       weekday: 'long',
       hour: 'numeric',
       minute: 'numeric',
+      timeZone: 'UTC',
     },
   },
 } as const;

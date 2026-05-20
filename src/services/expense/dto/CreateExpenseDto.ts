@@ -1,4 +1,5 @@
 import type { CreateExpenseRequest } from '../requests';
+import type { DateTime } from 'luxon';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import type { Money } from 'src/utils';
 import type { User } from 'src/models/User';
@@ -6,7 +7,7 @@ import type { User } from 'src/models/User';
 class CreateExpenseDto {
   readonly description: string;
 
-  readonly date: Date;
+  readonly date: DateTime;
 
   readonly isProportional: boolean;
 
@@ -20,7 +21,7 @@ class CreateExpenseDto {
 
   constructor(data: {
     description: string;
-    date: Date;
+    date: DateTime;
     isProportional: boolean;
     price: Money;
     expenseCycle: ExpenseCycle;
@@ -37,9 +38,14 @@ class CreateExpenseDto {
   }
 
   toRequest(): CreateExpenseRequest {
+    const date = this.date.toISO();
+    if (date === null) {
+      throw new Error('invalid date');
+    }
+
     return {
       description: this.description,
-      date: this.date.toISOString(),
+      date,
       isProportional: this.isProportional,
       valueInCents: this.price.valueInCents,
       expenseCycleId: this.expenseCycle.id,

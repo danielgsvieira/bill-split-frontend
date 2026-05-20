@@ -1,21 +1,22 @@
 <script setup lang="ts">
+import type { DateTime } from 'luxon';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import { expenseService } from 'src/services';
 import type { RouteLocationRaw } from 'vue-router';
 import SharedWithInput from './SharedWithInput.vue';
 import { useI18n } from 'vue-i18n';
 import type { User } from 'src/models/User';
+import { validation } from 'src/utils';
 import { AppBtn, AppDatePicker, AppForm, AppGoBackBtn, AppInput } from 'src/components';
 import { computed, watch } from 'vue';
-import { endOfDay, startOfDay, validation } from 'src/utils';
 import { useApiCall, useForm } from 'src/composables';
 
 type ExpenseCycleFormData = {
   title: string;
   description: string;
   sharedWith: User[];
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: DateTime | null;
+  endDate: DateTime | null;
 };
 type ExpensecycleFormProps = {
   expenseCycle?: ExpenseCycle | null;
@@ -60,7 +61,7 @@ const { formData, submitting, submit } = useForm<ExpenseCycleFormData>({
 });
 
 const expensesSortedByDate = computed(() => {
-  return expenses.value?.toSorted((a, b) => a.date.getTime() - b.date.getTime()) ?? [];
+  return expenses.value?.toSorted((a, b) => a.date.toMillis() - b.date.toMillis()) ?? [];
 });
 
 const earliestExpense = computed(() => {
@@ -109,15 +110,15 @@ const rules = computed(() => {
 
 const startDateModel = computed({
   get: () => formData.value.startDate,
-  set: (value: Date | null) => {
-    formData.value.startDate = value !== null ? startOfDay(value) : null;
+  set: (value: DateTime | null) => {
+    formData.value.startDate = value !== null ? value.startOf('day') : null;
   },
 });
 
 const endDateModel = computed({
   get: () => formData.value.endDate,
-  set: (value: Date | null) => {
-    formData.value.endDate = value !== null ? endOfDay(value) : null;
+  set: (value: DateTime | null) => {
+    formData.value.endDate = value !== null ? value.endOf('day') : null;
   },
 });
 

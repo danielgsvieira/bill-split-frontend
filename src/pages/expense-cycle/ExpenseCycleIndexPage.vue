@@ -52,14 +52,14 @@ const columns: AppTableColumns<ExpenseCycle> = [
     field: 'startDate',
     label: labels.fields.startDate,
     align: 'center',
-    format: (value) => i18n.d(value, 'short'),
+    format: (value) => i18n.d(value.toJSDate(), 'short'),
   },
   {
     name: 'endDate',
     field: 'endDate',
     label: labels.fields.endDate,
     align: 'center',
-    format: (value) => i18n.d(value, 'short'),
+    format: (value) => i18n.d(value.toJSDate(), 'short'),
   },
   {
     name: 'createdBy',

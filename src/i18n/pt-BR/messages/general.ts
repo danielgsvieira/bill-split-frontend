@@ -12,6 +12,7 @@ const general = {
   goBack: 'Voltar',
   logout: 'Sair',
   no: 'Não',
+  noResults: 'Nehum resultado',
   remove: 'Remover',
   removeConfirmationMessage: 'Deseja remover este registro? A remoção não poderá ser revertida.',
   removeSuccessMessage: 'Registro removido com sucesso',

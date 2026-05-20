@@ -1,4 +1,5 @@
-import { dateFromString } from './date';
+import { dateFormat } from 'src/consts';
+import { DateTime } from 'luxon';
 import { i18n as i18nInstance } from 'src/boot/i18n';
 import { isNullOrUndefined } from './is-null-or-undefined';
 import type { ValidationRule } from 'quasar';
@@ -82,16 +83,16 @@ function minLength(min: number, options?: { customMinText?: string }): Validatio
   };
 }
 
-function minDate(min: NotRequired<Date>, options?: { customMinText?: string }): ValidationRule {
+function minDate(min: NotRequired<DateTime>, options?: { customMinText?: string }): ValidationRule {
   return (value: NotRequired<string>): true | string => {
     if (isNullOrUndefined(value) || isNullOrUndefined(min)) {
       return true;
     }
 
-    const dateTimeValue = dateFromString(value);
+    const dateTimeValue = DateTime.fromFormat(value, dateFormat);
     if (dateTimeValue < min) {
       return i18n.t('validation.minDate.short', {
-        min: options?.customMinText ?? i18n.d(min, 'short'),
+        min: options?.customMinText ?? i18n.d(min.toJSDate(), 'short'),
       });
     }
 
@@ -99,16 +100,16 @@ function minDate(min: NotRequired<Date>, options?: { customMinText?: string }): 
   };
 }
 
-function maxDate(max: NotRequired<Date>, options?: { customMaxText?: string }): ValidationRule {
+function maxDate(max: NotRequired<DateTime>, options?: { customMaxText?: string }): ValidationRule {
   return (value: NotRequired<string>): true | string => {
     if (isNullOrUndefined(value) || isNullOrUndefined(max)) {
       return true;
     }
 
-    const dateTimeValue = dateFromString(value);
+    const dateTimeValue = DateTime.fromFormat(value, dateFormat);
     if (dateTimeValue > max) {
       return i18n.t('validation.maxDate.short', {
-        max: options?.customMaxText ?? i18n.d(max, 'short'),
+        max: options?.customMaxText ?? i18n.d(max.toJSDate(), 'short'),
       });
     }
 

@@ -1,16 +1,17 @@
+import type { DateTime } from 'luxon';
 import type { Money } from 'src/utils';
 import type { User } from './User';
 
 class Expense {
   readonly id: number;
 
-  readonly createdAt: Date;
+  readonly createdAt: DateTime;
 
-  readonly updatedAt: Date;
+  readonly updatedAt: DateTime;
 
   readonly description: string;
 
-  readonly date: Date;
+  readonly date: DateTime;
 
   readonly isProportional: boolean;
 
@@ -24,10 +25,10 @@ class Expense {
 
   constructor(data: {
     id: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: DateTime;
+    updatedAt: DateTime;
     description: string;
-    date: Date;
+    date: DateTime;
     isProportional: boolean;
     price: Money;
     expenseCycle: { id: number };

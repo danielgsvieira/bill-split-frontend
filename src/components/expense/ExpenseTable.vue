@@ -52,7 +52,7 @@ const columns: AppTableColumns<Expense> = [
     field: 'date',
     label: labels.fields.date,
     align: 'left',
-    format: (value) => i18n.d(value, 'short'),
+    format: (value) => i18n.d(value.toJSDate(), 'short'),
   },
   {
     name: 'price',

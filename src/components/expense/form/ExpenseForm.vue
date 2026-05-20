@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DateTime } from 'luxon';
 import type { Expense } from 'src/models/Expense';
 import type { ExpenseCycle } from 'src/models/ExpenseCycle';
 import ExpenseCycleUsersInput from './ExpenseCycleUsersInput.vue';
@@ -20,7 +21,7 @@ import { onMounted, watch } from 'vue';
 
 type ExpenseFormData = {
   description: string;
-  date: Date | null;
+  date: DateTime | null;
   isProportional: boolean;
   price: Money;
   paidBy: User | null;

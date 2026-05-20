@@ -40,7 +40,7 @@ const sharedBetweenText = computed(() =>
     <AppFieldValue
       class="col-6 col-lg col-md-3"
       :label="labels.fields.date"
-      :value="i18n.d(expense.date, 'short')"
+      :value="i18n.d(expense.date.toJSDate(), 'short')"
     />
     <AppFieldValue
       class="col-6 col-lg col-md-3"

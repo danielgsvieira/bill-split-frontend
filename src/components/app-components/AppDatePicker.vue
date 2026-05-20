@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import AppBtn from './AppBtn.vue';
 import AppIcon from './AppIcon.vue';
+import { dateFormat } from 'src/consts';
+import { DateTime } from 'luxon';
+import { isNullOrUndefined } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 import { computed, useTemplateRef } from 'vue';
-import { dateFromString, isNullOrUndefined } from 'src/utils';
 import { QDate, QPopupProxy, ClosePopup as vClosePopup } from 'quasar';
 
-type AppDatePickerModelType = Date | null;
+type AppDatePickerModelType = DateTime | null;
 type AppDatePickerProps = Omit<AppInputProps, 'type'>;
 
 const props = defineProps<AppDatePickerProps>();
@@ -19,11 +21,12 @@ const popupProxyRef = useTemplateRef<InstanceType<typeof QPopupProxy>>('popup-pr
 
 const modelStrValue = computed({
   get: () => {
-    if (isNullOrUndefined(model.value)) {
+    const dateString = model.value?.toISO();
+    if (isNullOrUndefined(dateString)) {
       return null;
     }
 
-    return i18n.d(model.value, 'short');
+    return i18n.d(dateString, 'short');
   },
   set: (value: string | null) => {
     if (value === null) {
@@ -31,7 +34,7 @@ const modelStrValue = computed({
       return;
     }
 
-    model.value = dateFromString(value);
+    model.value = DateTime.fromFormat(value, dateFormat);
 
     popupProxyRef.value?.hide();
   },

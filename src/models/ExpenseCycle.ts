@@ -1,19 +1,20 @@
+import type { DateTime } from 'luxon';
 import type { User } from './User';
 
 class ExpenseCycle {
   readonly id: number;
 
-  readonly createdAt: Date;
+  readonly createdAt: DateTime;
 
-  readonly updatedAt: Date;
+  readonly updatedAt: DateTime;
 
   readonly title: string;
 
   readonly description: string | null;
 
-  readonly startDate: Date;
+  readonly startDate: DateTime;
 
-  readonly endDate: Date;
+  readonly endDate: DateTime;
 
   readonly createdBy: User;
 
@@ -21,12 +22,12 @@ class ExpenseCycle {
 
   constructor(data: {
     id: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: DateTime;
+    updatedAt: DateTime;
     title: string;
     description: string | null;
-    startDate: Date;
-    endDate: Date;
+    startDate: DateTime;
+    endDate: DateTime;
     createdBy: User;
     sharedWith: User[];
   }) {
