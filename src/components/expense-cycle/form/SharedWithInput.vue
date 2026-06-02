@@ -6,20 +6,12 @@ import { userService } from 'src/services';
 import { computed, onMounted } from 'vue';
 
 type SharedWithInputProps = {
-  disable?: boolean | undefined;
-  hint?: string | undefined;
   label?: string | undefined;
   id: string;
   name: string;
 };
 
-const {
-  disable = undefined,
-  hint = undefined,
-  label = undefined,
-  id,
-  name,
-} = defineProps<SharedWithInputProps>();
+const { label = undefined, id, name } = defineProps<SharedWithInputProps>();
 const model = defineModel<User[]>();
 
 const {
@@ -39,17 +31,5 @@ const userOptions = computed(() => {
 </script>
 
 <template>
-  <AppSelect
-    :id
-    v-model="model"
-    class="col-12 col-md-4"
-    clearable
-    :disable
-    :hint
-    :label
-    :loading
-    multiple
-    :name
-    :options="userOptions"
-  />
+  <AppSelect :id v-model="model" :label :loading multiple :name :options="userOptions" />
 </template>

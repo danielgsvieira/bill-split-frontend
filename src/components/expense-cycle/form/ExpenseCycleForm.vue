@@ -183,6 +183,7 @@ export type { ExpenseCycleFormData };
     <SharedWithInput
       id="input_sharedWith"
       v-model="formData.sharedWith"
+      class="col-12 col-md-4"
       :label="labels.inputs.sharedWith"
       name="sharedWith"
     />
