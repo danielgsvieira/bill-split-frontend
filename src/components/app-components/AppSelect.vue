@@ -27,7 +27,7 @@ type AppSelectProps = {
 type AppSelectModelType = T | T[] | null | undefined;
 
 const {
-  clearable = undefined,
+  clearable = true,
   disable = undefined,
   hint = undefined,
   id,
