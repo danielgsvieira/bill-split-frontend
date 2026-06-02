@@ -10,7 +10,7 @@ class ApiValidationError extends ApiError {
     message: string,
     validationErrors: ApiValidationErrorData,
   ) {
-    super(error, statusCode, message);
+    super(error, statusCode, message, undefined);
 
     this.validationErrors = validationErrors;
   }
@@ -25,7 +25,12 @@ class ApiValidationError extends ApiError {
       );
     }
 
-    return new ApiError(errorResponse.error, errorResponse.statusCode, errorResponse.message);
+    return new ApiError(
+      errorResponse.error,
+      errorResponse.statusCode,
+      errorResponse.message,
+      undefined,
+    );
   }
 }
 

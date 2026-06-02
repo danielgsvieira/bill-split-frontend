@@ -1,12 +1,10 @@
 import type { DateTime } from 'luxon';
-import type { User } from './User';
+import type { ExpenseCycleUser } from './ExpenseCycleUser';
 
-class ExpenseCycle {
+class ExpenseCycleListItem {
+  declare readonly __brand: symbol & { __brand: 'ExpenseCycleListItem' };
+
   readonly id: number;
-
-  readonly createdAt: DateTime;
-
-  readonly updatedAt: DateTime;
 
   readonly title: string;
 
@@ -16,31 +14,23 @@ class ExpenseCycle {
 
   readonly endDate: DateTime;
 
-  readonly createdBy: User;
-
-  readonly sharedWith: User[];
+  readonly createdBy: ExpenseCycleUser;
 
   constructor(data: {
     id: number;
-    createdAt: DateTime;
-    updatedAt: DateTime;
     title: string;
     description: string | null;
     startDate: DateTime;
     endDate: DateTime;
-    createdBy: User;
-    sharedWith: User[];
+    createdBy: ExpenseCycleUser;
   }) {
     this.id = data.id;
-    this.createdAt = data.createdAt;
-    this.updatedAt = data.updatedAt;
     this.title = data.title;
     this.description = data.description;
     this.startDate = data.startDate;
     this.endDate = data.endDate;
     this.createdBy = data.createdBy;
-    this.sharedWith = data.sharedWith;
   }
 }
 
-export { ExpenseCycle };
+export { ExpenseCycleListItem };

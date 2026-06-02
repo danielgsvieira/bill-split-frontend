@@ -2,6 +2,8 @@ import { httpClient } from 'src/utils';
 import type { isUsernameAvailableResponse, LoginRespose, UserResponse } from './responses';
 
 class AuthService {
+  declare readonly __brand: symbol & { __brand: 'AuthService' };
+
   readonly basePath = 'auth';
 
   public async login(data: { username: string; password: string }) {

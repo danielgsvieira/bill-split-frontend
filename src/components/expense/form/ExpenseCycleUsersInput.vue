@@ -1,8 +1,8 @@
-<script setup lang="ts" generic="T extends User | User[]">
+<script setup lang="ts" generic="T extends ExpenseCycleUser | ExpenseCycleUser[]">
 import { AppSelect } from 'src/components';
 import { expenseCycleService } from 'src/services';
+import type { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import { useApiCall } from 'src/composables';
-import type { User } from 'src/models/User';
 import type { ValidationRule } from 'quasar';
 import { computed, onMounted } from 'vue';
 

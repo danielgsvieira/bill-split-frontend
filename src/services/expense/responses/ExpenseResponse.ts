@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon';
-import { Expense } from 'src/models/Expense';
+import { Expense } from 'src/models/expense/Expense';
 import { Money } from 'src/utils';
-import { User } from 'src/models/User';
-import type { UserResponse } from 'src/services';
+import { type ExpenseUserResponse, expenseUserResponseToModel } from './ExpenseUserResponse';
 
 type ExpenseResponse = {
   id: number;
@@ -13,8 +12,8 @@ type ExpenseResponse = {
   isProportional: boolean;
   valueInCents: number;
   expenseCycle: { id: number };
-  paidBy: UserResponse;
-  sharedBetween: UserResponse[];
+  paidBy: ExpenseUserResponse;
+  sharedBetween: ExpenseUserResponse[];
 };
 
 function expenseResponseToModel(data: ExpenseResponse): Expense;
@@ -29,9 +28,9 @@ function expenseResponseToModel(data: ExpenseResponse | ExpenseResponse[]): Expe
     createdAt: DateTime.fromISO(data.createdAt),
     updatedAt: DateTime.fromISO(data.updatedAt),
     date: DateTime.fromISO(data.date),
-    paidBy: new User(data.paidBy),
+    paidBy: expenseUserResponseToModel(data.paidBy),
     price: new Money(data.valueInCents),
-    sharedBetween: data.sharedBetween.map((el) => new User(el)),
+    sharedBetween: expenseUserResponseToModel(data.sharedBetween),
   });
 }
 

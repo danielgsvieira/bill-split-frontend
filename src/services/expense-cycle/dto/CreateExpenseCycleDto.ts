@@ -3,10 +3,16 @@ import type { DateTime } from 'luxon';
 import type { User } from 'src/models/User';
 
 class CreateExpenseCycleDto {
+  declare readonly __brand: symbol & { __brand: 'CreateExpenseCycleDto' };
+
   readonly title: string;
+
   readonly description: string;
+
   readonly sharedWith: User[];
+
   readonly startDate: DateTime;
+
   readonly endDate: DateTime;
 
   constructor(data: {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Expense } from 'src/models/Expense';
+import type { Expense } from 'src/models/expense/Expense';
 import { expenseService } from 'src/services';
 import type { RouteLocationRaw } from 'vue-router';
 import { useI18n } from 'vue-i18n';

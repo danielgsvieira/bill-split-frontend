@@ -14,7 +14,7 @@ const labels = {
   createSuccessMessage: i18n.t('general.createSuccessMessage'),
 };
 
-const { data: createdExpenseCycle, execute: createExpenseCycle } = useApiCall(
+const { data: createExpenseCycleResult, execute: createExpenseCycle } = useApiCall(
   (dto: CreateExpenseCycleDto) => expenseCycleService.create(dto),
 );
 
@@ -32,9 +32,12 @@ async function handleSubmit(data: ExpenseCycleFormData) {
   });
   await createExpenseCycle(dto);
 
-  if (createdExpenseCycle.value !== null) {
+  if (createExpenseCycleResult.value !== null) {
     toast.positive(labels.createSuccessMessage);
-    void router.push({ name: 'expense-cycle-view', params: { id: createdExpenseCycle.value.id } });
+    void router.push({
+      name: 'expense-cycle-view',
+      params: { id: createExpenseCycleResult.value.id },
+    });
   }
 }
 </script>

@@ -3,6 +3,8 @@ import type { CreateExpenseDto, EditExpenseDto } from './dto';
 import { type ExpenseResponse, expenseResponseToModel } from './responses';
 
 class ExpenseService {
+  declare readonly __brand: symbol & { __brand: 'ExpenseService' };
+
   readonly basePath = 'expense';
 
   async listByExpenseCycleId(expenseCycleId: number) {

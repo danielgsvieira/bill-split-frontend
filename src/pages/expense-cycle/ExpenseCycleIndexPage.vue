@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ExpenseCycle } from 'src/models/ExpenseCycle';
+import type { ExpenseCycleListItem } from 'src/models/expense-cycle/ExpenseCycleListItem';
 import { expenseCycleService } from 'src/services';
 import { onMounted } from 'vue';
 import { useApiCall } from 'src/composables';
@@ -33,7 +33,7 @@ onMounted(() => {
   void fetchExpenseCycles();
 });
 
-const columns: AppTableColumns<ExpenseCycle> = [
+const columns: AppTableColumns<ExpenseCycleListItem> = [
   {
     name: 'title',
     field: 'title',
@@ -72,7 +72,7 @@ const columns: AppTableColumns<ExpenseCycle> = [
 
 const createExpenseCycleRoute: RouteLocationRaw = { name: 'expense-cycle-create' };
 
-function handleRowClick(row: ExpenseCycle) {
+function handleRowClick(row: ExpenseCycleListItem) {
   void router.push({ name: 'expense-cycle-view', params: { id: row.id } });
 }
 </script>

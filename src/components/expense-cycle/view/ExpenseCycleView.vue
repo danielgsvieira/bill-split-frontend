@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { ExpenseCycle } from 'src/models/ExpenseCycle';
+import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleDetails';
 import { expenseCycleService } from 'src/services';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from 'src/stores';
@@ -11,7 +11,7 @@ import { type RouteLocationRaw, useRouter } from 'vue-router';
 import { useApiCall, useDialog, useToast } from 'src/composables';
 
 type ExpenseCycleViewProps = {
-  expenseCycle: ExpenseCycle;
+  expenseCycle: ExpenseCycleDetails;
 };
 
 const { expenseCycle } = defineProps<ExpenseCycleViewProps>();

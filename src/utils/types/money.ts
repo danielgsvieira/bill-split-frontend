@@ -1,4 +1,6 @@
 class Money {
+  declare readonly __brand: symbol & { __brand: 'Money' };
+
   readonly valueInCents: number;
 
   constructor(valueInCents: number) {

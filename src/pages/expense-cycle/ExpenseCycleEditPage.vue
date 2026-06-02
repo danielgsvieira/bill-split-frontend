@@ -31,7 +31,7 @@ onMounted(() => {
   void fetchExpenseCycle();
 });
 
-const { data: editedExpenseCycle, execute: editExpenseCycle } = useApiCall(
+const { data: editExpenseCycleResult, execute: editExpenseCycle } = useApiCall(
   (dto: EditExpenseCycleDto) => expenseCycleService.edit(dto),
 );
 
@@ -50,11 +50,13 @@ async function handleSubmit(data: ExpenseCycleFormData) {
   });
   await editExpenseCycle(dto);
 
-  if (editedExpenseCycle.value !== null) {
-    expenseCycle.value = editedExpenseCycle.value;
+  if (editExpenseCycleResult.value !== null) {
     toast.positive(labels.editSuccessMessage);
 
-    void router.push({ name: 'expense-cycle-view', params: { id: expenseCycleId } });
+    void router.push({
+      name: 'expense-cycle-view',
+      params: { id: editExpenseCycleResult.value.id },
+    });
   }
 }
 

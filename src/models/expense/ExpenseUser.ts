@@ -1,5 +1,5 @@
-class User {
-  declare readonly __brand: symbol & { __brand: 'User' };
+class ExpenseUser {
+  declare readonly __brand: symbol & { __brand: 'ExpenseUser' };
 
   readonly id: number;
 
@@ -14,4 +14,4 @@ class User {
   }
 }
 
-export { User };
+export { ExpenseUser };

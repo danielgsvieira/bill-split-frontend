@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AppFieldValue } from '../app-components';
 import { computed } from 'vue';
-import type { Expense } from 'src/models/Expense';
+import type { Expense } from 'src/models/expense/Expense';
 import { useI18n } from 'vue-i18n';
 
 type ExpenseViwProps = {

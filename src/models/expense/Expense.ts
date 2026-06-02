@@ -1,8 +1,10 @@
 import type { DateTime } from 'luxon';
+import type { ExpenseUser } from './ExpenseUser';
 import type { Money } from 'src/utils';
-import type { User } from './User';
 
 class Expense {
+  declare readonly __brand: symbol & { __brand: 'Expense' };
+
   readonly id: number;
 
   readonly createdAt: DateTime;
@@ -19,9 +21,9 @@ class Expense {
 
   readonly expenseCycle: { id: number };
 
-  readonly paidBy: User;
+  readonly paidBy: ExpenseUser;
 
-  readonly sharedBetween: User[];
+  readonly sharedBetween: ExpenseUser[];
 
   constructor(data: {
     id: number;
@@ -32,8 +34,8 @@ class Expense {
     isProportional: boolean;
     price: Money;
     expenseCycle: { id: number };
-    paidBy: User;
-    sharedBetween: User[];
+    paidBy: ExpenseUser;
+    sharedBetween: ExpenseUser[];
   }) {
     this.id = data.id;
     this.createdAt = data.createdAt;

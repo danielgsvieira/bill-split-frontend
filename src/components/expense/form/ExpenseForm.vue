@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { DateTime } from 'luxon';
-import type { Expense } from 'src/models/Expense';
-import type { ExpenseCycle } from 'src/models/ExpenseCycle';
+import type { Expense } from 'src/models/expense/Expense';
+import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleDetails';
+import { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import ExpenseCycleUsersInput from './ExpenseCycleUsersInput.vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
-import type { User } from 'src/models/User';
 import {
   AppBtn,
   AppDatePicker,
@@ -24,12 +24,12 @@ type ExpenseFormData = {
   date: DateTime | null;
   isProportional: boolean;
   price: Money;
-  paidBy: User | null;
-  sharedBetween: User[];
+  paidBy: ExpenseCycleUser | null;
+  sharedBetween: ExpenseCycleUser[];
 };
 type ExpenseFormProps = {
   expense?: Expense | null;
-  expenseCycle: ExpenseCycle;
+  expenseCycle: ExpenseCycleDetails;
   onSubmit: (data: ExpenseFormData) => Promise<void> | void;
 };
 
@@ -81,8 +81,8 @@ function fillExpenseData(newValue: Expense) {
     date: newValue.date,
     isProportional: newValue.isProportional,
     price: new Money(newValue.price.valueInCents),
-    paidBy: newValue.paidBy,
-    sharedBetween: [...newValue.sharedBetween],
+    paidBy: new ExpenseCycleUser(newValue.paidBy),
+    sharedBetween: newValue.sharedBetween.map((el) => new ExpenseCycleUser(el)),
   };
 }
 

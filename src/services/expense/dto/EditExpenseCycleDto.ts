@@ -1,9 +1,11 @@
 import type { DateTime } from 'luxon';
 import type { EditExpenseRequest } from '../requests';
+import type { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import type { Money } from 'src/utils';
-import type { User } from 'src/models/User';
 
 class EditExpenseDto {
+  declare readonly __brand: symbol & { __brand: 'EditExpenseDto' };
+
   readonly id: number;
 
   readonly description: string;
@@ -14,9 +16,9 @@ class EditExpenseDto {
 
   readonly price: Money;
 
-  readonly paidBy: User;
+  readonly paidBy: ExpenseCycleUser;
 
-  readonly sharedBetween: User[];
+  readonly sharedBetween: ExpenseCycleUser[];
 
   constructor(data: {
     id: number;
@@ -24,8 +26,8 @@ class EditExpenseDto {
     date: DateTime;
     isProportional: boolean;
     price: Money;
-    paidBy: User;
-    sharedBetween: User[];
+    paidBy: ExpenseCycleUser;
+    sharedBetween: ExpenseCycleUser[];
   }) {
     this.id = data.id;
     this.description = data.description;

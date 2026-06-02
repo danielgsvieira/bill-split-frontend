@@ -12,6 +12,8 @@ type MakeRequestConfig = RequestConfig & {
 };
 
 class HttpClient {
+  declare readonly __brand: symbol & { __brand: 'HttpClient' };
+
   constructor(
     private readonly baseUrl: string,
     private readonly defaultHeaders: Headers,

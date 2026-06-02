@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import type { DateTime } from 'luxon';
-import type { ExpenseCycle } from 'src/models/ExpenseCycle';
-import { expenseService } from 'src/services';
+import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleDetails';
 import type { RouteLocationRaw } from 'vue-router';
 import SharedWithInput from './SharedWithInput.vue';
+import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
-import type { User } from 'src/models/User';
+import { User } from 'src/models/User';
 import { validation } from 'src/utils';
 import { AppBtn, AppDatePicker, AppForm, AppGoBackBtn, AppInput } from 'src/components';
 import { computed, watch } from 'vue';
-import { useApiCall, useForm } from 'src/composables';
 
 type ExpenseCycleFormData = {
   title: string;
@@ -19,7 +18,7 @@ type ExpenseCycleFormData = {
   endDate: DateTime | null;
 };
 type ExpensecycleFormProps = {
-  expenseCycle?: ExpenseCycle | null;
+  expenseCycle?: ExpenseCycleDetails | null;
   onSubmit: (data: ExpenseCycleFormData) => Promise<void> | void;
 };
 
@@ -43,10 +42,6 @@ const labels = {
   submitBtn: i18n.t('general.save'),
 };
 
-const { data: expenses, execute: fetchExpenses } = useApiCall((expenseCycleId: number) =>
-  expenseService.listByExpenseCycleId(expenseCycleId),
-);
-
 const { formData, submitting, submit } = useForm<ExpenseCycleFormData>({
   initialValue: {
     title: '',
@@ -61,7 +56,7 @@ const { formData, submitting, submit } = useForm<ExpenseCycleFormData>({
 });
 
 const expensesSortedByDate = computed(() => {
-  return expenses.value?.toSorted((a, b) => a.date.toMillis() - b.date.toMillis()) ?? [];
+  return expenseCycle?.expenses.toSorted((a, b) => a.date.toMillis() - b.date.toMillis()) ?? [];
 });
 
 const earliestExpense = computed(() => {
@@ -129,12 +124,10 @@ watch(
       formData.value = {
         title: newValue.title,
         description: newValue.description ?? '',
-        sharedWith: [...newValue.sharedWith],
+        sharedWith: newValue.sharedWith.map((el) => new User(el)),
         startDate: newValue.startDate,
         endDate: newValue.endDate,
       };
-
-      void fetchExpenses(newValue.id);
     }
   },
 );

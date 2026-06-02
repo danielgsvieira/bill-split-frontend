@@ -80,7 +80,7 @@ function useApiCall<T, Args extends unknown[]>(
 
       data.value = result;
     } catch (err) {
-      const apiError = err instanceof ApiError ? err : ApiError.createUnknownError();
+      const apiError = err instanceof ApiError ? err : ApiError.createUnknownError(err);
 
       printApiErrorToast(apiError);
 
