@@ -1,7 +1,7 @@
 import type { AppRouteRecordRaw } from 'src/router/routes';
 import type { ExpenseCycleEditPageProps } from './ExpenseCycleEditPage.vue';
 import type { ExpenseCycleUpdateUserBudgetsPageProps } from './ExpenseCycleUpdateUserBudgetsPage.vue';
-import type { ExpenseCycleViewPageProps } from './ExpenseCycleViewPage.vue';
+import type { ExpenseCycleViewPageProps } from './view/ExpenseCycleViewPage.vue';
 
 const expenseCycleRoutes: AppRouteRecordRaw[] = [
   {
@@ -24,7 +24,7 @@ const expenseCycleRoutes: AppRouteRecordRaw[] = [
       {
         name: 'expense-cycle-view',
         path: ':id',
-        component: () => import('./ExpenseCycleViewPage.vue'),
+        component: () => import('./view/ExpenseCycleViewPage.vue'),
         props: (route): ExpenseCycleViewPageProps => ({
           expenseCycleId: Number.parseInt(route.params.id as string),
         }),
