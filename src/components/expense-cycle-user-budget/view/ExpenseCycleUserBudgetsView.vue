@@ -20,7 +20,7 @@ const labels = {
 };
 
 const updateUserBudgetsRoute = computed<RouteLocationRaw>(() => {
-  return { name: 'expense-cycle-update-user-budgets', params: { expenseCycleId } };
+  return { name: 'expense-cycle-update-user-budgets', params: { id: expenseCycleId } };
 });
 </script>
 
