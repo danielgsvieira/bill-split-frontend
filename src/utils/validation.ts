@@ -2,6 +2,7 @@ import { dateFormat } from 'src/consts';
 import { DateTime } from 'luxon';
 import { i18n as i18nInstance } from 'src/boot/i18n';
 import { isNullOrUndefined } from './is-null-or-undefined';
+import type { Money } from './types';
 import type { ValidationRule } from 'quasar';
 
 type NotRequired<T> = T | null | undefined;
@@ -145,6 +146,42 @@ function maxNumber(max: NotRequired<number>, options?: { customMaxText?: string 
   };
 }
 
+function minMoney(min: NotRequired<Money>, options?: { customMinText?: string }): ValidationRule {
+  return (value: NotRequired<string>): true | string => {
+    if (isNullOrUndefined(value) || isNullOrUndefined(min)) {
+      return true;
+    }
+
+    const numericValue = Number.parseInt(value.replaceAll('.', '').replaceAll(',', ''));
+
+    if (numericValue < min.valueInCents) {
+      return i18n.t('validation.minNumber.short', {
+        min: options?.customMinText ?? i18n.n(min.decimalValue, 'currency'),
+      });
+    }
+
+    return true;
+  };
+}
+
+function maxMoney(max: NotRequired<Money>, options?: { customMaxText?: string }): ValidationRule {
+  return (value: NotRequired<string>): true | string => {
+    if (isNullOrUndefined(value) || isNullOrUndefined(max)) {
+      return true;
+    }
+
+    const numericValue = Number.parseInt(value.replaceAll('.', '').replaceAll(',', ''));
+
+    if (numericValue > max.valueInCents) {
+      return i18n.t('validation.maxMoney.short', {
+        max: options?.customMaxText ?? i18n.n(max.decimalValue, 'currency'),
+      });
+    }
+
+    return true;
+  };
+}
+
 const validation = {
   required,
   length,
@@ -154,6 +191,8 @@ const validation = {
   maxDate,
   minNumber,
   maxNumber,
+  minMoney,
+  maxMoney,
 };
 
 export { validation };

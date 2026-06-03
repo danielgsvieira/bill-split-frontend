@@ -70,7 +70,7 @@ const rules = {
     validation.minDate(expenseCycle.startDate),
     validation.maxDate(expenseCycle.endDate),
   ],
-  value: [validation.required(), validation.minNumber(0.01)],
+  value: [validation.required(), validation.minMoney(new Money(1))],
   paidBy: [validation.required()],
   sharedBetween: [validation.required()],
 };
@@ -134,7 +134,6 @@ export type { ExpenseFormData };
       :label="labels.inputs.price"
       name="value"
       :rules="rules.value"
-      :step="0.01"
     />
     <ExpenseCycleUsersInput
       id="input_paidBy"

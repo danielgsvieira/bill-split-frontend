@@ -1,10 +1,16 @@
 import { httpClient } from 'src/utils';
-import type { CreateExpenseCycleDto, EditExpenseCycleDto } from './dto';
+import type {
+  CreateExpenseCycleDto,
+  EditExpenseCycleDto,
+  UpdateExpenseCycleUserBudgetsDto,
+} from './dto';
 import {
   type ExpenseCycleDetailsResponse,
   expenseCycleDetailsResponseToModel,
   type ExpenseCycleListItemResponse,
   expenseCycleListItemResponseToModel,
+  type ExpenseCycleUserBudgetResponse,
+  expenseCycleUserBudgetResponseToModel,
   type ExpenseCycleUserResponse,
   expenseCycleUserResponseToModel,
 } from './responses';
@@ -40,10 +46,27 @@ class ExpenseCycleService {
 
   async listUsers(id: number) {
     const response = await httpClient.get<ExpenseCycleUserResponse[]>(
-      `${this.basePath}/${id}/list-user`,
+      `${this.basePath}/${id}/user`,
     );
 
     return expenseCycleUserResponseToModel(response);
+  }
+
+  async listUserBudgets(id: number) {
+    const response = await httpClient.get<ExpenseCycleUserBudgetResponse[]>(
+      `${this.basePath}/${id}/user-budget`,
+    );
+
+    return expenseCycleUserBudgetResponseToModel(response);
+  }
+
+  async updateUserBudgets(id: number, dto: UpdateExpenseCycleUserBudgetsDto) {
+    const response = await httpClient.patch<ExpenseCycleUserBudgetResponse[]>(
+      `${this.basePath}/${id}/update-user-budgets`,
+      dto.toRequest(),
+    );
+
+    return expenseCycleUserBudgetResponseToModel(response);
   }
 }
 

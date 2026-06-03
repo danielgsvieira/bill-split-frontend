@@ -7,8 +7,10 @@ import {
   AppBtn,
   AppCard,
   AppGoBackBtn,
+  AppInnerLoading,
   AppPage,
   AppSeparator,
+  ExpenseCycleUserBudgetsView,
   ExpenseCycleView,
   ExpenseTable,
 } from 'src/components';
@@ -25,6 +27,7 @@ const i18n = useI18n();
 const labels = {
   createExpenseBtn: i18n.t('expenseCycle.viewPage.createExpenseBtn'),
   expenseListTitle: i18n.t('expenseCycle.viewPage.expenseListTitle'),
+  expenseCycleUserBudgetsTitle: i18n.t('expenseCycle.viewPage.expenseCycleUserBudgetsTitle'),
   pageTitile: i18n.t('expenseCycle.viewPage.pageTitle'),
 };
 
@@ -40,12 +43,16 @@ const {
   execute: fetchExpenses,
 } = useApiCall(() => expenseService.listByExpenseCycleId(expenseCycleId));
 
-onMounted(async () => {
-  await fetchExpenseCycle();
+const {
+  data: userBudgets,
+  loading: loadingUserBudgets,
+  execute: fetchUserBudgets,
+} = useApiCall(() => expenseCycleService.listUserBudgets(expenseCycleId));
 
-  if (expenseCycle.value !== null) {
-    void fetchExpenses();
-  }
+onMounted(() => {
+  void fetchExpenseCycle();
+  void fetchExpenses();
+  void fetchUserBudgets();
 });
 
 const goBackRoute: RouteLocationRaw = { name: 'expense-cycle-index' };
@@ -57,29 +64,44 @@ export type { ExpenseCycleViewPageProps };
 <template>
   <AppPage :title="labels.pageTitile">
     <AppCard :loading>
-      <ExpenseCycleView v-if="expenseCycle !== null" :expense-cycle />
-      <AppSeparator spaced="lg" />
-      <div>
-        <div class="row">
-          <div class="col">
-            <h3 class="q-mb-md q-mt-none text-h5">{{ labels.expenseListTitle }}</h3>
+      <template v-if="expenseCycle !== null">
+        <ExpenseCycleView :expense-cycle />
+        <AppSeparator spaced="lg" />
+        <div>
+          <div class="row">
+            <div class="col">
+              <h3 class="q-mb-md q-mt-none text-h5">{{ labels.expenseCycleUserBudgetsTitle }}</h3>
+            </div>
           </div>
-          <div class="col-auto">
-            <AppBtn
-              icon="add"
-              :label="labels.createExpenseBtn"
-              :to="createExpenseRoute"
-              type="button"
-            />
-          </div>
+          <ExpenseCycleUserBudgetsView
+            :expense-cycle-id="expenseCycle.id"
+            :user-budgets="userBudgets ?? []"
+          />
+          <AppInnerLoading :showing="loadingUserBudgets" />
         </div>
-        <ExpenseTable
-          editable
-          :expenses="expenses ?? []"
-          :loading="loadingExpenses"
-          @refresh-list="fetchExpenses"
-        />
-      </div>
+        <AppSeparator spaced="lg" />
+        <div>
+          <div class="row">
+            <div class="col">
+              <h3 class="q-mb-md q-mt-none text-h5">{{ labels.expenseListTitle }}</h3>
+            </div>
+            <div class="col-auto">
+              <AppBtn
+                icon="add"
+                :label="labels.createExpenseBtn"
+                :to="createExpenseRoute"
+                type="button"
+              />
+            </div>
+          </div>
+          <ExpenseTable
+            editable
+            :expenses="expenses ?? []"
+            :loading="loadingExpenses"
+            @refresh-list="fetchExpenses"
+          />
+        </div>
+      </template>
     </AppCard>
     <div class="items-center justify-end q-mt-md row">
       <AppGoBackBtn :fallback-route="goBackRoute" />

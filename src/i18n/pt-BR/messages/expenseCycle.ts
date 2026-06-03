@@ -24,8 +24,13 @@ const expenseCycle = {
   indexPage: {
     pageTitle: 'Ciclos de Despesa',
   },
+  updateUserBudgtsPage: {
+    expenseCycleTitle: 'Ciclo de Despesa',
+    pageTitle: 'Atualizar Orçamento dos Usuários',
+  },
   viewPage: {
     createExpenseBtn: 'Cadastrar Despesa',
+    expenseCycleUserBudgetsTitle: 'Orçamento por Usuário',
     expenseListTitle: 'Despesas',
     pageTitle: 'Ciclo de Despesa',
   },
