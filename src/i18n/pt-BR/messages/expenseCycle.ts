@@ -13,6 +13,10 @@ const expenseCycle = {
       onlyCreatorCanEdit: 'Somente o criador do ciclo pode editar',
     },
   },
+  fieldValidations: {
+    requiredUserRelatedToExpenses:
+      'O usuário {user} é obrigatório pois existem despesas vinculadas à ele',
+  },
   fields: {
     createdBy: 'Criado por',
     description: 'Descrição',
@@ -29,10 +33,19 @@ const expenseCycle = {
     pageTitle: 'Atualizar Orçamento dos Usuários',
   },
   viewPage: {
+    allBudgetsMustBeFilledHint: 'Preencha todos os orçamentos',
     createExpenseBtn: 'Cadastrar Despesa',
+    expenseCycleBalanceTitle: 'Resultados',
     expenseCycleUserBudgetsTitle: 'Orçamento por Usuário',
     expenseListTitle: 'Despesas',
+    fillUserBudgetsToViewHint: 'Preencha todos os orçamentos para visualizar',
     pageTitle: 'Ciclo de Despesa',
+    valuesSection: {
+      balance: 'Saldo',
+      debtPaymentSuggestion: 'Sugestão de pagamentos',
+      paymentRecomendationText: '{payingUser} paga {value} para {receivingUser}',
+      totalExpended: 'Gasto total',
+    },
   },
 };
 

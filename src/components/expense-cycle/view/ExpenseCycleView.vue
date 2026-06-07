@@ -85,17 +85,17 @@ const editExpenseCycleRoute = computed<RouteLocationRaw>(() => {
         :value="valueOrEmptyIndicator(expenseCycle.description)"
       />
       <AppFieldValue
-        class="col-12 col-md-4"
+        class="col-12 col-sm-4"
         :label="labels.fields.startDate"
         :value="i18n.d(expenseCycle.startDate.toJSDate(), 'short')"
       />
       <AppFieldValue
-        class="col-12 col-md-4"
+        class="col-12 col-sm-4"
         :label="labels.fields.endDate"
         :value="i18n.d(expenseCycle.endDate.toJSDate(), 'short')"
       />
       <AppFieldValue
-        class="col-12 col-md-4"
+        class="col-12 col-sm-4"
         :label="labels.fields.sharedWith"
         :value="sharedWithText"
       />

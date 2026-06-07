@@ -4,6 +4,7 @@ import { ExpenseCycleExpense } from 'src/models/expense-cycle/ExpenseCycleExpens
 type ExpenseCycleExpenseResponse = {
   id: number;
   date: string;
+  userIds: number[];
 };
 
 function expenseCycleExpenseResponseToModel(data: ExpenseCycleExpenseResponse): ExpenseCycleExpense;
@@ -17,7 +18,11 @@ function expenseCycleExpenseResponseToModel(
     return data.map((el) => expenseCycleExpenseResponseToModel(el));
   }
 
-  return new ExpenseCycleExpense({ id: data.id, date: DateTime.fromISO(data.date) });
+  return new ExpenseCycleExpense({
+    id: data.id,
+    date: DateTime.fromISO(data.date),
+    userIds: data.userIds,
+  });
 }
 
 export { expenseCycleExpenseResponseToModel };

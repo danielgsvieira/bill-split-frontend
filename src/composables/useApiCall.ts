@@ -84,6 +84,11 @@ function useApiCall<T, Args extends unknown[]>(
 
       printApiErrorToast(apiError);
 
+      if (apiError.isUnknownError) {
+        // eslint-disable-next-line no-console
+        console.log({ error: apiError.capturedError });
+      }
+
       if (apiError.isUnauthorized) {
         authStore.logout();
         void router.push({ name: 'login', query: { redirect: route.path } });

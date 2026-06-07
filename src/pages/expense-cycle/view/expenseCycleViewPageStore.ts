@@ -1,6 +1,6 @@
-import { ref } from 'vue';
 import { useApiCall } from 'src/composables';
 import { acceptHMRUpdate, defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 import { expenseCycleService, expenseService } from 'src/services';
 
 const useExpenseCycleViewPageStore = defineStore('expenseCycleViewPageStore', () => {
@@ -48,6 +48,10 @@ const useExpenseCycleViewPageStore = defineStore('expenseCycleViewPageStore', ()
     await Promise.all([fetchExpenseCycle(), fetchExpenses(), fetchUserBudgets()]);
   }
 
+  const hasEmptyUserBudget = computed(() => {
+    return userBudgets.value?.some((el) => el.value.valueInCents === 0) ?? false;
+  });
+
   return {
     expenseCycle,
     loadingExpenseCycle,
@@ -59,6 +63,7 @@ const useExpenseCycleViewPageStore = defineStore('expenseCycleViewPageStore', ()
     loadingExpenses,
     fetchExpenses,
     init,
+    hasEmptyUserBudget,
   };
 });
 

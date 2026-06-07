@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { AppBtn } from '../../app-components';
 import { computed } from 'vue';
 import type { ExpenseCycleUserBudget } from 'src/models/expense-cycle/ExpenseCycleUserBudget';
-import ExpenseCycleUserBudgetView from './ExpenseCycleUserBudgetView.vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { AppBtn, AppFieldValue } from '../../app-components';
 
 type ExpenseCycleUserBudgetsViewProps = {
   expenseCycleId: number;
@@ -26,10 +25,11 @@ const updateUserBudgetsRoute = computed<RouteLocationRaw>(() => {
 
 <template>
   <div class="q-gutter-xl row">
-    <ExpenseCycleUserBudgetView
+    <AppFieldValue
       v-for="userBudget in userBudgets"
       :key="userBudget.id"
-      :user-budget
+      :label="userBudget.user.displayName"
+      :value="i18n.n(userBudget.value.decimalValue, 'currency')"
     />
   </div>
   <div class="items-center justify-end q-gutter-md row">

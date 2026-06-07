@@ -48,13 +48,6 @@ const columns: AppTableColumns<Expense> = [
     align: 'left',
   },
   {
-    name: 'date',
-    field: 'date',
-    label: labels.fields.date,
-    align: 'left',
-    format: (value) => i18n.d(value.toJSDate(), 'short'),
-  },
-  {
     name: 'price',
     field: 'price',
     label: labels.fields.price,
@@ -62,11 +55,18 @@ const columns: AppTableColumns<Expense> = [
     format: (value) => i18n.n(value.decimalValue, 'currency'),
   },
   {
-    name: 'isProportional',
-    field: 'isProportional',
-    label: labels.fields.isProportional,
+    name: 'date',
+    field: 'date',
+    label: labels.fields.date,
     align: 'left',
-    format: (value) => (value ? labels.yes : labels.no),
+    format: (value) => i18n.d(value.toJSDate(), 'short'),
+  },
+  {
+    name: 'sharedBetween',
+    field: 'sharedBetween',
+    label: labels.fields.sharedBetween,
+    align: 'left',
+    format: (value) => getSharedBetweenText(value),
   },
   {
     name: 'paidBy',
@@ -76,11 +76,11 @@ const columns: AppTableColumns<Expense> = [
     format: (value) => value.displayName,
   },
   {
-    name: 'sharedBetween',
-    field: 'sharedBetween',
-    label: labels.fields.sharedBetween,
+    name: 'isProportional',
+    field: 'isProportional',
+    label: labels.fields.isProportional,
     align: 'left',
-    format: (value) => getSharedBetweenText(value),
+    format: (value) => (value ? labels.yes : labels.no),
   },
 ];
 

@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import { useExpenseCycleViewPageStore } from './expenseCycleViewPageStore';
 import { useI18n } from 'vue-i18n';
 import { AppCard, AppGoBackBtn, AppPage, AppSeparator, ExpenseCycleView } from 'src/components';
-import { ExpensesSection, UserBudgetsSection } from './components';
+import { ExpensesSection, UserBudgetsSection, ValuesSection } from './components';
 
 type ExpenseCycleViewPageProps = {
   expenseCycleId: number;
@@ -35,11 +35,13 @@ export type { ExpenseCycleViewPageProps };
   <AppPage :title="labels.pageTitile">
     <AppCard :loading-expense-cycle>
       <template v-if="expenseCycle !== null">
-        <ExpenseCycleView :expense-cycle />
+        <ValuesSection />
+        <AppSeparator spaced="lg" />
+        <ExpensesSection />
         <AppSeparator spaced="lg" />
         <UserBudgetsSection />
         <AppSeparator spaced="lg" />
-        <ExpensesSection />
+        <ExpenseCycleView :expense-cycle />
       </template>
     </AppCard>
     <div class="items-center justify-end q-mt-md row">

@@ -76,6 +76,23 @@ const latestExpense = computed(() => {
   return expensesSortedByDate.value[numberOfExpenses - 1] ?? null;
 });
 
+const requiredSharedWithIds = computed(() => {
+  if (expenseCycle === null) {
+    return [];
+  }
+
+  const idsSet = expenseCycle.expenses.reduce((acc, expense) => {
+    expense.userIds.forEach((id) => {
+      if (id !== expenseCycle.createdBy.id) {
+        acc.add(id);
+      }
+    });
+    return acc;
+  }, new Set<number>());
+
+  return Array.from(idsSet);
+});
+
 const rules = computed(() => {
   const startDate = [
     validation.required(),
@@ -179,6 +196,7 @@ export type { ExpenseCycleFormData };
       class="col-12 col-md-4"
       :label="labels.inputs.sharedWith"
       name="sharedWith"
+      :required-ids="requiredSharedWithIds"
     />
     <div class="col-12">
       <div class="items-center justify-end q-gutter-x-md row">

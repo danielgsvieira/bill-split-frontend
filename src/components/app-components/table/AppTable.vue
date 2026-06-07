@@ -61,7 +61,7 @@ const tableColumns = computed(() => {
     bordered
     :columns="tableColumns"
     flat
-    :grid="grid ?? quasar.screen.lt.sm"
+    :grid="grid ?? quasar.screen.lt.md"
     :loading
     :rows
     :rows-per-page-options

@@ -7,9 +7,12 @@ class ExpenseCycleExpense {
 
   readonly date: DateTime;
 
-  constructor(data: { id: number; date: DateTime }) {
+  readonly userIds: number[];
+
+  constructor(data: { id: number; date: DateTime; userIds: number[] }) {
     this.id = data.id;
     this.date = data.date;
+    this.userIds = data.userIds;
   }
 }
 
