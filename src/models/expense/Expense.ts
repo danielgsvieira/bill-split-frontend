@@ -97,7 +97,7 @@ class Expense {
         valueForUser = new Money(rest.valueInCents);
       } else {
         valueForUser = new Money(valuePerUser.valueInCents);
-        rest = new Money(rest.valueInCents - rest.valueInCents);
+        rest = new Money(rest.valueInCents - valueForUser.valueInCents);
       }
 
       result.push({ user, value: valueForUser });

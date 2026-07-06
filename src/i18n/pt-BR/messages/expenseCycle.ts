@@ -38,6 +38,9 @@ const expenseCycle = {
     expenseCycleBalanceTitle: 'Resultados',
     expenseCycleUserBudgetsTitle: 'Orçamento por Usuário',
     expenseListTitle: 'Despesas',
+    expensesFilter: {
+      includesUser: 'Compartilhado entre',
+    },
     fillUserBudgetsToViewHint: 'Preencha todos os orçamentos para visualizar',
     pageTitle: 'Ciclo de Despesa',
     valuesSection: {

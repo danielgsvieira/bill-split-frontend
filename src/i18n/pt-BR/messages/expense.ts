@@ -9,12 +9,14 @@ const expense = {
     pageTitle: 'Editar Despesa',
   },
   fields: {
+    balancePerUser: 'Saldo Por Usuário',
     date: 'Data',
     description: 'Descrição',
     isProportional: 'Custo Proporcional',
     paidBy: 'Pago por',
     price: 'Valor',
     sharedBetween: 'Compartilhado entre',
+    valuePerUser: 'Valor Por Usuário',
   },
 };
 

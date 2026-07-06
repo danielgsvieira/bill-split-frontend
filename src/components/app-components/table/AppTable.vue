@@ -13,6 +13,8 @@ import { QTable, type QTableColumn, QTd, useQuasar } from 'quasar';
 
 // TODO: Fix action column slot not working on mobile/grid version
 
+type BodyCellSlots = Record<`body-cell-${string}`, VueSlot<{ row: T }>>;
+
 type AppTableProps = {
   columns: AppTableColumns<T>;
   grid?: boolean | undefined;
@@ -24,7 +26,7 @@ type AppTableProps = {
 type AppTableEmits = (e: 'rowClick', value: T) => void;
 type AppTableSlots = {
   actionCell: VueSlot<{ row: T }>;
-};
+} & BodyCellSlots;
 
 const {
   columns,
@@ -35,7 +37,7 @@ const {
   useActionsColumn = false,
 } = defineProps<AppTableProps>();
 const emit = defineEmits<AppTableEmits>();
-defineSlots<AppTableSlots>();
+const slots = defineSlots<AppTableSlots>();
 
 const i18n = useI18n();
 const quasar = useQuasar();
@@ -46,7 +48,7 @@ const tableColumns = computed(() => {
   if (useActionsColumn) {
     result.push({
       align: 'center',
-      field: '' as keyof T,
+      field: '',
       label: i18n.t('general.table.actionColumnLabel'),
       name: 'actions',
     });
@@ -67,6 +69,11 @@ const tableColumns = computed(() => {
     :rows-per-page-options
     @row-click="(_, row) => emit('rowClick', row)"
   >
+    <template v-for="(_, slotName) in slots" :key="slotName" #[slotName]="slotProps">
+      <QTd :props="slotProps">
+        <slot v-if="slotName !== 'actionCell'" :name="slotName" v-bind="slotProps" />
+      </QTd>
+    </template>
     <template v-if="useActionsColumn" #[`body-cell-actions`]="cellProps">
       <QTd :props="cellProps">
         <slot name="actionCell" v-bind="{ row: cellProps.row }" />

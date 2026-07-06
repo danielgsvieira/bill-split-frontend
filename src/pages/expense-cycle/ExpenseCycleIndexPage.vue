@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { DateTime } from 'luxon';
 import type { ExpenseCycleListItem } from 'src/models/expense-cycle/ExpenseCycleListItem';
 import { expenseCycleService } from 'src/services';
+import type { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import { onMounted } from 'vue';
 import { useApiCall } from 'src/composables';
 import { useI18n } from 'vue-i18n';
@@ -45,28 +47,28 @@ const columns: AppTableColumns<ExpenseCycleListItem> = [
     field: 'description',
     label: labels.fields.description,
     align: 'left',
-    format: (value) => valueOrEmptyIndicator(value),
+    format: (value: string | null) => valueOrEmptyIndicator(value),
   },
   {
     name: 'startDate',
     field: 'startDate',
     label: labels.fields.startDate,
     align: 'center',
-    format: (value) => i18n.d(value.toJSDate(), 'short'),
+    format: (value: DateTime) => i18n.d(value.toJSDate(), 'short'),
   },
   {
     name: 'endDate',
     field: 'endDate',
     label: labels.fields.endDate,
     align: 'center',
-    format: (value) => i18n.d(value.toJSDate(), 'short'),
+    format: (value: DateTime) => i18n.d(value.toJSDate(), 'short'),
   },
   {
     name: 'createdBy',
     field: 'createdBy',
     label: labels.fields.createdBy,
     align: 'center',
-    format: (value) => value.displayName,
+    format: (value: ExpenseCycleUser) => value.displayName,
   },
 ];
 

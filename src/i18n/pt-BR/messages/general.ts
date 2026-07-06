@@ -3,12 +3,14 @@
 
 const general = {
   appTitle: 'Divisão de Contas',
+  applyFilter: 'Filtrar',
   close: 'Fechar',
   create: 'Cadastrar',
   createSuccessMessage: 'Registro cradastrado com sucesso',
   delete: 'Remover',
   edit: 'Editar',
   editSuccessMessage: 'Registro atualizado com sucesso',
+  filters: 'Filtros',
   goBack: 'Voltar',
   logout: 'Sair',
   no: 'Não',

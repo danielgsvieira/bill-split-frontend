@@ -1,13 +1,11 @@
-type AppTableColumn<R, F extends keyof R> = {
+type AppTableColumn<T> = {
   align: 'center' | 'left' | 'right';
-  field: F;
+  field: string;
   label: string;
   name: string;
-  format?: (value: R[F], row: R) => string;
+  format?: (value: never, row: T) => string;
 };
 
-type AppTableColumns<R> = {
-  [K in keyof R]: AppTableColumn<R, K>;
-}[keyof R][];
+type AppTableColumns<T> = AppTableColumn<T>[];
 
 export type { AppTableColumns };
