@@ -187,8 +187,8 @@ function getPaymentRecomendationText(receivingUser: string, payingUser: string, 
       </div>
     </div>
     <div v-if="hasEmptyUserBudget" class="items-center row">
-      <AppIcon class="text-grey-8" name="info" />
-      <p class="d-inline-block q-mb-none q-ml-sm text-grey-8">
+      <AppIcon class="opacity-50" name="info" />
+      <p class="d-inline-block opacity-50 q-mb-none q-ml-sm">
         {{ labels.fillUserBudgetsToViewHint }}
       </p>
     </div>
@@ -221,12 +221,10 @@ function getPaymentRecomendationText(receivingUser: string, payingUser: string, 
         >
           <AppFieldValue
             class="q-pa-sm"
-            :class="{
-              'highlighted-info': authUser?.id === user.id,
-              'text-negative': balance.valueInCents < 0,
-            }"
+            :class="{ 'highlighted-info': authUser?.id === user.id }"
             :label="user.displayName"
             :value="i18n.n(balance.decimalValue, 'currency')"
+            :value-text-class="balance.valueInCents < 0 ? 'text-negative' : undefined"
           />
         </div>
       </div>
@@ -266,5 +264,10 @@ function getPaymentRecomendationText(receivingUser: string, payingUser: string, 
 .highlighted-info {
   background-color: $grey-3;
   border-radius: 0.25rem;
+
+  :deep(.body--dark) &,
+  body.body--dark & {
+    background-color: $grey-9;
+  }
 }
 </style>

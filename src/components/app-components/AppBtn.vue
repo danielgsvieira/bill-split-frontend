@@ -7,7 +7,7 @@
 import type { AppSizeString } from 'src/utils';
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
-import { QBtn, type QBtnProps } from 'quasar';
+import { QBtn, type QBtnProps, useQuasar } from 'quasar';
 
 type AppBtnProps = {
   color?: QBtnProps['color'];
@@ -35,10 +35,21 @@ const {
 } = defineProps<AppBtnProps>();
 const emit = defineEmits<AppBtnEmits>();
 
+const quasar = useQuasar();
+
 const btnColor = computed(() => {
-  const defaultColor = flat === true ? 'grey-8' : 'primary';
+  const defaultColor = flat === true ? undefined : 'primary';
 
   return color ?? defaultColor;
+});
+
+const computedStyle = computed(() => {
+  if (!flat) {
+    return undefined;
+  }
+
+  const textColor = quasar.dark.isActive ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)';
+  return { color: textColor };
 });
 
 export type { AppBtnEmits, AppBtnProps };
@@ -54,6 +65,7 @@ export type { AppBtnEmits, AppBtnProps };
     no-caps
     :round
     :size
+    :style="computedStyle"
     :to
     :type
     @click="(e) => emit('click', e)"

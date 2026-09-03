@@ -3,6 +3,7 @@ import AppCard from './AppCard.vue';
 import AppChip from './AppChip.vue';
 import AppColorPicker from './AppColorPicker.vue';
 import AppCustomDialog from './AppCustomDialog.vue';
+import AppDarkModeToggle from './AppDarkModeToggle.vue';
 import AppDatePicker from './AppDatePicker.vue';
 import AppFieldValue from './AppFieldValue.vue';
 import AppForm from './AppForm.vue';
@@ -26,6 +27,7 @@ export {
   AppColorPicker,
   AppCustomDialog,
   AppDatePicker,
+  AppDarkModeToggle,
   AppFieldValue,
   AppForm,
   AppGoBackBtn,

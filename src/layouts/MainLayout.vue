@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AppDarkModeToggle } from 'src/components';
 import MainLayoutUserMenu from './MainLayoutUserMenu.vue';
 import { RouterView } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -9,9 +10,10 @@ const i18n = useI18n();
 
 <template>
   <QLayout view="lHh Lpr lFf">
-    <QHeader elevated>
+    <QHeader>
       <QToolbar>
         <QToolbarTitle>{{ i18n.t('general.appTitle') }}</QToolbarTitle>
+        <AppDarkModeToggle />
         <MainLayoutUserMenu />
       </QToolbar>
     </QHeader>

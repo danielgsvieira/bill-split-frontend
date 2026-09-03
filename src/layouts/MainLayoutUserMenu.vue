@@ -38,7 +38,7 @@ const menuOffset = [0, 2];
 <template>
   <QAvatar class="cursor-pointer" color="blue-grey-2 text-primary">
     {{ userInitial }}
-    <QMenu anchor="bottom right" class="q-mt-xl" :offset="menuOffset" self="top right">
+    <QMenu anchor="bottom right" :offset="menuOffset" self="top right">
       <QList>
         <QItem v-close-popup v-ripple clickable @click="handleLogout">
           <QItemSection side>

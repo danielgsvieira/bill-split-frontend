@@ -16,7 +16,7 @@ const labels = {
     <div>
       <div class="fontSize30vh">{{ labels.fourOFour }}</div>
 
-      <div class="opacity04 text-h2">{{ labels.pageNotFoundText }}</div>
+      <div class="opacity-40 text-h2">{{ labels.pageNotFoundText }}</div>
 
       <div class="q-mt-md text-subtitle1">
         <RouterLink to="/">
@@ -30,9 +30,5 @@ const labels = {
 <style scoped lang="scss">
 .fontSize30vh {
   font-size: 30vh;
-}
-
-.opacity04 {
-  opacity: 0.4;
 }
 </style>

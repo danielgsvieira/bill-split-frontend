@@ -2,16 +2,17 @@
 type AppFielValueProps = {
   label: string;
   value?: string | number | null | undefined;
+  valueTextClass?: string | undefined;
 };
 
-const { label, value = undefined } = defineProps<AppFielValueProps>();
+const { label, value = undefined, valueTextClass = undefined } = defineProps<AppFielValueProps>();
 </script>
 
 <template>
   <div class="column">
-    <label class="text-body2 text-grey-8 text-weight-medium">
+    <label class="opacity-50 text-body2 text-weight-medium">
       {{ label }}
     </label>
-    <p class="q-mb-none text-body">{{ value ?? '' }}</p>
+    <p class="q-mb-none text-body" :class="valueTextClass">{{ value ?? '' }}</p>
   </div>
 </template>

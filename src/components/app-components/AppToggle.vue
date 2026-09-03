@@ -7,23 +7,27 @@
 import { QField, QToggle, type QToggleProps, type ValidationRule } from 'quasar';
 
 type AppToggleProps = {
+  checkedIcon?: string | undefined;
   color?: QToggleProps['color'];
   falseValue?: T;
   indeterminateValue?: T;
   label?: string | undefined;
   leftLabel?: boolean | undefined;
-  trueValue?: T;
   rules?: ValidationRule[] | undefined;
+  trueValue?: T;
+  uncheckedIcon?: string | undefined;
 };
 
 const {
+  checkedIcon = undefined,
   color = 'primary',
   falseValue = false,
   indeterminateValue = undefined,
   label = undefined,
   leftLabel = false,
-  trueValue = true,
   rules = undefined,
+  trueValue = true,
+  uncheckedIcon = undefined,
 } = defineProps<AppToggleProps>();
 
 const model = defineModel<T | null | undefined>();
@@ -33,12 +37,14 @@ const model = defineModel<T | null | undefined>();
   <QField v-model="model" borderless :rules>
     <QToggle
       v-model="model"
+      :checked-icon
       :color
       :false-value
       :indeterminate-value
       :label
       :left-label
       :true-value
+      :unchecked-icon
     />
   </QField>
 </template>
