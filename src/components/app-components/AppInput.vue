@@ -4,7 +4,7 @@
   Docs: https://quasar.dev/vue-components/input
 -->
 <script setup lang="ts">
-import type { VNode } from 'vue';
+import type { VueSlot } from 'src/utils';
 import { QInput, type ValidationRule } from 'quasar';
 
 type InputType =
@@ -37,8 +37,8 @@ type AppInputProps = {
 };
 type AppInputEmits = (e: 'keyup') => void;
 type AppInputSlots = {
-  append: () => VNode[];
-  prepend: () => VNode[];
+  append: VueSlot;
+  prepend: VueSlot;
 };
 
 const {

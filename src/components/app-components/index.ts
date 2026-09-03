@@ -1,5 +1,8 @@
 import AppBtn from './AppBtn.vue';
 import AppCard from './AppCard.vue';
+import AppChip from './AppChip.vue';
+import AppColorPicker from './AppColorPicker.vue';
+import AppCustomDialog from './AppCustomDialog.vue';
 import AppDatePicker from './AppDatePicker.vue';
 import AppFieldValue from './AppFieldValue.vue';
 import AppForm from './AppForm.vue';
@@ -19,6 +22,9 @@ import { AppTable, AppTableActionBtn, type AppTableColumns } from './table';
 export {
   AppBtn,
   AppCard,
+  AppChip,
+  AppColorPicker,
+  AppCustomDialog,
   AppDatePicker,
   AppFieldValue,
   AppForm,

@@ -5,7 +5,7 @@ import { QCard, QCardSection } from 'quasar';
 
 type AppPageProps = {
   loading?: boolean | undefined;
-  title?: string;
+  title?: string | undefined;
 };
 type AppPageSlots = {
   default: VueSlot;

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { VNode } from 'vue';
+import type { VueSlot } from 'src/utils';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 
 type AppNumberInputModelValue = number | null | undefined;
 type AppNumberInputProps = Omit<AppInputProps, 'modelValue' | 'type'>;
 type AppNumberInputSlots = {
-  append: () => VNode[];
-  prepend: () => VNode[];
+  append: VueSlot;
+  prepend: VueSlot;
 };
 
 const props = defineProps<AppNumberInputProps>();

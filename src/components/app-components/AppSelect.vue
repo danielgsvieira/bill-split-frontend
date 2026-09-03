@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T extends object | string | number">
 import { useI18n } from 'vue-i18n';
+import type { VueSlot } from 'src/utils';
 import { QItem, QItemSection, QSelect, type ValidationRule } from 'quasar';
 import { ref, watch } from 'vue';
 
@@ -24,6 +25,14 @@ type AppSelectProps = {
   rules?: ValidationRule[] | undefined;
   useChips?: boolean | undefined;
 };
+type AppSelectSlots = {
+  selectedItem: VueSlot<{
+    option: AppSelectOption;
+    selected: boolean;
+    removeAtIndex: (index: number) => void;
+    toggleOption: (opt: AppSelectOption) => void;
+  }>;
+};
 type AppSelectModelType = T | T[] | null | undefined;
 
 const {
@@ -39,6 +48,7 @@ const {
   rules = undefined,
   useChips = undefined,
 } = defineProps<AppSelectProps>();
+const slots = defineSlots<AppSelectSlots>();
 
 const model = defineModel<AppSelectModelType>();
 
@@ -98,6 +108,12 @@ watch(
           {{ i18n.t('general.noResults') }}
         </QItemSection>
       </QItem>
+    </template>
+    <template
+      v-if="slots['selectedItem']"
+      #[`selected-item`]="{ opt, selected, removeAtIndex, toggleOption }"
+    >
+      <slot name="selectedItem" v-bind="{ option: opt, selected, removeAtIndex, toggleOption }" />
     </template>
   </QSelect>
 </template>
