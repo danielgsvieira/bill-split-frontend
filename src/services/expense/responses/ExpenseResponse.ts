@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { Expense } from 'src/models/expense/Expense';
 import { Money } from 'src/utils';
+import { type ExpenseTagResponse, expenseTagResponseToModel } from './ExpenseTagResponse';
 import { type ExpenseUserResponse, expenseUserResponseToModel } from './ExpenseUserResponse';
 
 type ExpenseResponse = {
@@ -14,6 +15,7 @@ type ExpenseResponse = {
   expenseCycle: { id: number };
   paidBy: ExpenseUserResponse;
   sharedBetween: ExpenseUserResponse[];
+  tags: ExpenseTagResponse[];
 };
 
 function expenseResponseToModel(data: ExpenseResponse): Expense;
@@ -31,6 +33,7 @@ function expenseResponseToModel(data: ExpenseResponse | ExpenseResponse[]): Expe
     paidBy: expenseUserResponseToModel(data.paidBy),
     price: new Money(data.valueInCents),
     sharedBetween: expenseUserResponseToModel(data.sharedBetween),
+    tags: expenseTagResponseToModel(data.tags),
   });
 }
 

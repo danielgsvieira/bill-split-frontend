@@ -16,6 +16,7 @@ const expense = {
     paidBy: 'Pago por',
     price: 'Valor',
     sharedBetween: 'Compartilhado entre',
+    tags: 'Marcadores',
     valuePerUser: 'Valor Por Usuário',
   },
 };

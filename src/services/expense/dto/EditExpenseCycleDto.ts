@@ -2,6 +2,7 @@ import type { DateTime } from 'luxon';
 import type { EditExpenseRequest } from '../requests';
 import type { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import type { Money } from 'src/utils';
+import type { Tag } from 'src/models/tag/Tag';
 
 class EditExpenseDto {
   declare readonly __brand: symbol & { __brand: 'EditExpenseDto' };
@@ -20,6 +21,8 @@ class EditExpenseDto {
 
   readonly sharedBetween: ExpenseCycleUser[];
 
+  readonly tags: Tag[];
+
   constructor(data: {
     id: number;
     description: string;
@@ -28,6 +31,7 @@ class EditExpenseDto {
     price: Money;
     paidBy: ExpenseCycleUser;
     sharedBetween: ExpenseCycleUser[];
+    tags: Tag[];
   }) {
     this.id = data.id;
     this.description = data.description;
@@ -36,6 +40,7 @@ class EditExpenseDto {
     this.price = data.price;
     this.paidBy = data.paidBy;
     this.sharedBetween = data.sharedBetween;
+    this.tags = data.tags;
   }
 
   toRequest(): EditExpenseRequest {
@@ -52,6 +57,7 @@ class EditExpenseDto {
       valueInCents: this.price.valueInCents,
       paidByUserId: this.paidBy.id,
       sharedBetweenIds: this.sharedBetween.map((el) => el.id),
+      tagIds: this.tags.map((el) => el.id),
     };
   }
 }

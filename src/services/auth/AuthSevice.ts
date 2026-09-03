@@ -1,5 +1,5 @@
 import { httpClient } from 'src/utils';
-import type { isUsernameAvailableResponse, LoginRespose, UserResponse } from './responses';
+import type { IsUsernameAvailableResponse, LoginRespose, UserResponse } from './responses';
 
 class AuthService {
   declare readonly __brand: symbol & { __brand: 'AuthService' };
@@ -19,7 +19,7 @@ class AuthService {
   }
 
   public async isUsernameAvailable(username: string) {
-    return httpClient.post<isUsernameAvailableResponse>(`${this.basePath}/is-username-available`, {
+    return httpClient.post<IsUsernameAvailableResponse>(`${this.basePath}/is-username-available`, {
       username,
     });
   }

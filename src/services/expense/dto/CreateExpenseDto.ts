@@ -20,6 +20,8 @@ class CreateExpenseDto {
 
   readonly sharedBetween: { id: number }[];
 
+  readonly tags: { id: number }[];
+
   constructor(data: {
     description: string;
     date: DateTime;
@@ -28,6 +30,7 @@ class CreateExpenseDto {
     expenseCycle: { id: number };
     paidBy: ExpenseCycleUser;
     sharedBetween: ExpenseCycleUser[];
+    tags: { id: number }[];
   }) {
     this.description = data.description;
     this.date = data.date;
@@ -36,6 +39,7 @@ class CreateExpenseDto {
     this.expenseCycle = data.expenseCycle;
     this.paidBy = data.paidBy;
     this.sharedBetween = data.sharedBetween;
+    this.tags = data.tags;
   }
 
   toRequest(): CreateExpenseRequest {
@@ -52,6 +56,7 @@ class CreateExpenseDto {
       expenseCycleId: this.expenseCycle.id,
       paidByUserId: this.paidBy.id,
       sharedBetweenIds: this.sharedBetween.map((el) => el.id),
+      tagIds: this.tags.map((el) => el.id),
     };
   }
 }

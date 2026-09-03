@@ -1,6 +1,11 @@
 import { i18n as i18nInstance } from 'src/boot/i18n';
 import { Dialog, type QDialogOptions } from 'quasar';
 
+type DialogEmits = {
+  (e: 'ok', payload?: never): void;
+  (e: 'hide'): void;
+};
+
 function useDialog() {
   const i18n = i18nInstance.global;
 
@@ -34,7 +39,8 @@ function useDialog() {
     });
   }
 
-  return { confirm };
+  return { confirm, customDialog };
 }
 
+export type { DialogEmits };
 export { useDialog };

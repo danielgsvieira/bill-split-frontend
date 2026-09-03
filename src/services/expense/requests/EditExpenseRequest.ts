@@ -5,6 +5,7 @@ type EditExpenseRequest = {
   valueInCents: number;
   paidByUserId: number;
   sharedBetweenIds: number[];
+  tagIds: number[];
 };
 
 export type { EditExpenseRequest };

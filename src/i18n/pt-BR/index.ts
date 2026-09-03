@@ -7,6 +7,7 @@ import { expense } from './messages/expense';
 import { expenseCycle } from './messages/expenseCycle';
 import { general } from './messages/general';
 import { pageNotFound } from './messages/pageNotFound';
+import { tag } from './messages/tag';
 import { validation } from './messages/validation';
 
 const ptBR = {
@@ -16,6 +17,7 @@ const ptBR = {
   expenseCycle,
   general,
   pageNotFound,
+  tag,
   validation,
 };
 

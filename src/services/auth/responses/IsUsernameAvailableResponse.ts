@@ -1,5 +1,5 @@
-type isUsernameAvailableResponse = {
+type IsUsernameAvailableResponse = {
   isAvailable: boolean;
 };
 
-export type { isUsernameAvailableResponse };
+export type { IsUsernameAvailableResponse };

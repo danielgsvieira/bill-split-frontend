@@ -4,6 +4,7 @@
 const general = {
   appTitle: 'Divisão de Contas',
   applyFilter: 'Filtrar',
+  cancel: 'Cancelar',
   close: 'Fechar',
   create: 'Cadastrar',
   createSuccessMessage: 'Registro cradastrado com sucesso',

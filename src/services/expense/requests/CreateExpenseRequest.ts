@@ -6,6 +6,7 @@ type CreateExpenseRequest = {
   expenseCycleId: number;
   paidByUserId: number;
   sharedBetweenIds: number[];
+  tagIds: number[];
 };
 
 export type { CreateExpenseRequest };

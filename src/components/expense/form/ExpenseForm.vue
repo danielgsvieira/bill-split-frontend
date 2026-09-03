@@ -5,6 +5,8 @@ import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleD
 import { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import ExpenseCycleUsersInput from './ExpenseCycleUsersInput.vue';
 import type { RouteLocationRaw } from 'vue-router';
+import { Tag } from 'src/models/tag/Tag';
+import { TagSelect } from 'src/components/tag';
 import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
 import {
@@ -26,6 +28,7 @@ type ExpenseFormData = {
   price: Money;
   paidBy: ExpenseCycleUser | null;
   sharedBetween: ExpenseCycleUser[];
+  tags: Tag[];
 };
 type ExpenseFormProps = {
   expense?: Expense | null;
@@ -45,6 +48,7 @@ const labels = {
     paidBy: i18n.t('expense.fields.paidBy'),
     sharedBetween: i18n.t('expense.fields.sharedBetween'),
     price: i18n.t('expense.fields.price'),
+    tags: i18n.t('expense.fields.tags'),
   },
   submitBtn: i18n.t('general.save'),
 };
@@ -57,6 +61,7 @@ const { formData, submitting, submit } = useForm<ExpenseFormData>({
     price: new Money(0),
     paidBy: null,
     sharedBetween: [],
+    tags: [],
   },
   submit: async (data) => {
     await onSubmit(data);
@@ -83,6 +88,7 @@ function fillExpenseData(newValue: Expense) {
     price: new Money(newValue.price.valueInCents),
     paidBy: new ExpenseCycleUser(newValue.paidBy),
     sharedBetween: newValue.sharedBetween.map((el) => new ExpenseCycleUser(el)),
+    tags: newValue.tags.map((el) => new Tag(el)),
   };
 }
 
@@ -158,6 +164,13 @@ export type { ExpenseFormData };
       v-model="formData.isProportional"
       class="col-12"
       :label="labels.inputs.isProportional"
+    />
+    <TagSelect
+      id="input_tags"
+      v-model="formData.tags"
+      class="col-12"
+      :label="labels.inputs.tags"
+      name="tags"
     />
     <div class="col-12">
       <div class="items-center justify-end q-gutter-x-md row">

@@ -1,4 +1,5 @@
 import type { DateTime } from 'luxon';
+import type { ExpenseTag } from './ExpenseTag';
 import type { ExpenseUser } from './ExpenseUser';
 import { Money } from 'src/utils';
 
@@ -27,6 +28,8 @@ class Expense {
 
   readonly sharedBetween: ExpenseUser[];
 
+  readonly tags: ExpenseTag[];
+
   constructor(data: {
     id: number;
     createdAt: DateTime;
@@ -38,6 +41,7 @@ class Expense {
     expenseCycle: { id: number };
     paidBy: ExpenseUser;
     sharedBetween: ExpenseUser[];
+    tags: ExpenseTag[];
   }) {
     this.id = data.id;
     this.createdAt = data.createdAt;
@@ -49,6 +53,7 @@ class Expense {
     this.expenseCycle = data.expenseCycle;
     this.paidBy = data.paidBy;
     this.sharedBetween = data.sharedBetween;
+    this.tags = data.tags;
   }
 
   get sharedBetweenIds() {
