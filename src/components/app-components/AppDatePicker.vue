@@ -42,7 +42,7 @@ const modelStrValue = computed({
 </script>
 
 <template>
-  <AppInput v-bind="props" v-model="modelStrValue" mask="##/##/####" @click="popupProxyRef?.show()">
+  <AppInput v-bind="props" v-model="modelStrValue" mask="##/##/####">
     <template #append>
       <AppIcon class="cursor-pointer" name="event">
         <QPopupProxy ref="popup-proxy">

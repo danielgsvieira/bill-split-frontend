@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AppIcon from './AppIcon.vue';
-import { useTemplateRef } from 'vue';
 import AppInput, { type AppInputProps } from './AppInput.vue';
 import { QColor, QPopupProxy } from 'quasar';
 
@@ -9,16 +8,14 @@ type AppDatePickerProps = Omit<AppInputProps, 'type'>;
 
 const props = defineProps<AppDatePickerProps>();
 const model = defineModel<AppDatePickerModelType>({ default: '#AAAAAA' });
-
-const popupProxyRef = useTemplateRef<InstanceType<typeof QPopupProxy>>('popup-proxy');
 </script>
 
 <template>
-  <AppInput v-bind="props" v-model="model" @click="popupProxyRef?.show()">
+  <AppInput v-bind="props" v-model="model">
     <template #append>
       <div class="colorVisualizer" :style="{ backgroundColor: model ?? '' }"></div>
       <AppIcon class="cursor-pointer" name="colorize">
-        <QPopupProxy ref="popup-proxy">
+        <QPopupProxy>
           <QColor v-model="model" no-header />
         </QPopupProxy>
       </AppIcon>
