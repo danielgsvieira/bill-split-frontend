@@ -22,6 +22,9 @@ const general = {
   save: 'Salvar',
   table: {
     actionColumnLabel: 'Ações',
+    visibleColumnsMenu: {
+      title: 'Colunas visíveis',
+    },
   },
   yes: 'Sim',
 };

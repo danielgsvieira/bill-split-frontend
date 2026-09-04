@@ -6,21 +6,22 @@
 <!-- eslint-disable vue/no-unused-properties, vue/define-props-destructuring -->
 <script setup lang="ts">
 import { QIcon } from 'quasar';
-import type { VueSlot } from 'src/utils';
+import type { AppSizeString, VueSlot } from 'src/utils';
 
 type AppIconProps = {
   name: string;
+  size?: AppSizeString | undefined;
 };
 type AppIconSlots = {
   default: VueSlot;
 };
 
-const { name } = defineProps<AppIconProps>();
+const { name, size = undefined } = defineProps<AppIconProps>();
 defineSlots<AppIconSlots>();
 </script>
 
 <template>
-  <QIcon :name>
+  <QIcon :name :size>
     <slot name="default" />
   </QIcon>
 </template>

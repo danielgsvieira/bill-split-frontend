@@ -163,7 +163,7 @@ function handleDeleteBtnClick(expense: Expense) {
 </script>
 
 <template>
-  <AppTable :columns :loading :rows="expenses" :use-actions-column="editable">
+  <AppTable :columns :loading manage-columns :rows="expenses" :use-actions-column="editable">
     <template #body-cell-valuePerUser="cellProps">
       <ExpenseTableValuePerUserCell
         v-if="budgetData !== null"

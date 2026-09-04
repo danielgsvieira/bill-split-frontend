@@ -5,20 +5,20 @@
   Docs: https://quasar.dev/vue-components/table
 -->
 <script setup lang="ts" generic="T">
+import AppTableColumnManager from './AppTableColumnManager.vue';
 import type { AppTableColumns } from './app-table-columns';
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { VueSlot } from 'src/utils';
-import { QTable, type QTableColumn, QTd, useQuasar } from 'quasar';
-
-// TODO: Fix action column slot not working on mobile/grid version
+import { computed, ref } from 'vue';
+import { QTable, type QTableColumn, QTd } from 'quasar';
 
 type BodyCellSlots = Record<`body-cell-${string}`, VueSlot<{ row: T }>>;
 
 type AppTableProps = {
   columns: AppTableColumns<T>;
-  grid?: boolean | undefined;
+  defaultVisibleColumns?: string[] | undefined;
   loading?: boolean | undefined;
+  manageColumns?: boolean | undefined;
   rows: T[];
   rowsPerPageOptions?: number[];
   useActionsColumn?: boolean;
@@ -30,8 +30,9 @@ type AppTableSlots = {
 
 const {
   columns,
-  grid = undefined,
+  defaultVisibleColumns = undefined,
   loading = undefined,
+  manageColumns = undefined,
   rows,
   rowsPerPageOptions = [10, 20, 50, 0],
   useActionsColumn = false,
@@ -40,7 +41,14 @@ const emit = defineEmits<AppTableEmits>();
 const slots = defineSlots<AppTableSlots>();
 
 const i18n = useI18n();
-const quasar = useQuasar();
+
+const visibleColumnsModel = ref(defaultVisibleColumns ?? columns.map((el) => el.name));
+
+const availableColumns = computed(() => {
+  return columns.map((el) => {
+    return { name: el.name, label: el.label };
+  });
+});
 
 const tableColumns = computed(() => {
   const result: AppTableColumns<T> = [...columns];
@@ -56,6 +64,18 @@ const tableColumns = computed(() => {
 
   return result as QTableColumn[];
 });
+
+const tableVisibleColumns = computed(() => {
+  const visibleColumns = columns
+    .filter((el) => visibleColumnsModel.value.includes(el.name))
+    .map((el) => el.name);
+
+  if (useActionsColumn) {
+    visibleColumns.push('actions');
+  }
+
+  return visibleColumns;
+});
 </script>
 
 <template>
@@ -63,12 +83,15 @@ const tableColumns = computed(() => {
     bordered
     :columns="tableColumns"
     flat
-    :grid="grid ?? quasar.screen.lt.md"
     :loading
     :rows
     :rows-per-page-options
+    :visible-columns="tableVisibleColumns"
     @row-click="(_, row) => emit('rowClick', row)"
   >
+    <template v-if="manageColumns" #top-right>
+      <AppTableColumnManager v-model="visibleColumnsModel" :available-columns />
+    </template>
     <template v-for="(_, slotName) in slots" :key="slotName" #[slotName]="slotProps">
       <QTd :props="slotProps">
         <slot v-if="slotName !== 'actionCell'" :name="slotName" v-bind="slotProps" />
