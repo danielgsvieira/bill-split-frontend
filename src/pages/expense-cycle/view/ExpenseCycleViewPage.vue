@@ -32,18 +32,16 @@ export type { ExpenseCycleViewPageProps };
 </script>
 
 <template>
-  <AppPage :title="labels.pageTitile">
-    <AppCard :loading-expense-cycle>
-      <template v-if="expenseCycle !== null">
-        <ValuesSection />
-        <AppSeparator spaced="lg" />
-        <ExpensesSection />
-        <AppSeparator spaced="lg" />
-        <UserBudgetsSection />
-        <AppSeparator spaced="lg" />
-        <ExpenseCycleView :expense-cycle />
-      </template>
-    </AppCard>
+  <AppPage :loading="loadingExpenseCycle" :title="labels.pageTitile">
+    <template v-if="expenseCycle !== null">
+      <ValuesSection />
+      <AppSeparator spaced="lg" />
+      <ExpensesSection />
+      <AppSeparator spaced="lg" />
+      <UserBudgetsSection />
+      <AppSeparator spaced="lg" />
+      <ExpenseCycleView :expense-cycle />
+    </template>
     <div class="items-center justify-end q-mt-md row">
       <AppGoBackBtn :fallback-route="goBackRoute" />
     </div>

@@ -30,7 +30,7 @@ const quasar = useQuasar();
     <div class="col column content-width full-width q-pa-md">
       <template v-if="title !== undefined">
         <slot name="header">
-          <div class="col-auto items-center justify-between q-mb-md q-px-md row">
+          <div class="col-auto items-center justify-between q-mb-none q-px-md row">
             <h1
               class="q-ma-none text-h4"
               :class="!quasar.dark.isActive ? 'text-accent' : undefined"
