@@ -4,6 +4,7 @@ import type { Expense } from 'src/models/expense/Expense';
 import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleDetails';
 import { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import ExpenseCycleUsersInput from './ExpenseCycleUsersInput.vue';
+import ExpenseDescriptionInput from './ExpenseDescriptionInput.vue';
 import type { RouteLocationRaw } from 'vue-router';
 import { Tag } from 'src/models/tag/Tag';
 import { TagSelect } from 'src/components/tag';
@@ -14,7 +15,6 @@ import {
   AppDatePicker,
   AppForm,
   AppGoBackBtn,
-  AppInput,
   AppMoneyInput,
   AppToggle,
 } from '../../app-components';
@@ -56,7 +56,8 @@ const labels = {
 const { formData, submitting, submit } = useForm<ExpenseFormData>({
   initialValue: {
     description: '',
-    date: null,
+    // Just clone the start date object
+    date: expenseCycle.startDate.set({}),
     isProportional: false,
     price: new Money(0),
     paidBy: null,
@@ -117,7 +118,7 @@ export type { ExpenseFormData };
 
 <template>
   <AppForm class="q-col-gutter-md row" @submit="submit">
-    <AppInput
+    <ExpenseDescriptionInput
       id="input_description"
       v-model="formData.description"
       class="col-12 col-md-8"

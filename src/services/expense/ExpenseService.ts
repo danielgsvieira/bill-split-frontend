@@ -41,6 +41,12 @@ class ExpenseService {
 
     return expenseResponseToModel(response);
   }
+
+  getDescriptionAutocomplete(description: string) {
+    return httpClient.get<string[]>(
+      `${this.basePath}/autocomplete/description?description=${description}`,
+    );
+  }
 }
 
 const expenseService = new ExpenseService();

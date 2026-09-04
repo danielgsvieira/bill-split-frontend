@@ -1,3 +1,4 @@
+import AppAutocomplete from './AppAutocomplete.vue';
 import AppBtn from './AppBtn.vue';
 import AppCard from './AppCard.vue';
 import AppChip from './AppChip.vue';
@@ -21,6 +22,7 @@ import AppToggle from './AppToggle.vue';
 import { AppTable, AppTableActionBtn, type AppTableColumns } from './table';
 
 export {
+  AppAutocomplete,
   AppBtn,
   AppCard,
   AppChip,
