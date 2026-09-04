@@ -2,6 +2,7 @@
 import { authService } from 'src/services';
 import { useAuthStore } from 'src/stores';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 import { AppBtn, AppForm, AppInput, AppPage, AppPasswordInput } from 'src/components';
 import {
   type LocationQueryValue,
@@ -22,6 +23,7 @@ type RegisterFormData = {
 const i18n = useI18n();
 const route = useRoute();
 const router = useRouter();
+const quasar = useQuasar();
 
 const authStore = useAuthStore();
 
@@ -81,7 +83,9 @@ const loginRoute: RouteLocationRaw = { name: 'login', query: { redirect: route.q
 <template>
   <AppPage centered-content>
     <AppForm class="column full-width max-width q-gutter-y-sm" @submit="submit">
-      <h1 class="text-center text-h4 text-primary">{{ labels.pageTitle }}</h1>
+      <h1 class="text-center text-h4" :class="!quasar.dark.isActive ? 'text-accent' : undefined">
+        {{ labels.pageTitle }}
+      </h1>
       <AppInput
         id="input_username"
         v-model="formData.username"

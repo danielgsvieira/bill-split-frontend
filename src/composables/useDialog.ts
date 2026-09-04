@@ -32,7 +32,7 @@ function useDialog() {
         noCaps: true,
       },
       ok: {
-        color: 'primary',
+        color: 'accent',
         label: options.confirmBtn?.label ?? i18n.t('general.yes'),
         noCaps: true,
       },

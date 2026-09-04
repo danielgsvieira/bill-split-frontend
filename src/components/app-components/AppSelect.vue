@@ -104,7 +104,7 @@ watch(
   >
     <template #no-option>
       <QItem>
-        <QItemSection class="opacity-50 text-italic">
+        <QItemSection class="opacity-60 text-italic">
           {{ i18n.t('general.noResults') }}
         </QItemSection>
       </QItem>

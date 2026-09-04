@@ -36,7 +36,7 @@ const menuOffset = [0, 2];
 </script>
 
 <template>
-  <QAvatar class="cursor-pointer" color="blue-grey-2 text-primary">
+  <QAvatar class="cursor-pointer" color="blue-grey-2 text-accent">
     {{ userInitial }}
     <QMenu anchor="bottom right" :offset="menuOffset" self="top right">
       <QList>

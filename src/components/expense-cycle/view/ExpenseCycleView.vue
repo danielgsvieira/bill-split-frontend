@@ -102,7 +102,7 @@ const editExpenseCycleRoute = computed<RouteLocationRaw>(() => {
     </div>
     <div class="items-center justify-end q-gutter-md row">
       <AppBtn
-        color="primary"
+        color="accent"
         flat
         icon="edit"
         :label="labels.editBtn"

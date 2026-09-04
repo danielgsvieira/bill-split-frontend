@@ -20,7 +20,7 @@ type AppToggleProps = {
 
 const {
   checkedIcon = undefined,
-  color = 'primary',
+  color = 'accent',
   falseValue = false,
   indeterminateValue = undefined,
   label = undefined,

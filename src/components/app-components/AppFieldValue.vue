@@ -10,7 +10,7 @@ const { label, value = undefined, valueTextClass = undefined } = defineProps<App
 
 <template>
   <div class="column">
-    <label class="opacity-50 text-body2 text-weight-medium">
+    <label class="opacity-60 text-body2 text-weight-medium">
       {{ label }}
     </label>
     <p class="q-mb-none text-body" :class="valueTextClass">{{ value ?? '' }}</p>

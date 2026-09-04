@@ -38,7 +38,7 @@ const emit = defineEmits<AppBtnEmits>();
 const quasar = useQuasar();
 
 const btnColor = computed(() => {
-  const defaultColor = flat === true ? undefined : 'primary';
+  const defaultColor = flat === true ? undefined : 'accent';
 
   return color ?? defaultColor;
 });
@@ -48,7 +48,7 @@ const computedStyle = computed(() => {
     return undefined;
   }
 
-  const textColor = quasar.dark.isActive ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)';
+  const textColor = quasar.dark.isActive ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)';
   return { color: textColor };
 });
 

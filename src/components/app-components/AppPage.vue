@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppInnerLoading from './AppInnerLoading.vue';
-import { QPage } from 'quasar';
 import type { VueSlot } from 'src/utils';
+import { QPage, useQuasar } from 'quasar';
 
 type AppPageProps = {
   centeredContent?: boolean;
@@ -21,6 +21,8 @@ const {
   title = undefined,
 } = defineProps<AppPageProps>();
 const slots = defineSlots<AppPageSlots>();
+
+const quasar = useQuasar();
 </script>
 
 <template>
@@ -29,7 +31,10 @@ const slots = defineSlots<AppPageSlots>();
       <template v-if="title !== undefined">
         <slot name="header">
           <div class="col-auto items-center justify-between q-mb-md q-px-md row">
-            <h1 class="q-ma-none text-h4 text-primary">
+            <h1
+              class="q-ma-none text-h4"
+              :class="!quasar.dark.isActive ? 'text-accent' : undefined"
+            >
               <slot name="title">
                 {{ title }}
               </slot>

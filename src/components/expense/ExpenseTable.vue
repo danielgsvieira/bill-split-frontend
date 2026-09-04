@@ -169,7 +169,7 @@ function handleDeleteBtnClick(expense: Expense) {
     </template>
     <template #actionCell="cellProps">
       <div class="items-center justify-center q-gutter-xs row">
-        <AppTableActionBtn color="primary" icon="edit" :to="getEditExpenseRoute(cellProps.row)" />
+        <AppTableActionBtn color="accent" icon="edit" :to="getEditExpenseRoute(cellProps.row)" />
         <AppTableActionBtn
           color="negative"
           icon="delete"

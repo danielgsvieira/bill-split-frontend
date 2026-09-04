@@ -187,7 +187,7 @@ function getPaymentRecomendationText(receivingUser: string, payingUser: string, 
       </div>
     </div>
     <div v-if="hasEmptyUserBudget" class="items-center row">
-      <AppIcon class="opacity-50" name="info" />
+      <AppIcon class="opacity-60" name="info" />
       <p class="d-inline-block opacity-50 q-mb-none q-ml-sm">
         {{ labels.fillUserBudgetsToViewHint }}
       </p>
