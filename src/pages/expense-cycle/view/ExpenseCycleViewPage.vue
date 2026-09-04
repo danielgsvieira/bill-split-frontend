@@ -4,7 +4,7 @@ import { type RouteLocationRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useExpenseCycleViewPageStore } from './expenseCycleViewPageStore';
 import { useI18n } from 'vue-i18n';
-import { AppCard, AppGoBackBtn, AppPage, AppSeparator, ExpenseCycleView } from 'src/components';
+import { AppGoBackBtn, AppPage, AppSeparator, ExpenseCycleView } from 'src/components';
 import { ExpensesSection, UserBudgetsSection, ValuesSection } from './components';
 
 type ExpenseCycleViewPageProps = {
