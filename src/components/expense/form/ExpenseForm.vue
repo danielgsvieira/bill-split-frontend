@@ -5,19 +5,11 @@ import type { ExpenseCycleDetails } from 'src/models/expense-cycle/ExpenseCycleD
 import { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
 import ExpenseCycleUsersInput from './ExpenseCycleUsersInput.vue';
 import ExpenseDescriptionInput from './ExpenseDescriptionInput.vue';
-import type { RouteLocationRaw } from 'vue-router';
 import { Tag } from 'src/models/tag/Tag';
 import { TagSelect } from 'src/components/tag';
 import { useForm } from 'src/composables';
 import { useI18n } from 'vue-i18n';
-import {
-  AppBtn,
-  AppDatePicker,
-  AppForm,
-  AppGoBackBtn,
-  AppMoneyInput,
-  AppToggle,
-} from '../../app-components';
+import { AppBtn, AppDatePicker, AppForm, AppMoneyInput, AppToggle } from '../../app-components';
 import { Money, validation } from 'src/utils';
 import { onMounted, watch } from 'vue';
 
@@ -35,8 +27,10 @@ type ExpenseFormProps = {
   expenseCycle: ExpenseCycleDetails;
   onSubmit: (data: ExpenseFormData) => Promise<void> | void;
 };
+type ExpenseFormEmits = (e: 'cancel') => void;
 
 const { expense = null, expenseCycle, onSubmit } = defineProps<ExpenseFormProps>();
+const emit = defineEmits<ExpenseFormEmits>();
 
 const i18n = useI18n();
 
@@ -50,6 +44,7 @@ const labels = {
     price: i18n.t('expense.fields.price'),
     tags: i18n.t('expense.fields.tags'),
   },
+  cancelBtn: i18n.t('general.cancel'),
   submitBtn: i18n.t('general.save'),
 };
 
@@ -107,11 +102,6 @@ watch(
     }
   },
 );
-
-const goBackRoute: RouteLocationRaw = {
-  name: 'expense-cycle-view',
-  params: { id: expenseCycle.id },
-};
 
 export type { ExpenseFormData };
 </script>
@@ -175,7 +165,7 @@ export type { ExpenseFormData };
     />
     <div class="col-12">
       <div class="items-center justify-end q-gutter-x-md row">
-        <AppGoBackBtn :fallback-route="goBackRoute" />
+        <AppBtn flat :label="labels.cancelBtn" type="button" @click="() => emit('cancel')" />
         <AppBtn :label="labels.submitBtn" :loading="submitting" type="submit" />
       </div>
     </div>

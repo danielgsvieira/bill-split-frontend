@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
-import { AppPage, ExpenseForm, type ExpenseFormData } from 'src/components';
+import { AppCustomDialog, ExpenseForm, type ExpenseFormData } from 'src/components';
+import { type DialogEmits, useApiCall, useToast } from 'src/composables';
 import { EditExpenseDto, expenseCycleService, expenseService } from 'src/services';
 import { onMounted, ref } from 'vue';
-import { useApiCall, useToast } from 'src/composables';
 
-type ExpenseEditPageProps = {
+type EditExpenseDialogProps = {
   expenseId: number;
 };
+type EditExpenseDialogEmits = DialogEmits;
 
-const { expenseId } = defineProps<ExpenseEditPageProps>();
+const { expenseId } = defineProps<EditExpenseDialogProps>();
+const emit = defineEmits<EditExpenseDialogEmits>();
 
 const i18n = useI18n();
 const toast = useToast();
-const router = useRouter();
 
 const labels = {
-  pageTitle: i18n.t('expense.editPage.pageTitle'),
+  title: i18n.t('expense.editDialog.title'),
   editSuccessMessage: i18n.t('general.editSuccessMessage'),
 };
 
@@ -45,7 +45,7 @@ const { data: editedExpenseCycle, execute: editExpenseCycle } = useApiCall((dto:
   expenseService.edit(dto),
 );
 
-async function handleSubmit(data: ExpenseFormData) {
+async function handleSubmit(data: ExpenseFormData, onOk: () => void) {
   const { date, paidBy } = data;
   if (date === null || paidBy === null) {
     toast.negative(i18n.t('validation.invalidFormData'));
@@ -63,16 +63,29 @@ async function handleSubmit(data: ExpenseFormData) {
   if (editedExpenseCycle.value !== null) {
     expense.value = editedExpenseCycle.value;
     toast.positive(labels.editSuccessMessage);
-
-    void router.push({ name: 'expense-cycle-view', params: { id: expenseCycle.value?.id } });
+    onOk();
   }
 }
 
-export type { ExpenseEditPageProps };
+export type { EditExpenseDialogProps };
 </script>
 
 <template>
-  <AppPage :loading="loadingData" :title="labels.pageTitle">
-    <ExpenseForm v-if="expenseCycle !== null" :expense :expense-cycle @submit="handleSubmit" />
-  </AppPage>
+  <AppCustomDialog
+    v-slot="{ onOk, onCancel }"
+    :loading="loadingData"
+    persistent
+    :title="labels.title"
+    wide
+    @hide="() => emit('hide')"
+    @ok="(payload) => emit('ok', payload)"
+  >
+    <ExpenseForm
+      v-if="expenseCycle !== null"
+      :expense
+      :expense-cycle
+      @cancel="() => onCancel()"
+      @submit="(data) => handleSubmit(data, onOk)"
+    />
+  </AppCustomDialog>
 </template>

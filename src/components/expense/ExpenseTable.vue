@@ -8,9 +8,9 @@ import ExpenseTableBalancePerUserCell from './ExpenseTableBalancePerUserCell.vue
 import ExpenseTableValuePerUserCell from './ExpenseTableValuePerUserCell.vue';
 import type { ExpenseUser } from 'src/models/expense/ExpenseUser';
 import type { Money } from 'src/utils';
-import type { RouteLocationRaw } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { AppTable, AppTableActionBtn, type AppTableColumns } from '../app-components';
+import EditExpenseDialog, { type EditExpenseDialogProps } from './EditExpenseDialog.vue';
 import { useApiCall, useDialog, useToast } from 'src/composables';
 
 type ExpenseTableProps = {
@@ -19,7 +19,7 @@ type ExpenseTableProps = {
   loading?: boolean;
   userBudgets: ExpenseCycleUserBudget[] | null;
 };
-type ExpenseTableEmits = (e: 'refreshList') => void;
+type ExpenseTableEmits = (e: 'updateData') => void;
 
 const {
   editable = false,
@@ -127,8 +127,17 @@ function getSharedBetweenText(sharedBetween: Expense['sharedBetween']) {
   return sharedBetween.map((el) => el.displayName).join(', ');
 }
 
-function getEditExpenseRoute(expense: Expense): RouteLocationRaw {
-  return { name: 'expense-edit', params: { id: expense.id } };
+function openEditExpenseDialog(expenseId: number) {
+  const componentProps: EditExpenseDialogProps = { expenseId };
+
+  dialog
+    .customDialog({
+      component: EditExpenseDialog,
+      componentProps,
+    })
+    .onOk(() => {
+      emit('updateData');
+    });
 }
 
 const {
@@ -143,7 +152,7 @@ async function deleteExpense(expenseId: number) {
 
     if (deletedExpense.value !== null) {
       toast.positive(labels.removeExpense.successMessage);
-      emit('refreshList');
+      emit('updateData');
     }
   }
 }
@@ -169,7 +178,11 @@ function handleDeleteBtnClick(expense: Expense) {
     </template>
     <template #actionCell="cellProps">
       <div class="items-center justify-center q-gutter-xs row">
-        <AppTableActionBtn color="accent" icon="edit" :to="getEditExpenseRoute(cellProps.row)" />
+        <AppTableActionBtn
+          color="accent"
+          icon="edit"
+          @click="() => openEditExpenseDialog(cellProps.row.id)"
+        />
         <AppTableActionBtn
           color="negative"
           icon="delete"

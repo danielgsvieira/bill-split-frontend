@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import type { RouteLocationRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
+import { useDialog } from 'src/composables';
 import { useExpenseCycleViewPageStore } from '../expenseCycleViewPageStore';
 import { useI18n } from 'vue-i18n';
-import { AppBtn, ExpenseTable } from 'src/components';
+import {
+  AppBtn,
+  CreateExpenseDialog,
+  type CreateExpenseDialogProps,
+  ExpenseTable,
+} from 'src/components';
 import { computed, ref } from 'vue';
 import ExpensesFilter, { type ExpenseFilterValues } from './ExpensesFilter.vue';
 
 const i18n = useI18n();
+const dialog = useDialog();
 
 const labels = {
   createExpenseBtn: i18n.t('expenseCycle.viewPage.createExpenseBtn'),
@@ -17,15 +23,6 @@ const labels = {
 
 const pageStore = useExpenseCycleViewPageStore();
 const { expenseCycle, expenses, loadingExpenses, userBudgets } = storeToRefs(pageStore);
-
-function fetchExpenses() {
-  void pageStore.fetchExpenses();
-}
-
-const createExpenseRoute: RouteLocationRaw = {
-  name: 'expense-create',
-  query: { expenseCycleId: expenseCycle.value?.id },
-};
 
 const filterValues = ref<ExpenseFilterValues>({
   description: '',
@@ -60,6 +57,29 @@ const filteredExpenses = computed(() => {
 
   return result;
 });
+
+function openCreateExpenseDialog() {
+  if (expenseCycle.value === null) {
+    return;
+  }
+
+  const componentProps: CreateExpenseDialogProps = { expenseCycleId: expenseCycle.value.id };
+
+  dialog
+    .customDialog({
+      component: CreateExpenseDialog,
+      componentProps,
+    })
+    .onOk(reinitData);
+}
+
+function reinitData() {
+  if (expenseCycle.value === null) {
+    return;
+  }
+
+  void pageStore.init(expenseCycle.value.id);
+}
 </script>
 
 <template>
@@ -72,8 +92,8 @@ const filteredExpenses = computed(() => {
         <AppBtn
           icon="add"
           :label="labels.createExpenseBtn"
-          :to="createExpenseRoute"
           type="button"
+          @click="() => openCreateExpenseDialog()"
         />
       </div>
     </div>
@@ -87,7 +107,7 @@ const filteredExpenses = computed(() => {
       :expenses="filteredExpenses"
       :loading="loadingExpenses"
       :user-budgets
-      @refresh-list="fetchExpenses"
+      @update-data="reinitData"
     />
   </div>
 </template>

@@ -4,8 +4,10 @@ import type { VueSlot } from 'src/utils';
 import { QDialog, useDialogPluginComponent } from 'quasar';
 
 type AppCustomDialogProps = {
-  title?: string | undefined;
+  loading?: boolean | undefined;
   persistent?: boolean | undefined;
+  title?: string | undefined;
+  wide?: boolean | undefined;
 };
 
 type AppCustomDialogEmits = {
@@ -18,7 +20,12 @@ type AppCustomDialogSlots = {
   default: VueSlot<{ onCancel: () => void; onHide: () => void; onOk: (payload?: never) => void }>;
 };
 
-const { persistent = undefined, title = undefined } = defineProps<AppCustomDialogProps>();
+const {
+  loading = undefined,
+  persistent = undefined,
+  title = undefined,
+  wide = undefined,
+} = defineProps<AppCustomDialogProps>();
 defineEmits<AppCustomDialogEmits>();
 defineSlots<AppCustomDialogSlots>();
 
@@ -27,7 +34,7 @@ const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginC
 
 <template>
   <QDialog ref="dialogRef" :persistent @hide="onDialogHide">
-    <AppCard class="q-dialog-plugin" :title="title">
+    <AppCard class="q-dialog-plugin" :class="{ 'wide-dialog': wide }" :loading :title="title">
       <slot
         name="default"
         :on-cancel="onDialogCancel"
@@ -37,3 +44,10 @@ const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginC
     </AppCard>
   </QDialog>
 </template>
+
+<style scoped lang="scss">
+.wide-dialog {
+  width: 90vw;
+  max-width: $breakpoint-lg-min;
+}
+</style>

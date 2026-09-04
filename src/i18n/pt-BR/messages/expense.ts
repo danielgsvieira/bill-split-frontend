@@ -2,11 +2,11 @@
 /* eslint sort-keys: "error" */
 
 const expense = {
-  createPage: {
-    pageTitle: 'Cadastrar Despesa',
+  createDialog: {
+    title: 'Cadastrar Despesa',
   },
-  editPage: {
-    pageTitle: 'Editar Despesa',
+  editDialog: {
+    title: 'Editar Despesa',
   },
   fields: {
     balancePerUser: 'Saldo Por Usuário',
