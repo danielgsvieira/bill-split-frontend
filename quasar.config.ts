@@ -1,8 +1,11 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
+import { configDotenv } from 'dotenv';
 import { defineConfig } from '#q-app/wrappers';
 import { fileURLToPath } from 'node:url';
+
+configDotenv();
 
 export default defineConfig((ctx) => {
   return {
