@@ -53,7 +53,10 @@ export default defineConfig((ctx) => {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        API_BASE_URL: process.env.API_BASE_URL,
+        USER_INFO_KEY: process.env.USER_INFO_KEY,
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
