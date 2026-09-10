@@ -41,12 +41,14 @@ const columns: AppTableColumns<ExpenseCycleListItem> = [
     field: 'title',
     label: labels.fields.title,
     align: 'left',
+    gridColClass: 'col-12',
   },
   {
     name: 'description',
     field: 'description',
     label: labels.fields.description,
     align: 'left',
+    gridColClass: 'col-12',
     format: (value: string | null) => valueOrEmptyIndicator(value),
   },
   {
@@ -54,6 +56,7 @@ const columns: AppTableColumns<ExpenseCycleListItem> = [
     field: 'startDate',
     label: labels.fields.startDate,
     align: 'center',
+    gridColClass: 'col-6',
     format: (value: DateTime) => i18n.d(value.toJSDate(), 'short'),
   },
   {
@@ -61,6 +64,7 @@ const columns: AppTableColumns<ExpenseCycleListItem> = [
     field: 'endDate',
     label: labels.fields.endDate,
     align: 'center',
+    gridColClass: 'col-6',
     format: (value: DateTime) => i18n.d(value.toJSDate(), 'short'),
   },
   {
@@ -68,6 +72,7 @@ const columns: AppTableColumns<ExpenseCycleListItem> = [
     field: 'createdBy',
     label: labels.fields.createdBy,
     align: 'center',
+    gridColClass: 'col-6',
     format: (value: ExpenseCycleUser) => value.displayName,
   },
 ];
@@ -84,6 +89,12 @@ function handleRowClick(row: ExpenseCycleListItem) {
     <template #buttons>
       <AppBtn icon="add" :label="labels.createBtn" :to="createExpenseCycleRoute" type="button" />
     </template>
-    <AppTable :columns :loading="loading" :rows="expenseCycles ?? []" @row-click="handleRowClick" />
+    <AppTable
+      :columns
+      :loading="loading"
+      manage-columns
+      :rows="expenseCycles ?? []"
+      @row-click="handleRowClick"
+    />
   </AppPage>
 </template>

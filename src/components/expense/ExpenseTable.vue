@@ -9,6 +9,7 @@ import ExpenseTableValuePerUserCell from './ExpenseTableValuePerUserCell.vue';
 import type { ExpenseUser } from 'src/models/expense/ExpenseUser';
 import type { Money } from 'src/utils';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 import { AppTable, AppTableActionBtn, type AppTableColumns } from '../app-components';
 import EditExpenseDialog, { type EditExpenseDialogProps } from './EditExpenseDialog.vue';
 import { useApiCall, useDialog, useToast } from 'src/composables';
@@ -32,6 +33,7 @@ const emit = defineEmits<ExpenseTableEmits>();
 const i18n = useI18n();
 const dialog = useDialog();
 const toast = useToast();
+const quasar = useQuasar();
 
 const labels = {
   fields: {
@@ -73,12 +75,14 @@ const columns: AppTableColumns<Expense> = [
     field: 'description',
     label: labels.fields.description,
     align: 'left',
+    gridColClass: 'col-12',
   },
   {
     name: 'price',
     field: 'price',
     label: labels.fields.price,
     align: 'left',
+    gridColClass: 'col-6',
     format: (value: Money) => i18n.n(value.decimalValue, 'currency'),
   },
   {
@@ -86,6 +90,7 @@ const columns: AppTableColumns<Expense> = [
     field: 'date',
     label: labels.fields.date,
     align: 'left',
+    gridColClass: 'col-6',
     format: (value: DateTime) => i18n.d(value.toJSDate(), 'short'),
   },
   {
@@ -93,6 +98,7 @@ const columns: AppTableColumns<Expense> = [
     field: 'sharedBetween',
     label: labels.fields.sharedBetween,
     align: 'left',
+    gridColClass: 'col-6',
     format: (value: ExpenseUser[]) => getSharedBetweenText(value),
   },
   {
@@ -100,6 +106,7 @@ const columns: AppTableColumns<Expense> = [
     field: 'paidBy',
     label: labels.fields.paidBy,
     align: 'left',
+    gridColClass: 'col-6',
     format: (value: ExpenseUser) => value.displayName,
   },
   {
@@ -107,6 +114,7 @@ const columns: AppTableColumns<Expense> = [
     field: 'isProportional',
     label: labels.fields.isProportional,
     align: 'left',
+    gridColClass: 'col-12',
     format: (value: boolean) => (value ? labels.yes : labels.no),
   },
   {
@@ -114,12 +122,14 @@ const columns: AppTableColumns<Expense> = [
     field: 'valuePerUser',
     label: labels.fields.valuePerUser,
     align: 'left',
+    gridColClass: 'col-6',
   },
   {
     name: 'balancePerUser',
     field: 'balancePerUser',
     label: labels.fields.balancePerUser,
     align: 'left',
+    gridColClass: 'col-6',
   },
 ];
 
@@ -177,7 +187,10 @@ function handleDeleteBtnClick(expense: Expense) {
       />
     </template>
     <template #actionCell="cellProps">
-      <div class="items-center justify-center q-gutter-xs row">
+      <div
+        class="items-center q-gutter-xs row"
+        :class="quasar.screen.lt.sm ? 'justify-end' : 'justify-center'"
+      >
         <AppTableActionBtn
           color="accent"
           icon="edit"
