@@ -170,10 +170,31 @@ async function deleteExpense(expenseId: number) {
 function handleDeleteBtnClick(expense: Expense) {
   dialog.confirm(labels.removeExpense.dialog).onOk(() => void deleteExpense(expense.id));
 }
+
+const defaultVisibleColumns = computed(() => {
+  return quasar.screen.lt.sm
+    ? ['description', 'price', 'date']
+    : [
+        'description',
+        'price',
+        'date',
+        'sharedBetween',
+        'paidBy',
+        'isProportional',
+        'valuePerUser',
+        'balancePerUser',
+      ];
+});
 </script>
 
 <template>
-  <AppTable :columns :loading manage-columns :rows="expenses" :use-actions-column="editable">
+  <AppTable
+    :columns
+    :default-visible-columns
+    :loading
+    :rows="expenses"
+    :use-actions-column="editable"
+  >
     <template #body-cell-valuePerUser="cellProps">
       <ExpenseTableValuePerUserCell
         v-if="budgetData !== null"
