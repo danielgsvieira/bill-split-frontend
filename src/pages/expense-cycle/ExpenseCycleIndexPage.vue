@@ -3,15 +3,17 @@ import type { DateTime } from 'luxon';
 import type { ExpenseCycleListItem } from 'src/models/expense-cycle/ExpenseCycleListItem';
 import { expenseCycleService } from 'src/services';
 import type { ExpenseCycleUser } from 'src/models/expense-cycle/ExpenseCycleUser';
-import { onMounted } from 'vue';
 import { useApiCall } from 'src/composables';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 import { valueOrEmptyIndicator } from 'src/utils';
 import { AppBtn, AppPage, AppTable, type AppTableColumns } from 'src/components';
+import { computed, onMounted } from 'vue';
 import { type RouteLocationRaw, useRouter } from 'vue-router';
 
 const router = useRouter();
 const i18n = useI18n();
+const quasar = useQuasar();
 
 const labels = {
   createBtn: i18n.t('general.create'),
@@ -82,6 +84,12 @@ const createExpenseCycleRoute: RouteLocationRaw = { name: 'expense-cycle-create'
 function handleRowClick(row: ExpenseCycleListItem) {
   void router.push({ name: 'expense-cycle-view', params: { id: row.id } });
 }
+
+const defaultVisibleColumns = computed(() => {
+  return quasar.screen.lt.sm
+    ? ['title', 'startDate', 'endDate']
+    : ['title', 'description', 'startDate', 'endDate', 'createdBy'];
+});
 </script>
 
 <template>
@@ -91,8 +99,8 @@ function handleRowClick(row: ExpenseCycleListItem) {
     </template>
     <AppTable
       :columns
+      :default-visible-columns
       :loading="loading"
-      manage-columns
       :rows="expenseCycles ?? []"
       @row-click="handleRowClick"
     />

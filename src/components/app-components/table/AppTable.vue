@@ -47,7 +47,7 @@ const {
   defaultVisibleColumns = undefined,
   grid = undefined,
   loading = undefined,
-  manageColumns = undefined,
+  manageColumns = true,
   rows,
   rowsPerPageOptions = [10, 20, 50, 0],
   useActionsColumn = false,
@@ -129,7 +129,7 @@ const enableGridMode = computed(() => {
       <div class="col-md-4 col-sm-6 col-xs-12 q-pa-xs" @click="emit('rowClick', itemSlotProps.row)">
         <QCard bordered flat>
           <QCardSection>
-            <div class="q-col-gutter-md row">
+            <div class="q-col-gutter-sm row">
               <template
                 v-for="col in itemSlotProps.cols.filter((c) => c.name !== 'actions')"
                 :key="col.name"
