@@ -2,8 +2,8 @@
 import AppBtn from '../AppBtn.vue';
 import AppCard from '../AppCard.vue';
 import AppToggle from '../AppToggle.vue';
-import { QMenu } from 'quasar';
 import { useI18n } from 'vue-i18n';
+import { QMenu, useQuasar } from 'quasar';
 
 type AvailablecolumnData = { name: string; label: string };
 
@@ -16,6 +16,7 @@ const { availableColumns } = defineProps<AppTableColumnManagerProps>();
 const model = defineModel<string[]>({ required: true });
 
 const i18n = useI18n();
+const quasar = useQuasar();
 
 function isColumnVisible(colName: string) {
   return model.value.includes(colName);
@@ -43,7 +44,10 @@ function setColumnVisibility(colName: string, value: boolean | null | undefined)
     <AppBtn flat icon="settings" round size="sm" type="button" />
     <QMenu anchor="bottom right" self="top right">
       <AppCard :title="i18n.t('general.table.visibleColumnsMenu.title')">
-        <div class="column-setting-menu-container">
+        <div
+          class="column-setting-menu-container"
+          :class="quasar.screen.lt.sm ? 'one-column' : 'two-columns'"
+        >
           <AppToggle
             v-for="(column, index) in availableColumns"
             :key="index"
@@ -63,7 +67,14 @@ function setColumnVisibility(colName: string, value: boolean | null | undefined)
   max-width: $breakpoint-sm-min;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 0 0.5rem;
+
+  &.one-column {
+    grid-template-columns: 1fr;
+  }
+
+  &.two-columns {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
