@@ -6,6 +6,7 @@ import { auth } from './messages/auth';
 import { expense } from './messages/expense';
 import { expenseCycle } from './messages/expenseCycle';
 import { general } from './messages/general';
+import { menus } from './messages/menus';
 import { pageNotFound } from './messages/pageNotFound';
 import { tag } from './messages/tag';
 import { validation } from './messages/validation';
@@ -16,6 +17,7 @@ const ptBR = {
   expense,
   expenseCycle,
   general,
+  menus,
   pageNotFound,
   tag,
   validation,
