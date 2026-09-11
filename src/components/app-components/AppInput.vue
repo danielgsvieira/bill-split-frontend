@@ -66,6 +66,7 @@ export type { AppInputModelValue, AppInputProps };
   <QInput
     :id
     v-model="model"
+    color="accent"
     :debounce
     :disable
     :hint
