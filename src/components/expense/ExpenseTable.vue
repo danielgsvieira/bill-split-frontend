@@ -9,7 +9,6 @@ import ExpenseTableValuePerUserCell from './ExpenseTableValuePerUserCell.vue';
 import type { ExpenseUser } from 'src/models/expense/ExpenseUser';
 import type { Money } from 'src/utils';
 import { useI18n } from 'vue-i18n';
-import { useQuasar } from 'quasar';
 import { AppTable, AppTableActionBtn, type AppTableColumns } from '../app-components';
 import EditExpenseDialog, { type EditExpenseDialogProps } from './EditExpenseDialog.vue';
 import { useApiCall, useDialog, useToast } from 'src/composables';
@@ -33,7 +32,6 @@ const emit = defineEmits<ExpenseTableEmits>();
 const i18n = useI18n();
 const dialog = useDialog();
 const toast = useToast();
-const quasar = useQuasar();
 
 const labels = {
   fields: {
@@ -170,31 +168,10 @@ async function deleteExpense(expenseId: number) {
 function handleDeleteBtnClick(expense: Expense) {
   dialog.confirm(labels.removeExpense.dialog).onOk(() => void deleteExpense(expense.id));
 }
-
-const defaultVisibleColumns = computed(() => {
-  return quasar.screen.lt.sm
-    ? ['description', 'price', 'date']
-    : [
-        'description',
-        'price',
-        'date',
-        'sharedBetween',
-        'paidBy',
-        'isProportional',
-        'valuePerUser',
-        'balancePerUser',
-      ];
-});
 </script>
 
 <template>
-  <AppTable
-    :columns
-    :default-visible-columns
-    :loading
-    :rows="expenses"
-    :use-actions-column="editable"
-  >
+  <AppTable :columns :loading :rows="expenses" :use-actions-column="editable">
     <template #body-cell-valuePerUser="cellProps">
       <ExpenseTableValuePerUserCell
         v-if="budgetData !== null"
@@ -209,8 +186,8 @@ const defaultVisibleColumns = computed(() => {
     </template>
     <template #actionCell="cellProps">
       <div
-        class="items-center q-gutter-xs row"
-        :class="quasar.screen.lt.sm ? 'justify-end' : 'justify-center'"
+        class="items-center no-wrap q-gutter-xs row"
+        :class="cellProps.gridMode ? 'justify-end' : 'justify-center'"
       >
         <AppTableActionBtn
           color="accent"

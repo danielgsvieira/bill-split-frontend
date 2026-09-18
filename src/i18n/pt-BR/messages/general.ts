@@ -22,8 +22,13 @@ const general = {
   save: 'Salvar',
   table: {
     actionColumnLabel: 'Ações',
-    visibleColumnsMenu: {
-      title: 'Colunas visíveis',
+    settings: {
+      visibleColumns: 'Colunas visíveis',
+      visualizationMode: {
+        grid: 'Blocos',
+        row: 'Linhas',
+        title: 'Visualização',
+      },
     },
   },
   yes: 'Sim',
