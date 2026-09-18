@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/prop-name-casing -->
 <!--
   This component is simply a wrapper for the `QTable` component setting some defaults.
 
@@ -6,7 +5,7 @@
 -->
 <script setup lang="ts" generic="T">
 import AppFieldValue from '../AppFieldValue.vue';
-import AppTableColumnManager from './AppTableColumnManager.vue';
+import AppTableSettings from './AppTableSettings.vue';
 import { useI18n } from 'vue-i18n';
 import type { VueSlot } from 'src/utils';
 import type { AppTableColumnAlignment, AppTableColumns } from './app-table-columns';
@@ -29,7 +28,6 @@ type BodyCellSlots = Record<`body-cell-${string}`, VueSlot<{ row: T }>>;
 
 type AppTableProps = {
   columns: AppTableColumns<T>;
-  defaultVisibleColumns?: string[] | undefined;
   grid?: boolean | undefined;
   loading?: boolean | undefined;
   manageColumns?: boolean | undefined;
@@ -39,12 +37,11 @@ type AppTableProps = {
 };
 type AppTableEmits = (e: 'rowClick', value: T) => void;
 type AppTableSlots = {
-  actionCell: VueSlot<{ row: T }>;
+  actionCell: VueSlot<{ row: T; gridMode: boolean }>;
 } & BodyCellSlots;
 
 const {
   columns,
-  defaultVisibleColumns = undefined,
   grid = undefined,
   loading = undefined,
   manageColumns = true,
@@ -58,7 +55,10 @@ const slots = defineSlots<AppTableSlots>();
 const i18n = useI18n();
 const quasar = useQuasar();
 
-const visibleColumnsModel = ref(defaultVisibleColumns ?? columns.map((el) => el.name));
+const tableSettingsModel = ref({
+  visibleColumns: columns.map((el) => el.name),
+  gridMode: grid ?? quasar.screen.lt.sm,
+});
 
 const availableColumns = computed(() => {
   return columns.map((el) => {
@@ -83,7 +83,7 @@ const tableColumns = computed(() => {
 
 const tableVisibleColumns = computed(() => {
   const visibleColumns = columns
-    .filter((el) => visibleColumnsModel.value.includes(el.name))
+    .filter((el) => tableSettingsModel.value.visibleColumns.includes(el.name))
     .map((el) => el.name);
 
   if (useActionsColumn) {
@@ -92,26 +92,29 @@ const tableVisibleColumns = computed(() => {
 
   return visibleColumns;
 });
-
-const enableGridMode = computed(() => {
-  return grid ?? quasar.screen.lt.sm;
-});
 </script>
 
 <template>
+  <!--
+    The `key` atribute Forces a full table re-render when switching between table and grid modes.
+    Without this, Quasar's internal grid renderer causes the first few items to misalign.
+  -->
   <QTable
+    :key="String(tableSettingsModel.gridMode)"
     bordered
+    :class="{ 'app-table': !tableSettingsModel.gridMode }"
     :columns="tableColumns"
     flat
-    :grid="enableGridMode"
+    :grid="tableSettingsModel.gridMode"
     :loading
     :rows
     :rows-per-page-options
+    :virtual-scroll="!tableSettingsModel.gridMode"
     :visible-columns="tableVisibleColumns"
     @row-click="(_, row) => emit('rowClick', row)"
   >
     <template v-if="manageColumns" #top-right>
-      <AppTableColumnManager v-model="visibleColumnsModel" :available-columns />
+      <AppTableSettings v-model="tableSettingsModel" :available-columns />
     </template>
 
     <template v-for="(_, slotName) in slots" :key="slotName" #[slotName]="slotProps">
@@ -121,11 +124,14 @@ const enableGridMode = computed(() => {
     </template>
     <template v-if="useActionsColumn" #[`body-cell-actions`]="cellProps">
       <QTd :props="cellProps">
-        <slot name="actionCell" v-bind="{ row: cellProps.row }" />
+        <slot
+          name="actionCell"
+          v-bind="{ row: cellProps.row, gridMode: tableSettingsModel.gridMode }"
+        />
       </QTd>
     </template>
 
-    <template v-if="enableGridMode" #item="itemSlotProps: ItemSlotProps">
+    <template v-if="tableSettingsModel.gridMode" #item="itemSlotProps: ItemSlotProps">
       <div class="col-md-4 col-sm-6 col-xs-12 q-pa-xs" @click="emit('rowClick', itemSlotProps.row)">
         <QCard bordered flat>
           <QCardSection>
@@ -147,7 +153,10 @@ const enableGridMode = computed(() => {
                 </div>
               </template>
               <div class="col-12 justify-end">
-                <slot name="actionCell" v-bind="{ row: itemSlotProps.row }" />
+                <slot
+                  name="actionCell"
+                  v-bind="{ row: itemSlotProps.row, gridMode: tableSettingsModel.gridMode }"
+                />
               </div>
             </div>
           </QCardSection>
@@ -156,3 +165,30 @@ const enableGridMode = computed(() => {
     </template>
   </QTable>
 </template>
+
+<style scoped lang="css">
+.app-table {
+  max-height: 80vh;
+}
+
+:deep(.q-table__middle) {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem; /* Height for horizontal scrollbars */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--q-primary);
+    border-radius: 0.25rem;
+  }
+
+  /* Handle hover state */
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--q-accent); /* Darkens on hover */
+  }
+}
+</style>
