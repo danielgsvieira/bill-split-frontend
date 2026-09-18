@@ -46,12 +46,12 @@ const quasar = useQuasar();
         </slot>
       </template>
       <template v-if="centeredContent">
-        <section class="col items-center justify-center q-pa-md row">
+        <section class="col full-width items-center justify-center q-pa-md row">
           <slot name="default" />
         </section>
       </template>
       <template v-else>
-        <section class="col q-pa-md">
+        <section class="col full-width q-pa-md">
           <slot name="default" />
         </section>
       </template>
