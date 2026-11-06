@@ -111,6 +111,7 @@ export type { ExpenseFormData };
     <ExpenseDescriptionInput
       id="input_description"
       v-model="formData.description"
+      autofocus
       class="col-12 col-md-8"
       :label="labels.inputs.description"
       name="description"

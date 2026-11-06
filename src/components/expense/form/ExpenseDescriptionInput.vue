@@ -4,6 +4,7 @@ import { expenseService } from 'src/services';
 import type { ValidationRule } from 'quasar';
 
 type ExpenseDescriptionInputProps = {
+  autofocus?: boolean | undefined;
   id: string;
   label?: string | undefined;
   name: string;
@@ -12,6 +13,7 @@ type ExpenseDescriptionInputProps = {
 
 const {
   id,
+  autofocus = undefined,
   label = undefined,
   name,
   rules = undefined,
@@ -23,5 +25,5 @@ const autocompleteFn = (value: string) => {
 </script>
 
 <template>
-  <AppAutocomplete :id :autocomplete-fn :label :name :rules />
+  <AppAutocomplete :id :autocomplete-fn :autofocus :label :name :rules />
 </template>
