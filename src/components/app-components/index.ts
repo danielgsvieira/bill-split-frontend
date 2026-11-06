@@ -19,6 +19,7 @@ import AppPasswordInput from './AppPasswordInput.vue';
 import AppSelect from './AppSelect.vue';
 import AppSeparator from './AppSeparator.vue';
 import AppToggle from './AppToggle.vue';
+import AppTooltip from './AppTooltip.vue';
 import { AppTable, AppTableActionBtn, type AppTableColumns } from './table';
 
 export {
@@ -45,5 +46,6 @@ export {
   AppTable,
   AppTableActionBtn,
   AppToggle,
+  AppTooltip,
 };
 export type { AppTableColumns };
