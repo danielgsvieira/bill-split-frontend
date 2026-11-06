@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useDialog } from 'src/composables';
 import { useExpenseCycleViewPageStore } from '../expenseCycleViewPageStore';
 import { useI18n } from 'vue-i18n';
 import {
   AppBtn,
+  AppTooltip,
   CreateExpenseDialog,
   type CreateExpenseDialogProps,
   ExpenseTable,
 } from 'src/components';
 import { computed, ref } from 'vue';
 import ExpensesFilter, { type ExpenseFilterValues } from './ExpensesFilter.vue';
+import { useDialog, useKeydown } from 'src/composables';
 
 const i18n = useI18n();
 const dialog = useDialog();
 
+useKeydown('N', () => {
+  openCreateExpenseDialog();
+});
+
 const labels = {
   createExpenseBtn: i18n.t('expenseCycle.viewPage.createExpenseBtn'),
+  createExpenseBtnHint: i18n.t('general.keyboardShortcutHint', { shortcut: 'Shift + N' }),
   expenseListTitle: i18n.t('expenseCycle.viewPage.expenseListTitle'),
   filterTitle: i18n.t('general.filters'),
 };
@@ -88,13 +94,17 @@ function reinitData() {
       <div class="col">
         <h3 class="q-mb-md q-mt-none text-h5">{{ labels.expenseListTitle }}</h3>
       </div>
-      <div class="col-auto">
+      <div class="col-auto column">
         <AppBtn
           icon="add"
           :label="labels.createExpenseBtn"
           type="button"
           @click="() => openCreateExpenseDialog()"
-        />
+        >
+          <AppTooltip anchor="top middle" self="center middle">
+            {{ labels.createExpenseBtnHint }}
+          </AppTooltip>
+        </AppBtn>
       </div>
     </div>
     <div v-if="expenseCycle !== null" class="q-mb-md row">
