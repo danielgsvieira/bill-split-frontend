@@ -23,6 +23,7 @@ type InputType =
 
 type AppInputModelValue = string | number | null | undefined;
 type AppInputProps = {
+  autofocus?: boolean | undefined;
   debounce?: number | undefined;
   disable?: boolean | undefined;
   hint?: string | undefined;
@@ -42,6 +43,7 @@ type AppInputSlots = {
 };
 
 const {
+  autofocus = undefined,
   debounce = undefined,
   disable = undefined,
   hint = undefined,
@@ -66,6 +68,7 @@ export type { AppInputModelValue, AppInputProps };
   <QInput
     :id
     v-model="model"
+    :autofocus
     color="accent"
     :debounce
     :disable

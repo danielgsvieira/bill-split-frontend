@@ -4,9 +4,9 @@
   Docs: https://quasar.dev/vue-components/button
 -->
 <script setup lang="ts">
-import type { AppSizeString } from 'src/utils';
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
+import type { AppSizeString, VueSlot } from 'src/utils';
 import { QBtn, type QBtnProps, useQuasar } from 'quasar';
 
 type AppBtnProps = {
@@ -21,6 +21,9 @@ type AppBtnProps = {
   type: string;
 };
 type AppBtnEmits = (e: 'click', value: Event) => void;
+type AppBtnSlots = {
+  default: VueSlot;
+};
 
 const {
   color = undefined,
@@ -34,6 +37,7 @@ const {
   type,
 } = defineProps<AppBtnProps>();
 const emit = defineEmits<AppBtnEmits>();
+defineSlots<AppBtnSlots>();
 
 const quasar = useQuasar();
 
@@ -69,5 +73,7 @@ export type { AppBtnEmits, AppBtnProps };
     :to
     :type
     @click="(e) => emit('click', e)"
-  />
+  >
+    <slot name="default" />
+  </QBtn>
 </template>

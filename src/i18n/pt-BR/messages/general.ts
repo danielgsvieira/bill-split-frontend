@@ -13,6 +13,7 @@ const general = {
   editSuccessMessage: 'Registro atualizado com sucesso',
   filters: 'Filtros',
   goBack: 'Voltar',
+  keyboardShortcutHint: 'Atalho: {shortcut}',
   logout: 'Sair',
   no: 'Não',
   noResults: 'Nehum resultado',
