@@ -53,6 +53,7 @@ function handleFilter(
   <QSelect
     :id
     :clearable
+    color="accent"
     :disable
     fill-input
     hide-dropdown-icon
